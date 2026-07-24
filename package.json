@@ -1,8 +1,8 @@
 {
-  "name": "landing-page-zhevion",
+  "name": "zhevion",
   "version": "1.0.0",
   "private": true,
-  "description": "Zhevion studio landing page — a studio that makes AI Grocery Planner and Forge.",
+  "description": "Zhevion studio landing page — a studio that makes Zebite and RepForge.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
