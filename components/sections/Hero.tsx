@@ -21,7 +21,7 @@ export function Hero() {
 
       {/* On a desktop viewport the hero fills the screen below the 4rem sticky
           nav, so the next section starts off-screen instead of peeking in. */}
-      <div className="shell relative z-10 grid items-center gap-14 py-16 md:py-24 lg:min-h-[calc(100svh-4rem)] lg:grid-cols-[1.05fr_1fr]">
+      <div className="shell relative z-10 grid grid-cols-1 items-center gap-14 py-16 md:py-24 lg:min-h-[calc(100svh-4rem)] lg:grid-cols-[1.05fr_1fr]">
         <div>
           <h1
             id="hero-heading"
@@ -63,10 +63,17 @@ export function Hero() {
         </div>
 
         {/* Paired devices: a real screen from each app.
-            The frames are fixed-px, so on a large desktop they read as small
-            against the viewport — scaling the pair up keeps them sharp (a
-            transform, not a re-layout) without overflowing the grid column. */}
-        <div className="relative mx-auto flex items-end justify-center gap-0 md:justify-end lg:scale-110 xl:scale-125">
+            The frames are fixed-px (~380px combined) so they can't shrink to a
+            narrow phone. A transform scales the whole pair to fit — down on
+            small screens so nothing is clipped, up on desktop so it stays sharp
+            (a transform, not a re-layout, so the grid column is never stretched).
+
+            On mobile the pair is wider than the column, so it must fill the
+            column (w-full + min-w-0) and let justify-center balance the overflow
+            evenly — otherwise mx-auto shrink-wraps it to content width and it
+            drifts to the right. From sm up the column is roomy again, so it
+            reverts to shrink-to-fit centering (w-auto + mx-auto). */}
+        <div className="relative mx-auto flex w-full min-w-0 items-end justify-center gap-0 scale-[0.8] sm:w-auto sm:scale-90 md:scale-100 md:justify-end lg:scale-110 xl:scale-125">
           <div className="animate-float-slow">
             <DeviceFrame
               src={GROCERY.screens[0].src}

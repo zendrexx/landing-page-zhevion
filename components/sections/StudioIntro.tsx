@@ -102,11 +102,14 @@ export function StudioIntro() {
                   </li>
                 ))}
               </ul>
+              {/* On mobile (single column) Zeb sits centred on the right rather
+                  than jammed in the corner next to the app pills; from sm up the
+                  card gains its second column and he drops back to the corner. */}
               <Mascot
                 src="/mascot/zeb/zeb-wave.png"
                 width={1024}
                 height={1024}
-                className="bottom-3 right-3 h-auto w-[32%] max-w-[190px] drop-shadow-[0_16px_26px_rgba(0,0,0,0.5)]"
+                className="right-2 top-1/2 h-auto w-[36%] max-w-[190px] -translate-y-1/2 drop-shadow-[0_16px_26px_rgba(0,0,0,0.5)] sm:bottom-3 sm:right-3 sm:top-auto sm:w-[32%] sm:translate-y-0"
               />
             </article>
           </Reveal>
