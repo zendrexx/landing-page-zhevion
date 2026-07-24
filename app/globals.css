@@ -1,0 +1,276 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Zhevion design tokens (source of truth mirrored in tailwind.config.ts)
+   Studio base is neutral graphite; each app section shifts to its own
+   accent "world" via the .world-grocery / .world-forge scopes below.
+   ============================================================ */
+:root {
+  --graphite-900: #0e0f10;
+  --graphite-800: #16181a;
+  --graphite-700: #1e2124;
+  --cream: #f5f5f3;
+  --muted: #9a9a97;
+
+  --forest-900: #0d2e21;
+  --forest-700: #123b2a;
+  --forest-500: #1b5c41;
+  --lime: #b5e34d;
+  --lime-ink: #16290b;
+
+  --volt: #7c5cff;
+  --volt-deep: #5b34e0;
+  --volt-soft: #a88bff;
+
+  --hairline: rgba(245, 245, 243, 0.1);
+  --page-x: clamp(20px, 5vw, 48px);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--graphite-900);
+  color: var(--cream);
+  font-feature-settings: "ss01", "cv01";
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  /* Never allow the page body itself to scroll sideways. */
+  overflow-x: hidden;
+}
+
+/* ---- Accessibility: visible focus + skip link -------------------------- */
+:focus-visible {
+  outline: 2px solid var(--volt-soft);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -60px;
+  z-index: 100;
+  background: var(--cream);
+  color: var(--graphite-900);
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 700;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 16px;
+}
+
+/* ---- Subtle grain overlay (studio texture) ---------------------------- */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.35;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Faint dotted grid used on dark accent bands */
+.grid-texture {
+  background-image: radial-gradient(
+    rgba(245, 245, 243, 0.06) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+}
+
+/* ---- Reusable helpers -------------------------------------------------- */
+.shell {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: var(--page-x);
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.hairline {
+  border-color: var(--hairline);
+}
+
+/* Accent worlds — each app section sets its own local accent variable.
+   --accent-tint / --accent-line are pre-mixed because Tailwind 3 cannot apply
+   an opacity modifier to a var() colour (`bg-[color:var(--accent)]/10` emits
+   nothing at all) — keep them in sync with --accent above. */
+.world-grocery {
+  --accent: var(--lime);
+  --accent-ink: var(--lime-ink);
+  --accent-tint: rgba(181, 227, 77, 0.07);
+  --accent-line: rgba(181, 227, 77, 0.32);
+}
+.world-forge {
+  --accent: var(--volt);
+  --accent-ink: #ffffff;
+  --accent-tint: rgba(124, 92, 255, 0.09);
+  --accent-line: rgba(124, 92, 255, 0.36);
+}
+/* Neutral studio accent — used by pages that belong to no app (legal index,
+   website notice) so they can share the accent-driven components. */
+.world-studio {
+  --accent: var(--cream);
+  --accent-ink: var(--graphite-900);
+  --accent-tint: rgba(245, 245, 243, 0.05);
+  --accent-line: rgba(245, 245, 243, 0.22);
+}
+
+/* ---- Legal documents ---------------------------------------------------
+   Long-form prose for /legal/*. Styled here rather than with per-element
+   utility classes because lib/legal.ts emits plain <p>/<ul>/<table> and the
+   repo has no typography plugin. Measure is capped for readability; tables
+   scroll inside .legal-table-wrap so the body never scrolls sideways. */
+.legal-prose {
+  max-width: 68ch;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: rgba(245, 245, 243, 0.86);
+}
+
+.legal-prose > section + section {
+  margin-top: 3rem;
+}
+
+.legal-prose h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  scroll-margin-top: 6rem; /* clears the sticky nav on anchor jumps */
+  font-size: 1.375rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  color: var(--cream);
+}
+
+.legal-prose .legal-num {
+  flex-shrink: 0;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent, var(--muted));
+  opacity: 0.75;
+}
+
+.legal-prose p {
+  margin-top: 1.125rem;
+}
+
+.legal-prose ul {
+  margin-top: 1.125rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.legal-prose li {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.legal-prose li::before {
+  content: "";
+  position: absolute;
+  left: 0.25rem;
+  top: 0.7em;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--accent, var(--muted));
+  opacity: 0.7;
+}
+
+.legal-prose a {
+  color: var(--cream);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.legal-table-wrap {
+  margin-top: 1.5rem;
+  overflow-x: auto;
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+}
+
+.legal-prose table {
+  width: 100%;
+  min-width: 34rem;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.legal-prose thead th {
+  padding: 0.75rem 1rem;
+  background: rgba(245, 245, 243, 0.04);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cream);
+  white-space: nowrap;
+}
+
+.legal-prose tbody th,
+.legal-prose tbody td {
+  padding: 0.875rem 1rem;
+  border-top: 1px solid var(--hairline);
+  vertical-align: top;
+}
+
+.legal-prose tbody th {
+  font-weight: 700;
+  color: var(--cream);
+  white-space: nowrap;
+}
+
+/* ---- Scroll reveal (progressively enhanced by <Reveal/>) ---------------
+   Only hide when JS is available (html.js). Without JS, content is fully
+   visible — the reveal is a pure enhancement, never a content gate. */
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+html.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- Respect reduced motion everywhere -------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  html.js .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
