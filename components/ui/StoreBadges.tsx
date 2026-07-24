@@ -5,9 +5,25 @@ import { trackCTA } from "@/lib/analytics";
 /**
  * App Store + Google Play badges rendered as inline SVG.
  *
- * PRE-LAUNCH: links are placeholders (href="#"). When the apps go live, replace
- * `href` with the real store URLs. `data-cta` is forwarded to analytics.
+ * Each store is one of three states, driven by `lib/content.ts` (GROCERY.store
+ * / FORGE.store) so launch status is flipped there, not here:
+ *   - live      → a URL is passed → clickable "Get it on" badge
+ *   - next      → no URL, but named in `next` → emphasized "Up next" hint
+ *                 (still not a link — it just signals which store lands first)
+ *   - coming    → no URL → muted "Coming soon" badge
+ *
+ * Today both apps are pre-launch; Zebite's Google Play is marked `next`.
  */
+type StoreKey = "googlePlay" | "appStore";
+type Tone = "grocery" | "forge";
+
+/** Accent styling for the "up next" hint, per app. lime/volt are real theme
+ *  colours, so opacity modifiers (bg-lime/10) generate fine. */
+const TONE: Record<Tone, { text: string; ring: string; tint: string; dot: string }> = {
+  grocery: { text: "text-lime", ring: "border-lime/45", tint: "bg-lime/10", dot: "bg-lime" },
+  forge: { text: "text-volt-soft", ring: "border-volt/45", tint: "bg-volt/10", dot: "bg-volt-soft" },
+};
+
 function AppleBadge() {
   return (
     <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
@@ -27,42 +43,134 @@ function GoogleBadge() {
   );
 }
 
+/** One badge. Live link when `href` is set; otherwise a non-link that is either
+ *  an emphasized "up next" hint (`next`) or a muted "coming soon". */
+function Badge({
+  href,
+  next,
+  tone,
+  cta,
+  icon,
+  liveTop,
+  store,
+  appName,
+}: {
+  href: string | null;
+  next: boolean;
+  tone: Tone;
+  cta: string;
+  icon: React.ReactNode;
+  liveTop: string; // small line shown when live, e.g. "Get it on"
+  store: string; // store name, e.g. "Google Play"
+  appName: string; // for the hint's accessible label
+}) {
+  // Live: clickable download link.
+  if (href) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        data-cta={cta}
+        onClick={() => trackCTA(cta)}
+        className="inline-flex items-center gap-2.5 rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-cream transition hover:bg-white/10 focus-visible:bg-white/10"
+      >
+        {icon}
+        <span className="text-left leading-tight">
+          <span className="block text-[9px] uppercase tracking-wider text-muted">{liveTop}</span>
+          <span className="block text-sm font-bold">{store}</span>
+        </span>
+      </a>
+    );
+  }
+
+  // Up next: not a link, but visually promoted so it reads as "first to land".
+  if (next) {
+    const t = TONE[tone];
+    return (
+      <span
+        aria-disabled="true"
+        aria-label={`${appName} on ${store} — coming soon, launching first`}
+        className={`inline-flex items-center gap-2.5 rounded-xl border ${t.ring} ${t.tint} px-4 py-2.5 text-cream`}
+      >
+        {icon}
+        <span className="text-left leading-tight">
+          <span className={`flex items-center gap-1.5 text-[9px] font-semibold uppercase tracking-wider ${t.text}`}>
+            <span aria-hidden className={`h-1.5 w-1.5 rounded-full ${t.dot} animate-pulse`} />
+            Up next
+          </span>
+          <span className="block text-sm font-bold">{store}</span>
+        </span>
+      </span>
+    );
+  }
+
+  // Coming soon: muted, non-interactive.
+  return (
+    <span
+      aria-disabled="true"
+      className="inline-flex cursor-default items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-cream/55"
+    >
+      {icon}
+      <span className="text-left leading-tight">
+        <span className="block text-[9px] uppercase tracking-wider text-muted">Coming soon to</span>
+        <span className="block text-sm font-bold">{store}</span>
+      </span>
+    </span>
+  );
+}
+
 export function StoreBadges({
   app,
+  label,
+  googlePlay = null,
+  appStore = null,
+  next = null,
   className = "",
 }: {
+  /** Analytics id, e.g. "grocery" / "grocery-cta". Not shown to users. */
   app: string;
+  /** Human app name for accessible labels (e.g. "Zebite"). Falls back to `app`. */
+  label?: string;
+  /** Google Play listing URL, or null for "coming soon". */
+  googlePlay?: string | null;
+  /** App Store listing URL, or null for "coming soon". */
+  appStore?: string | null;
+  /** Which coming-soon store to promote as "up next" (first to launch). */
+  next?: StoreKey | null;
   className?: string;
 }) {
+  const anyLive = Boolean(googlePlay || appStore);
+  const appId = app.replace(/-cta$/, "");
+  const appName = label ?? appId;
+  // Colour the "up next" hint to match the app being shown.
+  const tone: Tone = appId.startsWith("forge") ? "forge" : "grocery";
+
   return (
     <div
       className={`flex flex-wrap gap-3 ${className}`}
-      aria-label={`Download ${app}, coming soon`}
+      aria-label={anyLive ? `Download ${appName}` : `Download ${appName}, coming soon`}
     >
-      <a
-        href="#"
-        data-cta={`appstore-${app}`}
-        onClick={() => trackCTA(`appstore-${app}`)}
-        className="inline-flex items-center gap-2.5 rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-cream transition hover:bg-white/10 focus-visible:bg-white/10"
-      >
-        <AppleBadge />
-        <span className="text-left leading-tight">
-          <span className="block text-[9px] uppercase tracking-wider text-muted">Coming soon to</span>
-          <span className="block text-sm font-bold">App Store</span>
-        </span>
-      </a>
-      <a
-        href="#"
-        data-cta={`googleplay-${app}`}
-        onClick={() => trackCTA(`googleplay-${app}`)}
-        className="inline-flex items-center gap-2.5 rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-cream transition hover:bg-white/10 focus-visible:bg-white/10"
-      >
-        <GoogleBadge />
-        <span className="text-left leading-tight">
-          <span className="block text-[9px] uppercase tracking-wider text-muted">Coming soon to</span>
-          <span className="block text-sm font-bold">Google Play</span>
-        </span>
-      </a>
+      <Badge
+        href={appStore}
+        next={!appStore && next === "appStore"}
+        tone={tone}
+        cta={`appstore-${app}`}
+        icon={<AppleBadge />}
+        liveTop="Download on the"
+        store="App Store"
+        appName={appName}
+      />
+      <Badge
+        href={googlePlay}
+        next={!googlePlay && next === "googlePlay"}
+        tone={tone}
+        cta={`googleplay-${app}`}
+        icon={<GoogleBadge />}
+        liveTop="Get it on"
+        store="Google Play"
+        appName={appName}
+      />
     </div>
   );
 }

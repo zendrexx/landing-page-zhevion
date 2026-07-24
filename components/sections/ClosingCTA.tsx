@@ -72,11 +72,25 @@ export function ClosingCTA() {
         <div className="mt-9 flex flex-col items-center gap-6">
           <div className="flex flex-col items-center gap-2">
             <span className="text-xs font-semibold uppercase tracking-wider text-lime">{GROCERY.name}</span>
-            <StoreBadges app="grocery-cta" className="justify-center" />
+            <StoreBadges
+              app="grocery-cta"
+              label={GROCERY.name}
+              googlePlay={GROCERY.store.googlePlay}
+              appStore={GROCERY.store.appStore}
+              next={GROCERY.store.next}
+              className="justify-center"
+            />
           </div>
           <div className="flex flex-col items-center gap-2">
             <span className="text-xs font-semibold uppercase tracking-wider text-volt-soft">{FORGE.name}</span>
-            <StoreBadges app="forge-cta" className="justify-center" />
+            <StoreBadges
+              app="forge-cta"
+              label={FORGE.name}
+              googlePlay={FORGE.store.googlePlay}
+              appStore={FORGE.store.appStore}
+              next={FORGE.store.next}
+              className="justify-center"
+            />
           </div>
         </div>
 

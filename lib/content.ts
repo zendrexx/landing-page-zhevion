@@ -83,7 +83,19 @@ export const GROCERY = {
   blurb:
     "Plan a week of meals and groceries around what's already in your pantry. The AI looks at what you own first and only buys what's missing, cutting waste and overspending.",
   platforms: "iOS · Android · Built with Flutter",
-  learnMoreHref: "#", // dedicated grocery landing page, when published
+  learnMoreHref: "https://zebite.zhevion.com", // dedicated Zebite landing page
+  // Store links. Both are null ("coming soon") while the app is still in
+  // development. `next: "googlePlay"` promotes the Play badge to an "Up next"
+  // hint — the store expected to launch first. When the Play listing goes
+  // live, set googlePlay to
+  // "https://play.google.com/store/apps/details?id=com.zhevion.grocery"
+  // (Zebite's real Android applicationId); set appStore once the iOS listing
+  // exists.
+  store: {
+    googlePlay: null as string | null,
+    appStore: null as string | null,
+    next: "googlePlay" as "googlePlay" | "appStore" | null,
+  },
   features: [
     {
       title: "AI meal planning",
@@ -126,7 +138,17 @@ export const FORGE = {
   blurb:
     "Your all-in-one powerlifting companion. Follow coach-made programs, log every rep offline-first, and watch your strength climb. Built for lifters, driven by progress.",
   platforms: "iOS · Android · Built with Flutter",
-  learnMoreHref: "#",
+  learnMoreHref: "https://repforge.zhevion.com", // dedicated RepForge landing page
+  // Store links — same shape as GROCERY.store. RepForge isn't published yet
+  // (its Android applicationId is still the Flutter placeholder
+  // com.example.client), so both stores are "coming soon". When the Play
+  // listing exists, set googlePlay to its URL to make the badge live.
+  store: {
+    googlePlay: null as string | null,
+    appStore: null as string | null,
+    // No store is promoted yet — RepForge trails Zebite to launch.
+    next: null as "googlePlay" | "appStore" | null,
+  },
   features: [
     {
       title: "Structured programs",

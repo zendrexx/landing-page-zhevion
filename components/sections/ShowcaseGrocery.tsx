@@ -92,7 +92,13 @@ export function ShowcaseGrocery() {
         </div>
 
         <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
-          <StoreBadges app="grocery" />
+          <StoreBadges
+            app="grocery"
+            label={GROCERY.name}
+            googlePlay={GROCERY.store.googlePlay}
+            appStore={GROCERY.store.appStore}
+            next={GROCERY.store.next}
+          />
           <a
             href={GROCERY.learnMoreHref}
             className="inline-flex items-center gap-1.5 text-sm font-bold text-lime hover:underline"

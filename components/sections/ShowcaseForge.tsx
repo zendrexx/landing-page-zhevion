@@ -94,7 +94,13 @@ export function ShowcaseForge() {
         </div>
 
         <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
-          <StoreBadges app="forge" />
+          <StoreBadges
+            app="forge"
+            label={FORGE.name}
+            googlePlay={FORGE.store.googlePlay}
+            appStore={FORGE.store.appStore}
+            next={FORGE.store.next}
+          />
           <a
             href={FORGE.learnMoreHref}
             className="inline-flex items-center gap-1.5 text-sm font-bold text-volt-soft hover:underline"
