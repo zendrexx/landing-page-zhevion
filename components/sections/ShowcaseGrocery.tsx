@@ -80,6 +80,7 @@ export function ShowcaseGrocery() {
                     imgWidth={GROCERY.screenSize.w}
                     imgHeight={GROCERY.screenSize.h}
                     chrome={GROCERY.screenChrome}
+                    bandIncluded={GROCERY.screenBandIncluded}
                     width={232}
                   />
                   <figcaption className="text-xs font-semibold text-cream/60">

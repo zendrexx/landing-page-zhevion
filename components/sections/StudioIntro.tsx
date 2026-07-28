@@ -137,6 +137,7 @@ export function StudioIntro() {
                   imgWidth={GROCERY.screenSize.w}
                   imgHeight={GROCERY.screenSize.h}
                   chrome={GROCERY.screenChrome}
+                  bandIncluded={GROCERY.screenBandIncluded}
                   width={SCREEN_W}
                 />
               </div>
@@ -166,6 +167,7 @@ export function StudioIntro() {
                   imgWidth={FORGE.screenSize.w}
                   imgHeight={FORGE.screenSize.h}
                   chrome={FORGE.screenChrome}
+                  bandIncluded={FORGE.screenBandIncluded}
                   width={SCREEN_W}
                 />
               </div>

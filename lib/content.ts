@@ -114,18 +114,29 @@ export const GROCERY = {
       body: "Photograph a receipt or your shelf and AI vision adds the items to your pantry and logs the spend.",
     },
   ] satisfies Feature[],
-  // Real portrait screenshots (in /public/screens/grocery), 720×1471.
+  // Real portrait screenshots, built by scripts/export-screens.py from the
+  // 2580×5592 masters in assets/screens/grocery-v4/ — the Android status bar
+  // and gesture bar cropped off, downscaled to 840px, and given the top/bottom
+  // band DeviceFrame lays its Dynamic Island and home indicator over.
+  //
+  // The app ships light and dark themes and the export writes both sets to
+  // /public/screens/grocery/<theme>/; the site uses the light set because its
+  // cream surface reads as a bright object against the studio's graphite
+  // background instead of dissolving into it. Adding a screen here means adding
+  // its name to SCREENS in the export script and re-running it.
   screens: [
-    { src: "/screens/grocery/home.png", label: "Today's plan", alt: "Zebite home screen showing today's meal plan with all three meals cooked and daily macro targets." },
-    { src: "/screens/grocery/plan.png", label: "Meal plan", alt: "Five-day meal plan with calories and macros eaten so far and today's meals." },
-    { src: "/screens/grocery/plan_recipe.png", label: "AI recipe", alt: "A generated AI recipe with ingredients, macros, and a Cook this action." },
-    { src: "/screens/grocery/grocery.png", label: "Within budget", alt: "Smart grocery list with a Within budget confirmation, one item to buy and the rest already owned." },
-    { src: "/screens/grocery/pantry.png", label: "Pantry", alt: "Categorized pantry with quantities and expiry states like expires in 3 days." },
-    { src: "/screens/grocery/insights.png", label: "Insights", alt: "Insights dashboard with weekly spending versus budget and nutrition trends." },
-    { src: "/screens/grocery/scan.png", label: "Snap to stock", alt: "Snap to stock screen to scan a receipt or photograph your groceries." },
+    { src: "/screens/grocery/light/10_home.webp", label: "Today's plan", alt: "Zebite home screen: Zeb flagging food that expires soon, today's three planned meals with calories, and daily macro targets." },
+    { src: "/screens/grocery/light/20_plan.webp", label: "Meal plan", alt: "Five-day meal plan with calories and macros eaten so far, a shopping and daily food-cost summary, and today's meals." },
+    { src: "/screens/grocery/light/21_plan_recipe.webp", label: "AI recipe", alt: "A recipe generated for one of the planned meals, with its ingredient list and macros." },
+    { src: "/screens/grocery/light/30_grocery.webp", label: "Within budget", alt: "Grocery list showing the budget left this week with a Within budget badge, three items to buy with prices, and the items already owned." },
+    { src: "/screens/grocery/light/40_pantry.webp", label: "Pantry", alt: "Pantry with items-in-stock and needs-attention counts, search, category filters, and per-item quantities flagged when they are running low." },
+    { src: "/screens/grocery/light/41_add_to_pantry.webp", label: "Snap to stock", alt: "Add to pantry sheet offering manual entry, scanning a receipt, or snapping a photo of your groceries for the AI to identify." },
+    { src: "/screens/grocery/light/50_insights.webp", label: "Insights", alt: "Insights screen summarising weekly spending against budget alongside nutrition trends." },
+    { src: "/screens/grocery/light/71_zeb_chat.webp", label: "Ask Zeb", alt: "Ask Zeb chat answering what to cook right now using ingredients already in the pantry." },
   ],
-  screenSize: { w: 720, h: 1471 },
+  screenSize: { w: 840, h: 1801 },
   screenChrome: "#f3f1e9", // matches the capture's cream top edge
+  screenBandIncluded: true,
 };
 
 export const FORGE = {
@@ -178,6 +189,9 @@ export const FORGE = {
   ],
   screenSize: { w: 720, h: 1560 },
   screenChrome: "#0f0f0f", // matches the capture's near-black top edge
+  // Captured flush at the app's own header with no band around it, so
+  // DeviceFrame reserves its own status strip for the island.
+  screenBandIncluded: false,
 };
 
 /**

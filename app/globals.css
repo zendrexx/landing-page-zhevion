@@ -78,6 +78,36 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* ---- Hero column rules ------------------------------------------------
+   Structure, not atmosphere. Evenly spaced vertical hairlines on the same
+   grid as .shell, masked to fade in and out vertically so they read as a
+   drafting canvas rather than a border. This replaces the pair of blurred
+   colour blobs the hero used to sit on: those gave the composition nothing
+   to align to and are the stock "AI landing page" backdrop.
+   Period is 20%, so lines land at 0/20/40/60/80% — none through the centre,
+   where the headline sits. */
+.hero-rules {
+  background-image: repeating-linear-gradient(
+    to right,
+    rgba(245, 245, 243, 0.06) 0 1px,
+    transparent 1px 20%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 16%,
+    #000 58%,
+    transparent 92%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 16%,
+    #000 58%,
+    transparent 92%
+  );
+}
+
 /* Faint dotted grid used on dark accent bands */
 .grid-texture {
   background-image: radial-gradient(

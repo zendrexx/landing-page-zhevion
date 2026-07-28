@@ -51,16 +51,23 @@ app galleries are real captures, and the `Us` section uses a real photo.
 
 Both galleries are real device captures; there are no placeholder screens.
 
-- **Zebite** — `public/screens/grocery/` at 720×1471, downscaled from the app's
-  `marketing/v3/screens/` (1200×2460, bottom 8px cropped to drop the renderer's
-  dark edge). (Paths keep the internal `grocery` key.)
+- **Zebite** — `public/screens/grocery/{light,dark}/` at 840×1801 WebP, built by
+  `python scripts/export-screens.py` from the 2580×5592 masters in
+  `assets/screens/grocery-v4/`. The masters are Android captures, so the export
+  crops their status bar and gesture bar off (the frame draws iPhone chrome
+  instead) and extends the first/last remaining row into a band for the island
+  and home indicator to sit over. Only the WebP ships — the 44 MB of masters
+  stays out of `public/`. Add a screen to `SCREENS` in the script and re-run.
+  (Paths keep the internal `grocery` key.)
 - **RepForge** — `public/screens/forge/` at 720×1560, downscaled from the workout
-  app's `client/marketing/screenshots/` (1440×3120).
+  app's `client/marketing/screenshots/` (1440×3120). No band baked in.
 - **`DeviceFrame`** takes each capture's intrinsic `imgWidth`/`imgHeight` and
   derives the frame height from them, so the two aspect ratios both fit without
-  cropping. `chrome` tints the status strip to the capture's top-edge colour
-  (cream for grocery, near-black for Forge) — update it if a capture's header
-  colour changes.
+  cropping, and draws the Dynamic Island and home indicator itself at a fixed
+  fraction of the frame width. `bandIncluded` says whether the capture brought
+  its own band (Zebite) or the frame must reserve a status strip above it
+  (RepForge); `chrome` fills that strip and the screen behind the image with the
+  capture's top-edge colour — update it if a capture's header colour changes.
 - **Us photos** — one square portrait per person, listed in `US.people`
   (`lib/content.ts`). `public/us/zen.jpg` is real; `public/us/partner.jpg` is a
   neutral stand-in and renders a visible "Photo coming" chip. Drop in the real

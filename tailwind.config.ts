@@ -64,10 +64,17 @@ const config: Config = {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-10px)" },
         },
+        // Gentler than float-slow — for the mascot, who should feel alive
+        // without looking like he's detached from the floor.
+        "float-soft": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-5px)" },
+        },
       },
       animation: {
         "reveal-up": "reveal-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both",
         "float-slow": "float-slow 6s ease-in-out infinite",
+        "float-soft": "float-soft 7s ease-in-out infinite",
       },
     },
   },

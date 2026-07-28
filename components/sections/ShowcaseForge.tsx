@@ -82,6 +82,7 @@ export function ShowcaseForge() {
                     imgWidth={FORGE.screenSize.w}
                     imgHeight={FORGE.screenSize.h}
                     chrome={FORGE.screenChrome}
+                    bandIncluded={FORGE.screenBandIncluded}
                     width={232}
                   />
                   <figcaption className="text-xs font-semibold text-cream/60">
