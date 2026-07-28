@@ -125,3 +125,5 @@ active in the Web3Forms dashboard.
 - **Learn more** — point `GROCERY.learnMoreHref` / `FORGE.learnMoreHref` at each
   app's dedicated landing page when published. `aigroceryplanner.app` is set as
   the canonical URL on the grocery landing page but does not resolve yet.
+  `FORGE.learnMoreHref` is `null` because RepForge has no page yet, which renders
+  the label muted and non-interactive; set the URL to turn the link back on.

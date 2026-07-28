@@ -149,7 +149,11 @@ export const FORGE = {
   blurb:
     "Your all-in-one powerlifting companion. Follow coach-made programs, log every rep offline-first, and watch your strength climb. Built for lifters, driven by progress.",
   platforms: "iOS · Android · Built with Flutter",
-  learnMoreHref: "https://repforge.zhevion.com", // dedicated RepForge landing page
+  // No dedicated RepForge page yet, so "Learn more" renders muted and
+  // non-interactive rather than linking somewhere that isn't there — the same
+  // rule the store badges follow. Set this to "https://repforge.zhevion.com"
+  // once that site is live and the link turns itself back on.
+  learnMoreHref: null as string | null,
   // Store links — same shape as GROCERY.store. RepForge isn't published yet
   // (its Android applicationId is still the Flutter placeholder
   // com.example.client), so both stores are "coming soon". When the Play

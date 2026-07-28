@@ -102,13 +102,28 @@ export function ShowcaseForge() {
             appStore={FORGE.store.appStore}
             next={FORGE.store.next}
           />
-          <a
-            href={FORGE.learnMoreHref}
-            className="inline-flex items-center gap-1.5 text-sm font-bold text-volt-soft hover:underline"
-          >
-            Learn more
-            <span aria-hidden>→</span>
-          </a>
+          {/* Live only once RepForge has a page of its own; until then it's a
+              muted label, not a link with nowhere to go. Arrow drops with the
+              href — an arrow that doesn't travel anywhere is a false promise. */}
+          {FORGE.learnMoreHref ? (
+            <a
+              href={FORGE.learnMoreHref}
+              className="inline-flex items-center gap-1.5 text-sm font-bold text-volt-soft hover:underline"
+            >
+              Learn more
+              <span aria-hidden>→</span>
+            </a>
+          ) : (
+            <span
+              aria-disabled="true"
+              className="inline-flex cursor-default items-center gap-2 text-sm font-bold text-cream/35"
+            >
+              Learn more
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-muted">
+                Coming soon
+              </span>
+            </span>
+          )}
         </div>
       </div>
     </section>
