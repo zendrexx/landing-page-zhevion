@@ -10,12 +10,19 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
-  "services": [
-    {
-      "binding": "WORKER_SELF_REFERENCE",
-      "service": "zhevion"
-    }
-  ],
+  // No WORKER_SELF_REFERENCE binding. @opennextjs/cloudflare's autoconfig adds
+  // one by default, but it's only used by the ISR revalidation path — the
+  // Worker calling itself to regenerate a page — and every route here is
+  // prerendered (`next build` reports 11/11 static, and nothing in the app
+  // exports `revalidate`/`dynamic` or uses a route handler). Meanwhile it broke
+  // the deploy: the binding resolved to a Worker named `landing-page-zhevion`
+  // that doesn't exist in the account, so the upload was rejected with
+  // "Service binding 'WORKER_SELF_REFERENCE' references Worker ... not found"
+  // [code: 10143].
+  //
+  // Restore it if this site ever gains ISR or on-demand revalidation — and if
+  // so, `service` must be *exactly* this file's `name`, or Cloudflare treats it
+  // as a binding to some other Worker instead of a self-reference.
   "images": {
     "binding": "IMAGES"
   },
