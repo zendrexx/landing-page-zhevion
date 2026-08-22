@@ -79,16 +79,10 @@ export function ComingSoon() {
         </h1>
 
         <div className="mt-[clamp(32px,6vh,64px)] max-w-[560px]">
-          {/* Status pill — lime stays the studio's micro-accent, so this is
-              the one warm dot on an otherwise ink/paper screen. */}
           <motion.div
             {...rise(0.85)}
-            className="inline-flex items-center gap-2.5 rounded-pill border border-ink/10 bg-paper/70 px-4 py-2 backdrop-blur-xl"
+            className="inline-flex items-center rounded-pill border border-ink/10 bg-paper/70 px-4 py-2 backdrop-blur-xl"
           >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-lime opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-lime" />
-            </span>
             <span className="eyebrow text-ink">Launching soon</span>
           </motion.div>
 
