@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ZhevionWordmark } from "@/components/brand/ZhevionLogo";
+import { ZhevionMark } from "@/components/brand/ZhevionLogo";
 import { trackCTA } from "@/lib/analytics";
 
 const LINKS = [
@@ -44,7 +44,7 @@ export function Nav({ base = "" }: { base?: string }) {
     >
       <nav className="shell flex h-16 items-center justify-between" aria-label="Primary">
         <a href={base || "#"} className="rounded-md" aria-label="Zhevion home">
-          <ZhevionWordmark size={30} />
+          <ZhevionMark size={30} />
         </a>
 
         <div className="hidden items-center gap-8 md:flex">

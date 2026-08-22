@@ -25,6 +25,19 @@ const config: Config = {
         },
         cream: "#F5F5F3",
         muted: "#9A9A97",
+        // Studio light canvas — the home page's ground. Faint values are
+        // pre-mixed because Tailwind 3 cannot apply an opacity modifier to a
+        // var() colour (see the note in globals.css).
+        paper: {
+          DEFAULT: "#F2F1EC",
+          deep: "#E8E7E0",
+        },
+        ink: {
+          DEFAULT: "#0D2E21",
+          soft: "#4A554E",
+          faint: "rgba(13, 46, 33, 0.42)",
+          rule: "rgba(13, 46, 33, 0.12)",
+        },
         // Grocery accent world
         forest: {
           900: "#0D2E21",
@@ -51,6 +64,9 @@ const config: Config = {
       },
       letterSpacing: {
         tightest: "-0.045em",
+        // The display wordmark is set far tighter than body copy: at 15vw the
+        // default sidebearings open gaps you can park a car in.
+        display: "-0.055em",
       },
       maxWidth: {
         content: "1200px",
@@ -70,11 +86,26 @@ const config: Config = {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-5px)" },
         },
+        // The hero hand's idle drift. Lives on its own wrapper element so it
+        // never competes with the pointer-parallax transform on the child.
+        "float-hand": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        // Track holds 3 copies of the list (see Stack.tsx) so -33.3333% loops
+        // seamlessly back to an identical copy, with enough runway that a
+        // short item list doesn't leave a visible gap on ultrawide viewports.
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-33.3333%)" },
+        },
       },
       animation: {
         "reveal-up": "reveal-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both",
         "float-slow": "float-slow 6s ease-in-out infinite",
         "float-soft": "float-soft 7s ease-in-out infinite",
+        "float-hand": "float-hand 7s ease-in-out infinite",
+        marquee: "marquee 32s linear infinite",
       },
     },
   },

@@ -1,4 +1,4 @@
-import { ZhevionWordmark } from "@/components/brand/ZhevionLogo";
+import { ZhevionMark } from "@/components/brand/ZhevionLogo";
 import { CONTACT, GROCERY, FORGE } from "@/lib/content";
 
 /** `base` prefixes in-page anchors — see the note on <Nav>. */
@@ -7,9 +7,9 @@ export function Footer({ base = "" }: { base?: string }) {
     <footer className="border-t border-white/10 bg-graphite-900 py-14">
       <div className="shell">
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
-          <div>
-            <ZhevionWordmark size={28} />
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">
+          <div className="flex flex-col items-center">
+            <ZhevionMark size={28} />
+            <p className="mt-2 text-xs leading-relaxed text-muted text-center">
               A small studio building focused, AI-powered apps for health and
               performance.
             </p>
@@ -41,8 +41,12 @@ export function Footer({ base = "" }: { base?: string }) {
           </FooterCol>
         </div>
 
-        <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t border-white/10 pt-6 text-xs text-muted sm:flex-row sm:items-center">
-          <p>© {new Date().getFullYear()} Zhevion. All rights reserved.</p>
+        <div className="mt-8 flex justify-center items-center gap-2 text-xs text-muted">
+          <ZhevionMark size={20} />
+          <span>Work studio contact</span>
+        </div>
+        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs text-muted sm:flex-row sm:items-center">
+          <p>© {new Date().getFullYear()} All rights reserved.</p>
           <p>Made for a stronger, smarter you.</p>
         </div>
       </div>

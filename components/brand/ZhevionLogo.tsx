@@ -30,9 +30,8 @@ export function ZhevionMark({ size = 32 }: { size?: number }) {
 
 export function ZhevionWordmark({ size = 32 }: { size?: number }) {
   return (
-    <span className="inline-flex items-center gap-2.5 font-extrabold tracking-tightest">
+    <span className="inline-flex items-center gap-2.5">
       <ZhevionMark size={size} />
-      <span className="text-[1.35rem] leading-none text-cream">Zhevion</span>
     </span>
   );
 }

@@ -233,3 +233,156 @@ export const US = {
     "We build slowly, ship what we'd use ourselves, and keep both apps small on purpose. If something feels bloated or off, it usually gets cut.",
   ],
 };
+
+/**
+ * Hero — the first screen.
+ *
+ * The rotating words are the studio's service offering, not app features, so
+ * the HONESTY RULE above applies differently here: nothing in this list claims
+ * a shipped capability of Zebite or RepForge. Keep it that way — if a word
+ * would read as a product claim, it belongs in GROCERY/FORGE instead.
+ *
+ * Word order is deliberate: it opens on the two broadest words, drops into the
+ * concrete deliverables in the middle, and closes on the widest one before
+ * looping, so the loop point never feels like a hard cut.
+ */
+export const HERO = {
+  eyebrow: "Independent design & product studio",
+  lead: "We design and build",
+  tail: "for people who expect more.",
+  words: [
+    "BRANDS",
+    "PRODUCTS",
+    "MOBILE APPS",
+    "SAAS",
+    "WEBSITES",
+    "SOFTWARE",
+    "LANDING PAGES",
+    "DIGITAL EXPERIENCES",
+  ],
+  /**
+   * The word the cycler rests on when the visitor prefers reduced motion, and
+   * the one used for server render so the first paint is never blank. Must be
+   * a member of `words`.
+   */
+  restWord: "PRODUCTS",
+  /**
+   * What a screen reader is given, once, in place of the animation. Written out
+   * rather than generated from `words` so the casing ("SaaS") and the final
+   * conjunction read as English instead of as a list.
+   */
+  spoken:
+    "We design and build brands, products, mobile apps, SaaS, websites, software, landing pages and digital experiences for people who expect more.",
+  meta: "",
+};
+
+/**
+ * Work — the section after the hero. Repositions the studio as one you can
+ * hire (websites, apps, SaaS, embedded tooling), using Zebite and RepForge as
+ * proof-of-craft case studies rather than the whole identity. See PROJECTS for
+ * the case-study entries themselves.
+ */
+export const STACK = {
+  eyebrow: "What we build with",
+  items: [
+    "Flutter",
+    "Firebase",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Dart",
+    "Swift",
+    "Tailwind CSS",
+    "Figma",
+    "Node.js",
+  ],
+} as const;
+
+export const WORK = {
+  eyebrow: "Selected work",
+  statement:
+    "Building a great product takes months. Starting with Zhevion takes less. We design, build, and ship products people want to use.",
+  deliverables: [
+    {
+      title: "Websites & Landing Pages",
+      body: "Fast, editorial sites that convert — not templates.",
+    },
+    {
+      title: "Mobile Apps",
+      body: "iOS and Android, one codebase, native feel.",
+    },
+    {
+      title: "SaaS & Web Platforms",
+      body: "Full-stack products, from auth to billing.",
+    },
+    {
+      title: "Embedded in your workflow",
+      body: "Tools and integrations that plug into how you already work.",
+    },
+  ],
+  storiesEyebrow: "Our story",
+  storiesHeading: "Two apps. One portfolio. Zero shortcuts.",
+} as const;
+
+export type ProjectKind = "Product" | "Portfolio";
+
+/**
+ * Case-study entries for the Work section's Stories block. `zebite` and
+ * `repforge` are looked up by `key` against GROCERY/FORGE for their real
+ * name/summary/screenshot — nothing here duplicates that data.
+ *
+ * `guanzon` is the user's own portfolio (zendrex.zhevion.com, already
+ * US.people[0].href). No screenshot exists for it, so `placeholder: true`
+ * tells ProjectCard to render a plain wordmark card instead of a fabricated
+ * device mockup — HONESTY RULE applies here too.
+ */
+export const PROJECTS = [
+  {
+    key: "zebite",
+    kind: "Product" as ProjectKind,
+    name: GROCERY.name,
+    summary: GROCERY.pitch,
+    ctaLabel: "View project",
+    href: GROCERY.learnMoreHref,
+  },
+  {
+    key: "repforge",
+    kind: "Product" as ProjectKind,
+    name: FORGE.name,
+    summary: FORGE.pitch,
+    ctaLabel: null as string | null,
+    href: FORGE.learnMoreHref,
+  },
+  {
+    key: "guanzon",
+    kind: "Portfolio" as ProjectKind,
+    name: "Guanzon",
+    // Placeholder — refine once real project details exist.
+    summary: "Freelance and portfolio work.",
+    ctaLabel: "View portfolio",
+    href: US.people[0].href,
+    placeholder: true,
+  },
+] as const;
+
+/**
+ * Where the phone's screen sits inside /hero/hand-phone.png, as a percentage
+ * of that image's own box.
+ *
+ * Measured, not eyeballed — `python scripts/export-hand.py` derives these from
+ * the master's pixels and is the only thing allowed to change them.
+ *
+ * The screen is 182x418 (aspect 0.4354). Getting this wrong is very visible:
+ * an earlier pass matched the bezel's grey gradient as well as the screen and
+ * came out 202x435, which put the app UI on top of the bezel and past the
+ * phone's silhouette. The bezel inset is ~10px per side on a 1584px master, so
+ * the margin for error is small.
+ */
+export const HAND_SCREEN_RECT = {
+  left: 15.135,
+  top: 1.957,
+  width: 49.189,
+  height: 74.377,
+  /** Corner radius, as a % of the rect's own width / height (22px @ 182x418). */
+  radius: "12.09% / 5.26%",
+};

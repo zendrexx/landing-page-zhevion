@@ -1,32 +1,18 @@
-import { Nav } from "@/components/sections/Nav";
-import { Hero } from "@/components/sections/Hero";
-import { StudioIntro } from "@/components/sections/StudioIntro";
-import { ShowcaseGrocery } from "@/components/sections/ShowcaseGrocery";
-import { ShowcaseForge } from "@/components/sections/ShowcaseForge";
-import { Philosophy } from "@/components/sections/Philosophy";
-import { Us } from "@/components/sections/Us";
-import { ClosingCTA } from "@/components/sections/ClosingCTA";
-import { Contact } from "@/components/sections/Contact";
-import { Footer } from "@/components/sections/Footer";
+import { ComingSoon } from "@/components/hero/ComingSoon";
 
+/**
+ * Temporary placeholder for the Cloudflare push: a single "launching soon"
+ * screen in the same paper/ink visual language as the real rebuild, standing
+ * in until Studio and Contact are built and the site is ready to go live.
+ *
+ * SiteNav, Hero, Work, and the legacy sections under components/sections/ all
+ * still exist and are simply not mounted here — swap ComingSoon back out for
+ * them once the full site is ready to ship.
+ */
 export default function Home() {
   return (
-    <>
-      <Nav />
-      <main id="main">
-        <Hero />
-        <StudioIntro />
-        {/* Both app showcases share the #apps anchor target. */}
-        <div id="apps">
-          <ShowcaseGrocery />
-          <ShowcaseForge />
-        </div>
-        <Philosophy />
-        <Us />
-        <ClosingCTA />
-        <Contact />
-      </main>
-      <Footer />
-    </>
+    <main id="main">
+      <ComingSoon />
+    </main>
   );
 }

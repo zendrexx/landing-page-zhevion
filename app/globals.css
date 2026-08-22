@@ -26,16 +26,33 @@
 
   --hairline: rgba(245, 245, 243, 0.1);
   --page-x: clamp(20px, 5vw, 48px);
+
+  /* ---- Light canvas (studio / home) ----------------------------------
+     The studio surface is warm paper with forest-green ink; lime stays a
+     micro-accent only (cursor, rules, dots) so the green reads as identity
+     rather than decoration. The graphite tokens above are NOT removed: the
+     /legal routes and the .world-* accent scopes still run on them. */
+  --paper: #f2f1ec;
+  --paper-deep: #e8e7e0;
+  --ink: #0d2e21;
+  --ink-soft: #4a554e;
+  --ink-faint: rgba(13, 46, 33, 0.42);
+  --rule: rgba(13, 46, 33, 0.12);
+
+  /* Focus ring colour, swapped per surface so it always has contrast. */
+  --focus: var(--ink);
 }
 
 html {
-  scroll-behavior: smooth;
+  /* No `scroll-behavior: smooth` — Lenis (components/site/SmoothScroll.tsx)
+     drives scrolling, and the two cancel each other out. Under reduced motion
+     Lenis never mounts and the browser's own instant jump is correct. */
   -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--graphite-900);
-  color: var(--cream);
+  background: var(--paper);
+  color: var(--ink);
   font-feature-settings: "ss01", "cv01";
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -45,7 +62,7 @@ body {
 
 /* ---- Accessibility: visible focus + skip link -------------------------- */
 :focus-visible {
-  outline: 2px solid var(--volt-soft);
+  outline: 2px solid var(--focus);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -55,8 +72,8 @@ body {
   left: 16px;
   top: -60px;
   z-index: 100;
-  background: var(--cream);
-  color: var(--graphite-900);
+  background: var(--ink);
+  color: var(--paper);
   padding: 10px 16px;
   border-radius: 10px;
   font-weight: 700;
@@ -303,4 +320,125 @@ html.js .reveal.is-visible {
     opacity: 1;
     transform: none;
   }
+}
+
+/* ============================================================
+   Light-canvas rebuild — additions below this line
+   ============================================================ */
+
+/* ---- Dark surface scope ------------------------------------------------
+   The body is warm paper now, but /legal/* is still built on the graphite
+   palette. Rather than fork <body>, those routes wrap their content in
+   .on-dark, which restores the dark ground locally and re-points the focus
+   ring so it keeps its contrast. Remove this once /legal is rebuilt. */
+.on-dark {
+  min-height: 100dvh;
+  background: var(--graphite-900);
+  color: var(--cream);
+  --focus: var(--volt-soft);
+}
+
+/* Same idea as .on-dark (dark ground + re-pointed focus ring) for a section
+   embedded within an otherwise-light page, rather than a whole route — no
+   forced min-height, since a section should size to its own content. */
+.dark-panel {
+  background: var(--graphite-900);
+  color: var(--cream);
+  --focus: var(--volt-soft);
+}
+
+::selection {
+  background: var(--lime);
+  color: var(--ink);
+}
+
+/* ---- Lenis ------------------------------------------------------------
+   Required by the library: it transforms the scroll container itself, so the
+   document must not also be trying to manage its own height or behaviour. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ---- Custom cursor -----------------------------------------------------
+   `cursor: none` lives behind .has-cursor, and Cursor.tsx only adds that class
+   after it has confirmed a fine pointer, JS, and no reduced-motion preference.
+   It must never appear in a static rule: a touch visitor or a no-JS visitor
+   has to keep the pointer their OS gave them, and a hidden cursor with nothing
+   drawn in its place is an unusable page.
+
+   !important is load-bearing — without it every Tailwind `cursor-pointer` and
+   the UA's own link cursor would draw a second pointer over ours. */
+html.has-cursor,
+html.has-cursor *:not(input):not(textarea):not(select) {
+  cursor: none !important;
+}
+
+/* Text entry keeps its I-beam: the caret position matters more than the
+   effect, and these are the one place a system cursor carries real meaning. */
+html.has-cursor input,
+html.has-cursor textarea,
+html.has-cursor select {
+  cursor: auto !important;
+}
+
+/* ---- Hero helpers ------------------------------------------------------ */
+
+/* Each letter of the wordmark rides up out of its own clipped box. Applied to
+   the wrapper, not the glyph, so the mask edge sits on the cap height. */
+.letter-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+/* Very low-contrast paper tooth. Much lighter than the .grain used on the dark
+   sections — on a light ground the same opacity reads as dirt. */
+.paper-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.28;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* The global rule above collapses durations, which is right for CSS but
+     cannot reach the motion library. Those guards live in the components. */
+  .paper-grain::before {
+    opacity: 0.28;
+  }
+}
+
+/* ---- Marquee edge fade --------------------------------------------------
+   Horizontal analog of .hero-rules' vertical mask: the Stack section's
+   endless-scroll row fades to transparent at its left/right edges instead
+   of clipping hard against the viewport edge. */
+.stack-fade {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 10%,
+    #000 90%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 10%,
+    #000 90%,
+    transparent 100%
+  );
 }
