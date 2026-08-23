@@ -22,8 +22,14 @@ const APP_LABEL: Record<LegalApp, string> = {
   website: "Website",
 };
 
+const KIND_LABEL: Record<LegalDoc["kind"], string> = {
+  privacy: "Privacy",
+  terms: "Terms",
+  "delete-data": "Delete data",
+};
+
 export function LegalDocPage({ doc }: { doc: LegalDoc }) {
-  const kindLabel = doc.kind === "privacy" ? "Privacy" : "Terms";
+  const kindLabel = KIND_LABEL[doc.kind];
 
   return (
     <article className={`${WORLD[doc.app]} pb-24 pt-10 md:pb-32 md:pt-14`}>

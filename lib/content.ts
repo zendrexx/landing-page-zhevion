@@ -16,8 +16,13 @@
  * Real contact details — same ones used on the portfolio and the AI Grocery
  * Planner landing page. No placeholder handles: if an account doesn't exist,
  * it doesn't get a link.
+ *
+ * CONTACT_EMAIL is the studio inbox (Zhevion), not Zen's personal address —
+ * used on every legal doc, the contact form, and anywhere the site promises
+ * "email us". Keep it a real, checked inbox: every /legal page tells a
+ * reviewer or a user to write to this address and expects an answer.
  */
-const CONTACT_EMAIL = "adversalozen8@gmail.com";
+const CONTACT_EMAIL = "zebite@zhevion.com";
 
 export type ContactIcon = "mail" | "linkedin" | "github";
 

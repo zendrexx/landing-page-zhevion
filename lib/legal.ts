@@ -47,7 +47,7 @@ export type LegalApp = "zebite" | "repforge" | "website";
 export type LegalDoc = {
   /** Route under /legal, e.g. "zebite/privacy". */
   slug: string;
-  kind: "privacy" | "terms";
+  kind: "privacy" | "terms" | "delete-data";
   app: LegalApp;
   /** Page <h1>. */
   title: string;
@@ -666,6 +666,119 @@ const ZEBITE_TERMS: LegalDoc = {
 };
 
 /* ══════════════════════════════════════════════════════════════════════════
+   ZEBITE — DELETE YOUR DATA
+
+   This is the URL that goes in the Google Play Console's "Delete data URL"
+   field. Google requires it to (1) name the app/developer shown on the store
+   listing, (2) prominently feature the deletion steps, and (3) specify what's
+   deleted vs. kept and for how long. It restates the "Keeping and deleting
+   your data" section of ZEBITE_PRIVACY as its own page rather than making a
+   reviewer find that section inside a much longer document — but the facts
+   must stay identical to that section; if one changes, check the other.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+const ZEBITE_DELETE_DATA: LegalDoc = {
+  slug: "zebite/delete-data",
+  kind: "delete-data",
+  app: "zebite",
+  title: `Delete Your ${GROCERY.name} Data`,
+  summary: `Two ways to remove what ${GROCERY.name} holds about you — clear everything and keep your account, or delete the account itself.`,
+  effective: LEGAL_EFFECTIVE,
+  updated: LEGAL_UPDATED,
+  tldr: [
+    `"Clear all data" in the app wipes your pantry, plans, lists and history instantly, and keeps you signed in.`,
+    "Deleting your account removes everything, including your sign-in and subscription record — email us to request it.",
+    "We complete a verified account-deletion request within 30 days and confirm when it's done.",
+    "Community price contributions are kept, detached from your account, since other users' budgets already rely on them.",
+  ],
+  sections: [
+    {
+      id: "option-clear",
+      heading: `Option 1 — Clear your data, keep your ${GROCERY.name} account`,
+      blocks: [
+        {
+          type: "p",
+          text: "This runs instantly, entirely in the app. No email required.",
+        },
+        {
+          type: "list",
+          items: [
+            `Open ${GROCERY.name} and sign in.`,
+            "Tap the profile icon in the top-left of the Home screen.",
+            'Scroll to the "Danger zone" section.',
+            'Tap "Clear all data" and confirm.',
+          ],
+        },
+        {
+          type: "p",
+          text: "If you own a Household with other members, you'll be asked to leave or hand it over first — a shared pantry and meal plan aren't only yours to delete.",
+        },
+      ],
+    },
+    {
+      id: "option-account",
+      heading: "Option 2 — Delete your account",
+      blocks: [
+        {
+          type: "p",
+          text: "This removes your account and everything tied to it. It isn't a button in the app yet, so it's a request to us.",
+        },
+        {
+          type: "list",
+          items: [
+            `Email ${EMAIL} from the address on your account, with "Delete my account" in the subject line.`,
+            "Tell us the email your account uses, so we can find and verify it.",
+            "We'll confirm the request and complete the deletion within 30 days.",
+          ],
+        },
+      ],
+    },
+    {
+      id: "what-gets-deleted",
+      heading: "What each option deletes",
+      blocks: [
+        {
+          type: "table",
+          head: ["Data", "Clear all data", "Account deletion"],
+          rows: [
+            ["Nutrition profile (height, weight, goals, targets)", "Deleted", "Deleted"],
+            ["Pantry inventory", "Deleted", "Deleted"],
+            ["Meal plans & grocery lists", "Deleted", "Deleted"],
+            ["Meal log & logged foods", "Deleted", "Deleted"],
+            ["Shopping history", "Deleted", "Deleted"],
+            ["Ask Zeb chat history", "Deleted", "Deleted"],
+            ["Saved custom foods & food preferences", "Deleted", "Deleted"],
+            ["Location (city/province you shop in)", "Deleted", "Deleted"],
+            ["Sign-in & account record", "Kept — you stay signed in", "Deleted"],
+            ["Subscription/tier record", "Kept", "Deleted"],
+            ["AI usage counters (a timestamp and a type, nothing else)", "Kept, and age out on their own", "Deleted"],
+            ["Community price contributions you submitted", "Kept, detached from your account", "Kept, detached from your account"],
+          ],
+        },
+        {
+          type: "p",
+          text: "Community grocery prices are shared publicly by design and never shown with anyone's identity attached — your account id is stored only so the database can tell your rows apart from someone else's, and it never appears on screen. We keep these entries, detached from your account, even after deletion, so other users' budgets aren't disrupted. Ask us to remove yours too in the same email and we will.",
+        },
+      ],
+    },
+    {
+      id: "how-long",
+      heading: "How long it takes",
+      blocks: [
+        {
+          type: "list",
+          items: [
+            "Clear all data: immediate. There is no retention window.",
+            "Account deletion: completed within 30 days of a verified request, and we confirm when it's done.",
+          ],
+        },
+      ],
+    },
+    contactSection(`${GROCERY.name} data deletion`),
+  ],
+};
+
+/* ══════════════════════════════════════════════════════════════════════════
    REPFORGE — PRIVACY POLICY
 
    RepForge makes no network calls. supabase_flutter is listed in pubspec.yaml
@@ -1104,6 +1217,7 @@ const WEBSITE_PRIVACY: LegalDoc = {
 export const LEGAL_DOCS = {
   zebitePrivacy: ZEBITE_PRIVACY,
   zebiteTerms: ZEBITE_TERMS,
+  zebiteDeleteData: ZEBITE_DELETE_DATA,
   repforgePrivacy: REPFORGE_PRIVACY,
   repforgeTerms: REPFORGE_TERMS,
   websitePrivacy: WEBSITE_PRIVACY,
@@ -1133,6 +1247,11 @@ export const LEGAL_INDEX: {
         href: "/legal/zebite/terms",
         title: "Terms of Service",
         blurb: "Your licence, and what AI-generated plans are and aren't.",
+      },
+      {
+        href: "/legal/zebite/delete-data",
+        title: "Delete your data",
+        blurb: "Clear everything and keep your account, or delete it entirely.",
       },
     ],
   },
