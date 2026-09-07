@@ -1,5 +1,3 @@
-import fs from "node:fs";
-import path from "node:path";
 import Image from "next/image";
 import { DeviceFrame } from "@/components/ui/DeviceFrame";
 import { Reveal } from "@/components/ui/Reveal";
@@ -8,25 +6,10 @@ import { FORGE, GROCERY, PROJECTS, STUDIO_HOME } from "@/lib/content";
 type StudioProduct = typeof GROCERY | typeof FORGE;
 export type PortfolioProject = Extract<(typeof PROJECTS)[number], { kind: "Portfolio" }>;
 
-/**
- * Some portfolio entries (SafetyCrib, RGM, Beru) point at screenshots that
- * haven't been dropped into /public/work yet. Rather than render a broken
- * <Image> for a 404 — which looked like the card itself was broken — check
- * the file actually exists (this module has no "use client", so it only ever
- * runs server-side) and fall back to a plain initials panel until it does.
- */
-function hasPublicAsset(assetPath: string): boolean {
-  try {
-    return fs.existsSync(path.join(process.cwd(), "public", assetPath.replace(/^\//, "")));
-  } catch {
-    return false;
-  }
-}
-
-// One pick per person, surfaced here so the homepage credits both Zendrex's
-// and Aldrin's own work — not just the studio's two products. Everything
-// else (the rest of Aldrin's projects included) lives on the full /work page.
-const HOME_PORTFOLIO_KEYS = ["guanzon", "safetycrib"] as const;
+// Keep the real work visible on the homepage: Zendrex's inventory system and
+// every supplied Aldrin project image. The full-size versions also live on
+// the dedicated /work page.
+const HOME_PORTFOLIO_KEYS = ["guanzon", "safetycrib", "rgm", "beru"] as const;
 
 export function SelectedWork() {
   const portfolioPicks = HOME_PORTFOLIO_KEYS.map((key) =>
@@ -112,28 +95,19 @@ export function SelectedWork() {
  * ProductProjectCard already uses for RepForge.
  */
 export function PortfolioProjectCard({ project }: { project: PortfolioProject }) {
-  const hasImage = hasPublicAsset(project.image);
-
   return (
     <div className="flex h-full flex-col overflow-hidden rounded-[20px] border border-ink/12 bg-paper">
       <div className="relative aspect-[16/10] overflow-hidden bg-paper-deep">
-        {hasImage ? (
-          <div className="absolute inset-4">
-            <Image
-              src={project.image}
-              alt={project.name}
-              fill
-              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-              className="object-contain"
-            />
-          </div>
-        ) : (
-          <div className="studio-grid-lines flex h-full items-center justify-center">
-            <span className="text-[clamp(2.5rem,6vw,4rem)] font-extrabold leading-none tracking-[-0.06em] text-ink/15">
-              {project.name.slice(0, 2).toUpperCase()}
-            </span>
-          </div>
-        )}
+        <div className="absolute inset-4">
+          <Image
+            src={project.image}
+            alt={`${project.name} project interface`}
+            fill
+            unoptimized
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="object-contain"
+          />
+        </div>
       </div>
       <div className="flex flex-1 flex-col p-5 sm:p-6">
         <a
@@ -286,8 +260,6 @@ export function PortfolioBigCard({
   number: string;
   reverse?: boolean;
 }) {
-  const hasImage = hasPublicAsset(project.image);
-
   return (
     <Reveal>
       <article className="overflow-hidden rounded-[30px] border border-white/10 bg-graphite-900 text-cream sm:rounded-[38px]">
@@ -336,27 +308,19 @@ export function PortfolioBigCard({
             className={`project-stage project-stage-portfolio relative min-h-[470px] overflow-hidden lg:min-h-full ${reverse ? "lg:order-1" : ""}`}
           >
             <div className="grid-texture absolute inset-0 opacity-35" aria-hidden />
-            {hasImage ? (
-              // object-contain, not object-cover: this is a raw app screenshot
-              // (its own chrome, whitespace, aspect ratio), not a shot cropped
-              // to fill a device frame — cropping it edge-to-edge cut off the
-              // UI. Padded and staged like the phone mockups above instead.
-              <div className="absolute inset-6 sm:inset-10 lg:inset-12">
-                <Image
-                  src={project.image}
-                  alt={project.name}
-                  fill
-                  sizes="(min-width: 1024px) 50vw, 100vw"
-                  className="object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.5)]"
-                />
-              </div>
-            ) : (
-              <div className="relative flex h-full items-center justify-center">
-                <span className="text-[clamp(4rem,9vw,8rem)] font-extrabold leading-none tracking-[-0.06em] text-cream/10">
-                  {project.name.slice(0, 2).toUpperCase()}
-                </span>
-              </div>
-            )}
+            {/* Load the supplied screenshots directly from /public/work so
+                production does not depend on image optimization or runtime
+                filesystem checks. */}
+            <div className="absolute inset-6 sm:inset-10 lg:inset-12">
+              <Image
+                src={project.image}
+                alt={`${project.name} project interface`}
+                fill
+                unoptimized
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.5)]"
+              />
+            </div>
           </div>
         </div>
       </article>
