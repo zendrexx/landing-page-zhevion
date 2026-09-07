@@ -403,6 +403,13 @@ export const STUDIO_HOME = {
   hero: {
     eyebrow: "Independent software & product studio",
     heading: "We build software that moves businesses forward.",
+    /**
+     * The closing word of `heading` cycles through this list (StudioHero
+     * renders it separately from the static lead-in text). Each entry keeps
+     * its own trailing period since it stands in as the sentence's full stop.
+     * First entry must match `heading`'s static word so SSR/no-JS matches.
+     */
+    words: ["forward.", "faster.", "further.", "ahead."],
     body:
       "Zhevion designs and develops mobile apps, business systems, websites, and digital products built around how businesses actually work.",
   },
@@ -558,7 +565,7 @@ export const TEAM = [
       "Supports the studio as product work and client solutions move from early ideas into delivery.",
     src: "/us/aldrinhead.jpg" as string | null,
     alt: "Aldrin, a member of the Zhevion studio team.",
-    href: null as string | null,
+    href: "https://aldrin.zhevion.com" as string | null,
   },
 ] as const;
 

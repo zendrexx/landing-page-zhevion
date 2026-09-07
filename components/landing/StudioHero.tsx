@@ -1,4 +1,5 @@
 import { DeviceFrame } from "@/components/ui/DeviceFrame";
+import { HeroWordCycle } from "@/components/landing/HeroWordCycle";
 import { GROCERY, FORGE, STUDIO_HOME } from "@/lib/content";
 
 export function StudioHero() {
@@ -15,7 +16,11 @@ export function StudioHero() {
               {STUDIO_HOME.hero.eyebrow}
             </p>
             <h1 className="mt-5 max-w-[11.5ch] animate-reveal-up text-[clamp(3rem,8.3vw,7.5rem)] font-extrabold leading-[0.94] tracking-[-0.06em] [animation-delay:80ms]">
-              We build software that moves businesses <span className="text-forest-500">forward.</span>
+              <span className="sr-only">{STUDIO_HOME.hero.heading}</span>
+              <span aria-hidden>
+                We build software that moves businesses{" "}
+                <HeroWordCycle words={STUDIO_HOME.hero.words} className="text-forest-500" />
+              </span>
             </h1>
           </div>
 

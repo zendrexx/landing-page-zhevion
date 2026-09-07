@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/site/SmoothScroll";
+import { Cursor } from "@/components/site/Cursor";
 
 /**
  * No `weight` array: omitting it makes next/font serve the variable font, which
@@ -95,6 +96,7 @@ export default function RootLayout({
         </a>
         {/* SmoothScroll bails out when reduced motion is requested. */}
         <SmoothScroll />
+        <Cursor />
         {children}
       </body>
     </html>

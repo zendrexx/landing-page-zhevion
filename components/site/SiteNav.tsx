@@ -37,10 +37,10 @@ export function SiteNav({ base = "" }: { base?: string }) {
         initial={reduce ? { opacity: 0 } : { opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: reduce ? 0.2 : 0.65, ease: [0.16, 1, 0.3, 1] }}
-        className="pointer-events-auto mx-auto w-full max-w-content lg:w-[680px]"
+        className="pointer-events-auto mx-auto w-full max-w-content lg:w-fit"
       >
-        <div className="zhevion-nav-cursor relative rounded-pill border border-ink/10 bg-paper/80 px-2 py-1.5 shadow-[0_14px_38px_-24px_rgba(13,46,33,0.38)] backdrop-blur-xl sm:px-2.5">
-          <div className="flex items-center justify-between gap-2">
+        <div className="relative rounded-pill border border-ink/10 bg-paper/80 px-2 py-1.5 shadow-[0_14px_38px_-24px_rgba(13,46,33,0.38)] backdrop-blur-xl sm:px-2.5 lg:px-3">
+          <div className="flex items-center justify-between gap-2 lg:gap-6">
             <a
               href={base || "/"}
               aria-label="Zhevion — home"
@@ -56,7 +56,7 @@ export function SiteNav({ base = "" }: { base?: string }) {
                   <li key={link.href}>
                     <a
                       href={destination(link.href)}
-                      className="block rounded-pill px-3 py-2 text-[0.8125rem] font-semibold text-ink-soft transition hover:bg-ink/5 hover:text-ink"
+                      className="block rounded-pill px-2.5 py-2 text-[0.8125rem] font-semibold text-ink-soft transition hover:bg-ink/5 hover:text-ink"
                     >
                       {link.label}
                     </a>

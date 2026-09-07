@@ -33,8 +33,8 @@ const STATES: Record<CursorState, { light: Palette; dark: Palette }> = {
   },
 };
 
-// The janky outer outline's stroke color: always visible (~45% opacity),
-// just recolored between ink and cream depending on the surface underneath.
+// The outer ring's stroke color: always visible (~45% opacity), just
+// recolored between ink and cream depending on the surface underneath.
 const RING_COLOR = {
   light: "rgba(13, 46, 33, 0.45)",
   dark: "rgba(245, 245, 243, 0.45)",
@@ -158,56 +158,32 @@ function CursorLayer() {
       animate={{ opacity: visible ? 1 : 0 }}
       transition={{ duration: 0.2 }}
     >
-      {/* Janky outer outline */}
-<motion.div
-  className="absolute border"
-  animate={{
-    width: s.size + 18,
-    height: s.size + 18,
-    borderColor: onDark ? RING_COLOR.dark : RING_COLOR.light,
-    rotate: [-7, -3, -8, -5, -7],
-    scaleX: [0.92, 0.97, 0.9, 0.95, 0.92],
-    scaleY: [1, 0.96, 1.03, 0.98, 1],
-  }}
-  style={{
-    borderRadius: "47% 53% 49% 51% / 54% 46% 55% 45%",
-  }}
-  transition={{
-    width: {
-      type: "spring",
-      stiffness: 320,
-      damping: 30,
-      mass: 0.6,
-    },
-    height: {
-      type: "spring",
-      stiffness: 320,
-      damping: 30,
-      mass: 0.6,
-    },
-    borderColor: {
-      type: "spring",
-      stiffness: 320,
-      damping: 30,
-      mass: 0.6,
-    },
-    rotate: {
-      duration: 2.8,
-      repeat: Infinity,
-      ease: "easeInOut",
-    },
-    scaleX: {
-      duration: 2.4,
-      repeat: Infinity,
-      ease: "easeInOut",
-    },
-    scaleY: {
-      duration: 2.1,
-      repeat: Infinity,
-      ease: "easeInOut",
-    },
-  }}
-/>
+      {/* Outer ring: a hand-drawn blob, not a laser-precise circle — its
+          border-radius and constant rotate/scale wobble are the site's one
+          always-on ambient animation, per the brand's cursor spec (matches
+          the cursor on zebite.zhevion.com, the other Zhevion property). */}
+      <motion.div
+        className="absolute border"
+        animate={{
+          width: s.size + 18,
+          height: s.size + 18,
+          borderColor: onDark ? RING_COLOR.dark : RING_COLOR.light,
+          rotate: [-7, -3, -8, -5, -7],
+          scaleX: [0.92, 0.97, 0.9, 0.95, 0.92],
+          scaleY: [1, 0.96, 1.03, 0.98, 1],
+        }}
+        style={{
+          borderRadius: "47% 53% 49% 51% / 54% 46% 55% 45%",
+        }}
+        transition={{
+          width: { type: "spring", stiffness: 320, damping: 30, mass: 0.6 },
+          height: { type: "spring", stiffness: 320, damping: 30, mass: 0.6 },
+          borderColor: { type: "spring", stiffness: 320, damping: 30, mass: 0.6 },
+          rotate: { duration: 2.8, repeat: Infinity, ease: "easeInOut" },
+          scaleX: { duration: 2.4, repeat: Infinity, ease: "easeInOut" },
+          scaleY: { duration: 2.1, repeat: Infinity, ease: "easeInOut" },
+        }}
+      />
 
     {/* Inner dot */}
     <motion.div

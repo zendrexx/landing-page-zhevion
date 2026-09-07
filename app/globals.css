@@ -60,19 +60,6 @@ body {
   overflow-x: hidden;
 }
 
-/* A studio-specific precision cursor for the compact navigation. The broken
-   outer ring echoes Zhevion's mark while the lime centre keeps it legible on
-   the paper/glass surface. Fine pointers only: touch and pen users retain
-   their platform-native interaction feedback. */
-@media (hover: hover) and (pointer: fine) {
-  .zhevion-nav-cursor,
-  .zhevion-nav-cursor * {
-    cursor:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg fill='none' stroke='%230d2e21' stroke-width='1.25' stroke-linecap='round'%3E%3Cpath d='M16 1v7M16 24v7M1 16h7M24 16h7'/%3E%3Cpath d='M9.6 5.1a12 12 0 0 1 12.8 0M26.9 9.6a12 12 0 0 1 0 12.8M22.4 26.9a12 12 0 0 1-12.8 0M5.1 22.4a12 12 0 0 1 0-12.8' opacity='.48'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='3.25' fill='%23b5e34d' stroke='%230d2e21' stroke-width='1.25'/%3E%3Ccircle cx='16' cy='16' r='.85' fill='%230d2e21'/%3E%3C/svg%3E") 16 16,
-      crosshair !important;
-  }
-}
-
 /* ---- Accessibility: visible focus + skip link -------------------------- */
 :focus-visible {
   outline: 2px solid var(--focus);
