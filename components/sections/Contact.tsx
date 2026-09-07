@@ -2,20 +2,9 @@
 
 import { useState } from "react";
 import { Reveal } from "@/components/ui/Reveal";
-import { ContactGlyph } from "@/components/ui/ContactIcons";
-import { CONTACT } from "@/lib/content";
+import { CONTACT, PROJECT_NEEDS, STUDIO_HOME } from "@/lib/content";
 import { trackCTA } from "@/lib/analytics";
 
-/**
- * Message form — same wiring as the portfolio's contact section: a client-side
- * POST to Web3Forms, no backend of our own. Web3Forms only accepts browser
- * requests on the free plan, so this must stay a client component.
- *
- * The access key is public by design (it only authorises submissions to the
- * inbox it's registered to) but still comes from NEXT_PUBLIC_WEB3FORMS_KEY so
- * it isn't hardcoded per-site. Missing key → the form says so and points at the
- * email address instead of pretending the message went through.
- */
 const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
 
 type Status = "idle" | "sending" | "sent" | "error";
@@ -23,10 +12,10 @@ type Status = "idle" | "sending" | "sent" | "error";
 export function Contact() {
   const [status, setStatus] = useState<Status>("idle");
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const form = e.currentTarget;
-    trackCTA("contact-message-submit");
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    trackCTA("project-inquiry-submit");
 
     if (!WEB3FORMS_KEY) {
       setStatus("error");
@@ -37,14 +26,15 @@ export function Contact() {
     try {
       const body = new FormData(form);
       body.append("access_key", WEB3FORMS_KEY);
-      body.append("subject", "New message from the Zhevion site");
-      body.append("from_name", "Zhevion landing page");
+      body.append("subject", "New project inquiry from Zhevion.com");
+      body.append("from_name", "Zhevion project inquiry");
 
-      const res = await fetch("https://api.web3forms.com/submit", {
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         body,
       });
-      const data = await res.json();
+      const data = await response.json();
+
       if (data.success) {
         setStatus("sent");
         form.reset();
@@ -57,78 +47,46 @@ export function Contact() {
   }
 
   const field =
-    "w-full rounded-2xl border border-white/12 bg-graphite-900 px-4 py-3.5 text-sm text-cream placeholder:text-muted/70 transition focus:border-lime/45 focus:outline-none";
+    "mt-2 w-full rounded-[14px] border border-ink/12 bg-paper px-4 py-3.5 text-base text-ink placeholder:text-ink-faint transition focus:border-forest-500 focus:outline-none";
 
   return (
     <section
       id="contact"
-      className="relative overflow-hidden border-t border-white/10 bg-graphite-800 py-20 md:py-28"
+      className="scroll-mt-24 border-t border-ink/10 bg-paper-deep py-[clamp(84px,12vw,160px)]"
       aria-labelledby="contact-heading"
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-50"
-        style={{
-          background:
-            "radial-gradient(520px 320px at 12% 0%, rgba(27,92,65,0.35), transparent 65%), radial-gradient(520px 320px at 92% 100%, rgba(124,92,255,0.3), transparent 65%)",
-        }}
-      />
+      <div className="shell">
+        <Reveal className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16">
+          <div className="lg:sticky lg:top-32 lg:self-start">
+            <p className="eyebrow text-forest-500">{STUDIO_HOME.contact.eyebrow}</p>
+            <h2
+              id="contact-heading"
+              className="mt-5 max-w-[11ch] text-[clamp(2.55rem,5.6vw,5.6rem)] font-extrabold leading-[0.96] tracking-[-0.06em]"
+            >
+              {STUDIO_HOME.contact.heading}
+            </h2>
+            <p className="mt-7 max-w-lg text-base font-medium leading-[1.75] text-ink-soft sm:text-lg">
+              {STUDIO_HOME.contact.body}
+            </p>
+            <div className="mt-8 border-t border-ink/12 pt-6">
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-ink-faint">Prefer email?</p>
+              <a
+                href={`mailto:${CONTACT.email}`}
+                className="mt-2 inline-block text-base font-bold text-ink underline decoration-ink/25 underline-offset-4 transition hover:decoration-ink"
+              >
+                {CONTACT.email}
+              </a>
+            </div>
+          </div>
 
-      <div className="shell relative z-10">
-        <Reveal className="mx-auto max-w-2xl text-center">
-          <p className="eyebrow text-muted">Contact</p>
-          <h2
-            id="contact-heading"
-            className="mt-4 text-3xl font-extrabold tracking-tightest sm:text-4xl"
+          <form
+            onSubmit={onSubmit}
+            className="rounded-[26px] border border-ink/10 bg-paper p-5 shadow-[0_24px_80px_-60px_rgba(13,46,33,0.5)] sm:p-8 lg:p-10"
           >
-            Say hello.
-          </h2>
-          <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-muted">
-            Feedback, bug reports, or just want early access? Send a message and
-            it lands straight in my inbox.
-          </p>
-        </Reveal>
-
-        {/* Direct links */}
-        <Reveal delay={80} className="mx-auto mt-10 max-w-3xl">
-          <ul className="grid gap-3 sm:grid-cols-3">
-            {CONTACT.links.map((l) => (
-              <li key={l.label}>
-                <a
-                  href={l.href}
-                  target={l.href.startsWith("http") ? "_blank" : undefined}
-                  rel="noreferrer"
-                  onClick={() => trackCTA(`contact-${l.label.toLowerCase()}`)}
-                  className="group flex h-full items-center gap-3 rounded-card border border-white/10 bg-graphite-900/70 p-4 transition hover:-translate-y-0.5 hover:border-lime/40 hover:bg-graphite-900"
-                >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-muted transition group-hover:border-lime/30 group-hover:text-lime">
-                    <ContactGlyph name={l.icon} />
-                  </span>
-                  <span className="min-w-0">
-                    <span className="block text-sm font-bold text-cream">{l.label}</span>
-                    <span className="block truncate text-xs text-muted">{l.value}</span>
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
-
-        {/* Message form */}
-        <Reveal
-          delay={140}
-          className="mx-auto mt-6 max-w-3xl rounded-card border border-white/10 bg-graphite-900/70 p-6 backdrop-blur-sm sm:p-8"
-        >
-          <h3 className="text-lg font-bold text-cream">Send a message</h3>
-
-          <form onSubmit={onSubmit} className="mt-5 space-y-4">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div>
-                <label htmlFor="contact-name" className="sr-only">
-                  Your name
-                </label>
+            <div className="grid gap-5 sm:grid-cols-2">
+              <label className="text-sm font-bold text-ink">
+                Name
                 <input
-                  id="contact-name"
                   name="name"
                   type="text"
                   required
@@ -137,65 +95,97 @@ export function Contact() {
                   placeholder="Your name"
                   className={field}
                 />
-              </div>
-              <div>
-                <label htmlFor="contact-email" className="sr-only">
-                  Your email
-                </label>
+              </label>
+              <label className="text-sm font-bold text-ink">
+                Company
                 <input
-                  id="contact-email"
-                  name="email"
-                  type="email"
-                  required
-                  autoComplete="email"
-                  placeholder="you@email.com"
+                  name="company"
+                  type="text"
+                  autoComplete="organization"
+                  placeholder="Company or organization"
                   className={field}
                 />
-              </div>
+              </label>
             </div>
 
-            <div>
-              <label htmlFor="contact-message" className="sr-only">
-                Your message
-              </label>
+            <label className="mt-5 block text-sm font-bold text-ink">
+              Email / contact information
+              <input
+                name="email"
+                type="email"
+                required
+                autoComplete="email"
+                placeholder="you@company.com"
+                className={field}
+              />
+            </label>
+
+            <fieldset className="mt-7">
+              <legend className="text-sm font-bold text-ink">What do you need?</legend>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {PROJECT_NEEDS.map((need, index) => {
+                  const id = `project-need-${index}`;
+                  return (
+                    <label key={need} htmlFor={id} className="cursor-pointer">
+                      <input
+                        id={id}
+                        name="project_type"
+                        type="radio"
+                        value={need}
+                        required
+                        className="peer sr-only"
+                      />
+                      <span className="inline-flex min-h-11 items-center rounded-pill border border-ink/12 px-4 text-sm font-semibold text-ink-soft transition hover:border-ink/30 peer-checked:border-ink peer-checked:bg-ink peer-checked:text-paper peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-ink">
+                        {need}
+                      </span>
+                    </label>
+                  );
+                })}
+              </div>
+            </fieldset>
+
+            <label className="mt-7 block text-sm font-bold text-ink">
+              Problem / project description
               <textarea
-                id="contact-message"
                 name="message"
                 required
-                minLength={10}
-                rows={5}
-                placeholder="What's on your mind?"
+                minLength={20}
+                rows={7}
+                placeholder="What is happening now, what should work better, and who needs to use it?"
                 className={`${field} resize-y`}
               />
-            </div>
+            </label>
 
-            {/* Honeypot — bots fill it, people never see it */}
-            <input type="checkbox" name="botcheck" tabIndex={-1} className="hidden" />
+            <input type="checkbox" name="botcheck" tabIndex={-1} className="hidden" aria-hidden />
 
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-3 pt-1">
+            <div className="mt-7 flex flex-col gap-4 border-t border-ink/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
               <button
                 type="submit"
                 disabled={status === "sending"}
-                className="rounded-pill bg-cream px-7 py-3 text-sm font-bold text-graphite-900 transition hover:opacity-90 disabled:opacity-60"
+                className="inline-flex min-h-12 items-center justify-center rounded-pill bg-ink px-7 text-sm font-bold text-paper transition hover:-translate-y-0.5 hover:bg-forest-500 disabled:translate-y-0 disabled:opacity-55"
               >
-                {status === "sending" ? "Sending…" : "Send message"}
+                {status === "sending" ? "Sending…" : "Send inquiry"}
+                {status !== "sending" ? <span className="ml-2" aria-hidden>↗</span> : null}
               </button>
-
-              {status === "sent" && (
-                <p role="status" className="text-sm font-semibold text-lime">
-                  Message sent. I&apos;ll get back to you. ✓
-                </p>
-              )}
-              {status === "error" && (
-                <p role="alert" className="text-sm text-red-400">
-                  Couldn&apos;t send that. Email{" "}
-                  <a className="underline" href={`mailto:${CONTACT.email}`}>
-                    {CONTACT.email}
-                  </a>{" "}
-                  directly instead.
-                </p>
-              )}
+              <p className="max-w-[20rem] text-xs leading-relaxed text-ink-faint">
+                Your message goes to the Zhevion studio inbox through our existing contact provider.
+              </p>
             </div>
+
+            {status === "sent" ? (
+              <p role="status" className="mt-5 rounded-xl border border-forest-500/20 bg-forest-500/5 p-4 text-sm font-bold text-forest-500">
+                Inquiry sent. We&apos;ll get back to you.
+              </p>
+            ) : null}
+            {status === "error" ? (
+              <p role="alert" className="mt-5 rounded-xl border border-red-700/20 bg-red-700/5 p-4 text-sm text-red-800">
+                We couldn&apos;t send that message. Email{" "}
+                <a className="font-bold underline" href={`mailto:${CONTACT.email}`}>
+                  {CONTACT.email}
+                </a>{" "}
+                instead.
+              </p>
+            ) : null}
           </form>
         </Reveal>
       </div>

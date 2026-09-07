@@ -391,3 +391,181 @@ export const HAND_SCREEN_RECT = {
   /** Corner radius, as a % of the rect's own width / height (22px @ 182x418). */
   radius: "12.09% / 5.26%",
 };
+
+/**
+ * Main studio homepage content.
+ *
+ * Unlike the app feature lists above, these entries describe work Zhevion can
+ * be hired to do. They deliberately make no claims about client counts,
+ * outcomes, timelines, or case studies that are not present in this repo.
+ */
+export const STUDIO_HOME = {
+  hero: {
+    eyebrow: "Independent software & product studio",
+    heading: "We build software that moves businesses forward.",
+    body:
+      "Zhevion designs and develops mobile apps, business systems, websites, and digital products built around how businesses actually work.",
+  },
+  work: {
+    eyebrow: "Selected work",
+    heading: "Working products, not presentation theatre.",
+    body:
+      "Our own products are where product thinking, interface design, and engineering meet. Every screen below comes from software we are actively building.",
+  },
+  services: {
+    eyebrow: "Services",
+    heading: "The right system for the work in front of you.",
+    body:
+      "We start with the business problem, then choose the smallest useful product that can solve it well.",
+  },
+  value: {
+    eyebrow: "From scattered to clear",
+    heading: "Your workflow should not depend on memory and manual follow-up.",
+    body:
+      "We study how information enters your business, where it gets stuck, and what your team repeats. Then we design one practical system around the way the work needs to move.",
+  },
+  process: {
+    eyebrow: "Process",
+    heading: "Clear decisions at every stage.",
+  },
+  team: {
+    eyebrow: "The people behind Zhevion",
+    heading: "Small team. Close collaboration.",
+    body:
+      "The people discussing the problem are the same people shaping and building the solution.",
+  },
+  about: {
+    eyebrow: "About Zhevion",
+    heading: "One studio for client software and products of our own.",
+    body:
+      "Zhevion is the umbrella behind the software we build for businesses and the focused products we build ourselves. We take ideas from an early conversation through product decisions, interface design, engineering, launch, and the improvements that follow.",
+  },
+  contact: {
+    eyebrow: "Start a project",
+    heading: "Have something your business should be doing better?",
+    body:
+      "Tell us about the work, the bottleneck, or the idea. Whether you need an app, a system, a website, automation, or simply help defining the right next step, we can start there.",
+  },
+} as const;
+
+export const STUDIO_SERVICES = [
+  {
+    number: "01",
+    title: "Business Systems",
+    body:
+      "Replace scattered records and manual follow-up with a system your team can see, trust, and use.",
+    items: [
+      "CRM and sales systems",
+      "Inventory and operations",
+      "Dashboards and admin tools",
+      "Project and internal tracking",
+    ],
+    outcome: "Less chasing. Better visibility. Clearer decisions.",
+  },
+  {
+    number: "02",
+    title: "Apps & Digital Products",
+    body:
+      "Turn an idea or customer need into a focused product that is useful from its first release.",
+    items: [
+      "Mobile apps",
+      "SaaS and MVP development",
+      "Customer portals",
+      "Product and interface design",
+    ],
+    outcome: "A product people can understand—and keep using.",
+  },
+  {
+    number: "03",
+    title: "Websites & Automation",
+    body:
+      "Create a clearer front door for the business and connect the repetitive work behind it.",
+    items: [
+      "Websites and landing pages",
+      "Lead-generation workflows",
+      "Forms, CRM, and API integration",
+      "Automation and AI-assisted workflows",
+    ],
+    outcome: "Fewer handoffs. Faster response. A stronger customer journey.",
+  },
+] as const;
+
+export const WORKFLOW_PROBLEMS = [
+  "Leads disappearing in Messenger",
+  "Manual tracking across spreadsheets",
+  "Repetitive admin work",
+  "No central source of business data",
+  "Customers asking the same questions",
+  "Tools and processes that do not connect",
+] as const;
+
+export const STUDIO_PROCESS = [
+  {
+    number: "01",
+    title: "Discover",
+    body: "Understand the business, the people doing the work, and the real constraint.",
+  },
+  {
+    number: "02",
+    title: "Plan",
+    body: "Define the useful first version, priorities, and a practical route to delivery.",
+  },
+  {
+    number: "03",
+    title: "Design",
+    body: "Shape the flow and interface around decisions users need to make.",
+  },
+  {
+    number: "04",
+    title: "Build",
+    body: "Develop the working product with maintainable foundations and regular review.",
+  },
+  {
+    number: "05",
+    title: "Launch",
+    body: "Prepare the product, content, and handoff for real-world use.",
+  },
+  {
+    number: "06",
+    title: "Improve",
+    body: "Learn from use, remove friction, and evolve what creates value.",
+  },
+] as const;
+
+export const TEAM = [
+  {
+    name: "Zendrex",
+    role: "Product development",
+    body:
+      "Turns product plans into working web and mobile software, from interface details to the systems behind them.",
+    src: "/us/zen.jpg" as string | null,
+    alt: "Zendrex, product developer at Zhevion.",
+    href: "https://zendrex.zhevion.com" as string | null,
+  },
+  {
+    name: "Jheanlyn",
+    role: "UI/UX & marketing",
+    body:
+      "Shapes how Zhevion products look, feel, and communicate with the people they are built for.",
+    src: "/us/partner.jpg" as string | null,
+    alt: "Jheanlyn, who works on UI, UX, and marketing at Zhevion.",
+    href: "https://jl.zhevion.com" as string | null,
+  },
+  {
+    name: "Aldrin",
+    role: "Studio team",
+    body:
+      "Supports the studio as product work and client solutions move from early ideas into delivery.",
+    src: null as string | null,
+    alt: "",
+    href: null as string | null,
+  },
+] as const;
+
+export const PROJECT_NEEDS = [
+  "Business system",
+  "Mobile app",
+  "Website",
+  "Automation",
+  "Not sure yet",
+] as const;

@@ -442,3 +442,148 @@ html.has-cursor select {
     transparent 100%
   );
 }
+
+/* ============================================================
+   Main studio landing page
+   ============================================================ */
+
+.studio-grid-lines {
+  background-image:
+    linear-gradient(to right, rgba(13, 46, 33, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(13, 46, 33, 0.035) 1px, transparent 1px);
+  background-size: min(8.333vw, 100px) 100%, 100% 96px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 92%);
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 92%);
+}
+
+.hero-product-stage {
+  position: relative;
+  min-height: 510px;
+}
+
+.hero-stage-light {
+  background:
+    radial-gradient(55% 75% at 50% 100%, rgba(245, 245, 243, 0.13), transparent 72%),
+    radial-gradient(34% 52% at 48% 72%, rgba(27, 92, 65, 0.34), transparent 75%),
+    radial-gradient(32% 48% at 74% 72%, rgba(124, 92, 255, 0.25), transparent 76%);
+}
+
+.hero-phone,
+.project-phone {
+  position: absolute;
+  transform-origin: top center;
+}
+
+.hero-phone-grocery {
+  left: 42%;
+  top: 112px;
+  transform: translateX(-64%) rotate(-6deg) scale(0.68);
+  z-index: 8;
+}
+
+.hero-phone-forge {
+  left: 64%;
+  top: 142px;
+  transform: translateX(-35%) rotate(6deg) scale(0.62);
+  z-index: 9;
+}
+
+.project-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(14, 15, 16, 0.55), transparent 32%);
+}
+
+.project-stage-grocery {
+  background:
+    radial-gradient(60% 55% at 50% 75%, rgba(181, 227, 77, 0.2), transparent 72%),
+    #123b2a;
+}
+
+.project-stage-forge {
+  background:
+    radial-gradient(60% 55% at 50% 75%, rgba(124, 92, 255, 0.3), transparent 72%),
+    #16181a;
+}
+
+.project-phone-primary {
+  left: 42%;
+  top: 54px;
+  transform: translateX(-65%) rotate(-6deg) scale(0.78);
+  z-index: 8;
+}
+
+.project-phone-secondary {
+  left: 65%;
+  top: 88px;
+  transform: translateX(-20%) rotate(7deg) scale(0.75);
+  z-index: 9;
+}
+
+.value-light {
+  background:
+    radial-gradient(48% 52% at 92% 88%, rgba(181, 227, 77, 0.1), transparent 76%),
+    radial-gradient(42% 50% at 8% 8%, rgba(27, 92, 65, 0.24), transparent 76%);
+}
+
+@media (min-width: 640px) {
+  .hero-product-stage {
+    min-height: 580px;
+  }
+
+  .hero-phone-grocery {
+    left: 45%;
+    top: 92px;
+    transform: translateX(-70%) rotate(-6deg) scale(0.86);
+  }
+
+  .hero-phone-forge {
+    left: 66%;
+    top: 125px;
+    transform: translateX(-18%) rotate(6deg) scale(0.8);
+  }
+
+  .project-phone-primary {
+    left: 44%;
+    top: 62px;
+    transform: translateX(-72%) rotate(-6deg) scale(0.9);
+  }
+
+  .project-phone-secondary {
+    left: 67%;
+    top: 94px;
+    transform: translateX(-12%) rotate(7deg) scale(0.84);
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-product-stage {
+    min-height: 620px;
+  }
+
+  .hero-phone-grocery {
+    left: 52%;
+    top: 56px;
+    transform: translateX(-72%) rotate(-6deg) scale(1.04);
+  }
+
+  .hero-phone-forge {
+    left: 69%;
+    top: 96px;
+    transform: translateX(-10%) rotate(6deg) scale(0.98);
+  }
+
+  .project-phone-primary {
+    left: 44%;
+    top: 68px;
+    transform: translateX(-70%) rotate(-6deg) scale(1);
+  }
+
+  .project-phone-secondary {
+    left: 69%;
+    top: 112px;
+    transform: translateX(-16%) rotate(7deg) scale(0.92);
+  }
+}

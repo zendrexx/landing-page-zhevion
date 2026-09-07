@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/site/SmoothScroll";
-import { Cursor } from "@/components/site/Cursor";
 
 /**
  * No `weight` array: omitting it makes next/font serve the variable font, which
@@ -20,46 +19,43 @@ const jakarta = Plus_Jakarta_Sans({
 // listings and OAuth consent screens point at — don't change it casually.
 const SITE_URL = "https://zhevion.com";
 
-// TODO: This metadata reflects the temporary "launching soon" placeholder
-// (see app/page.tsx). Restore the full "We design and build" copy below once
-// the real site is ready to go live.
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Zhevion | Launching soon",
+  title: "Zhevion | Software & Product Studio",
   description:
-    "Zhevion is an independent design and product studio, currently rebuilding the site. Say hello in the meantime.",
+    "Zhevion designs and builds mobile apps, business systems, websites, internal tools, automation, and custom digital products.",
   keywords: [
     "Zhevion",
+    "software studio",
+    "product studio",
+    "business systems",
+    "mobile app development",
+    "website development",
+    "workflow automation",
     "Zebite",
     "RepForge",
-    "AI grocery planner",
-    "meal planning app",
-    "powerlifting app",
-    "AI apps",
   ],
   openGraph: {
     type: "website",
     url: SITE_URL,
     siteName: "Zhevion",
-    title: "Zhevion | Launching soon",
+    title: "Zhevion | Software & Product Studio",
     description:
-      "An independent design and product studio, currently rebuilding the site.",
-    // TODO: /og.png still carries the old app-led artwork and headline. It
-    // needs regenerating once the rebuilt visual language is settled.
+      "Software shaped around how businesses actually work.",
     images: [
       {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "Zhevion — an independent design and product studio.",
+        alt: "Zhevion — software and product studio.",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Zhevion | Launching soon",
+    title: "Zhevion | Software & Product Studio",
     description:
-      "An independent design and product studio, currently rebuilding the site.",
+      "Software shaped around how businesses actually work.",
     images: ["/og.png"],
   },
 };
@@ -97,10 +93,8 @@ export default function RootLayout({
         <a href="#main" className="skip-link">
           Skip to content
         </a>
-        {/* Both no-op unless they apply: SmoothScroll bails under reduced
-            motion, Cursor unless the pointer is fine. Neither renders DOM. */}
+        {/* SmoothScroll bails out when reduced motion is requested. */}
         <SmoothScroll />
-        <Cursor />
         {children}
       </body>
     </html>
