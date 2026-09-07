@@ -21,6 +21,9 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
   const reduce = useReducedMotion();
   const tilt = TILT[index % TILT.length];
   const source = project.key === "zebite" ? GROCERY : project.key === "repforge" ? FORGE : null;
+  // Only Product-kind entries carry ctaLabel now — Portfolio entries dropped
+  // it once they moved to the "case study coming" treatment on /work.
+  const ctaLabel = "ctaLabel" in project ? project.ctaLabel : null;
 
   return (
     <motion.div
@@ -60,7 +63,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
         <p className="mt-1.5 text-sm text-cream/70">{project.summary}</p>
       </div>
 
-      {project.ctaLabel && project.href ? (
+      {ctaLabel && project.href ? (
         <a
           href={project.href}
           target="_blank"
@@ -68,7 +71,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
           onClick={() => trackCTA(`work-${project.key}`)}
           className="mt-6 inline-flex items-center gap-1.5 self-start text-sm font-semibold text-cream underline underline-offset-4"
         >
-          {project.ctaLabel} <span aria-hidden>→</span>
+          {ctaLabel} <span aria-hidden>→</span>
         </a>
       ) : null}
     </motion.div>

@@ -458,7 +458,13 @@ html.has-cursor select {
 
 .hero-product-stage {
   position: relative;
-  min-height: 510px;
+  /* The phones are top-anchored (.hero-phone-*'s own `top`) while the
+     "Zebite"/"RepForge" badges below are bottom-anchored (bottom-5 in
+     StudioHero.tsx) — at 510px the two collided on mobile, since a phone's
+     scaled-down bottom edge landed inside the badge row's own band and read
+     as covering the badge text. Taller stage = more gap between the two,
+     independent of either one's own position. */
+  min-height: 620px;
 }
 
 .hero-stage-light {
@@ -505,6 +511,14 @@ html.has-cursor select {
 .project-stage-forge {
   background:
     radial-gradient(60% 55% at 50% 75%, rgba(124, 92, 255, 0.3), transparent 72%),
+    #16181a;
+}
+
+/* Neutral stage for freelance/portfolio screenshots — no "world" accent
+   color to draw on, so a soft warm-cream glow instead of a brand tint. */
+.project-stage-portfolio {
+  background:
+    radial-gradient(60% 55% at 50% 78%, rgba(245, 245, 243, 0.08), transparent 72%),
     #16181a;
 }
 

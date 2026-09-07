@@ -22,7 +22,7 @@
  * "email us". Keep it a real, checked inbox: every /legal page tells a
  * reviewer or a user to write to this address and expects an answer.
  */
-const CONTACT_EMAIL = "zebite@zhevion.com";
+const CONTACT_EMAIL = "hello@zhevion.com";
 
 export type ContactIcon = "mail" | "linkedin" | "github";
 
@@ -120,9 +120,9 @@ export const GROCERY = {
     },
   ] satisfies Feature[],
   // Real portrait screenshots, built by scripts/export-screens.py from the
-  // 2580×5592 masters in assets/screens/grocery-v4/ — the Android status bar
-  // and gesture bar cropped off, downscaled to 840px, and given the top/bottom
-  // band DeviceFrame lays its Dynamic Island and home indicator over.
+  // 4300×9320 v5 masters in assets/v5/ — the Android status bar and gesture
+  // bar cropped off, downscaled to 840px, and given the top/bottom band
+  // DeviceFrame lays its Dynamic Island and home indicator over.
   //
   // The app ships light and dark themes and the export writes both sets to
   // /public/screens/grocery/<theme>/; the site uses the light set because its
@@ -332,19 +332,23 @@ export const WORK = {
 export type ProjectKind = "Product" | "Portfolio";
 
 /**
- * Case-study entries for the Work section's Stories block. `zebite` and
- * `repforge` are looked up by `key` against GROCERY/FORGE for their real
- * name/summary/screenshot — nothing here duplicates that data.
+ * Case-study entries for the Work section's Stories block, and for the
+ * standalone /work page. `zebite` and `repforge` are looked up by `key`
+ * against GROCERY/FORGE for their real name/summary/screenshot — nothing
+ * here duplicates that data.
  *
- * `guanzon` is the user's own portfolio (zendrex.zhevion.com, already
- * US.people[0].href). No screenshot exists for it, so `placeholder: true`
- * tells ProjectCard to render a plain wordmark card instead of a fabricated
- * device mockup — HONESTY RULE applies here too.
+ * The remaining entries are real freelance/personal work by studio people —
+ * `person` names who built it, `image` is a real screenshot (no fabricated
+ * device mockups; HONESTY RULE applies here too).
+ *
+ * `guanzon` is the Inventory Stock Request System Zendrex built as a Junior
+ * Software Developer at Guanzon Group of Companies — screenshot copied from
+ * zendrex.zhevion.com's own portfolio (outsource.png there).
  */
 export const PROJECTS = [
   {
     key: "zebite",
-    kind: "Product" as ProjectKind,
+    kind: "Product",
     name: GROCERY.name,
     summary: GROCERY.pitch,
     ctaLabel: "View project",
@@ -352,7 +356,7 @@ export const PROJECTS = [
   },
   {
     key: "repforge",
-    kind: "Product" as ProjectKind,
+    kind: "Product",
     name: FORGE.name,
     summary: FORGE.pitch,
     ctaLabel: null as string | null,
@@ -360,13 +364,47 @@ export const PROJECTS = [
   },
   {
     key: "guanzon",
-    kind: "Portfolio" as ProjectKind,
-    name: "Guanzon",
-    // Placeholder — refine once real project details exist.
-    summary: "Freelance and portfolio work.",
-    ctaLabel: "View portfolio",
+    kind: "Portfolio",
+    name: "Inventory Stock Request System",
+    person: "Zendrex",
+    summary:
+      "A Java/JavaFX desktop module handling item requests, multi-step approvals, and stock tracking, built as part of Guanzon Group of Companies' internal software.",
+    image: "/work/guanzon.png",
+    tags: ["Java", "JavaFX", "MySQL"],
     href: US.people[0].href,
-    placeholder: true,
+  },
+  {
+    key: "safetycrib",
+    kind: "Portfolio",
+    name: "SafetyCrib",
+    person: "Aldrin",
+    summary:
+      "An infant safety system that uses computer vision to detect vomiting events, combining a YOLO-based detection model with a React Native mobile application.",
+    image: "/work/safetycrib.png",
+    tags: ["Computer vision", "YOLO", "React Native"],
+    href: "https://aldrin.zhevion.com",
+  },
+  {
+    key: "rgm",
+    kind: "Portfolio",
+    name: "RGM Furniture",
+    person: "Aldrin",
+    summary:
+      "A full-stack e-commerce platform built for a local furniture business, featuring product browsing, cart and ordering functionality, Stripe payments, and MongoDB.",
+    image: "/work/rgm.png",
+    tags: ["E-commerce", "Stripe", "MongoDB"],
+    href: "https://aldrin.zhevion.com",
+  },
+  {
+    key: "beru",
+    kind: "Portfolio",
+    name: "Beru",
+    person: "Aldrin",
+    summary:
+      "An interactive mental-health-focused web application that combines a 3D digital world, real-time communication, and immersive user interactions.",
+    image: "/work/beru.jpg",
+    tags: ["3D world", "Real-time", "Web app"],
+    href: "https://aldrin.zhevion.com",
   },
 ] as const;
 
@@ -451,7 +489,7 @@ export const STUDIO_HOME = {
     eyebrow: "Start a project",
     heading: "Have something your business should be doing better?",
     body:
-      "Tell us about the work, the bottleneck, or the idea. Whether you need an app, a system, a website, automation, or simply help defining the right next step, we can start there.",
+      "Tell us about the work, the bottleneck, or the idea. You don't need to know what should be built yet — we'll help figure that out with you.",
   },
 } as const;
 

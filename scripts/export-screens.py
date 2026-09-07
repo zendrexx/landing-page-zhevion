@@ -1,16 +1,19 @@
-# Build the site's Zebite screenshot set from the v4 masters.
+# Build the site's Zebite screenshot set from the v5 masters.
 #
 #   python scripts/export-screens.py
 #
-# The masters in assets/screens/grocery-v4/ are raw Android captures at
-# 2580 x 5592: they carry the OS status bar (clock, Wi-Fi, battery) at the top
-# and the gesture bar at the bottom. Shipping those inside an iPhone frame is
-# wrong twice over — Android chrome on an iPhone, and no Dynamic Island.
+# The masters in assets/v5/ are raw Android captures at 4300 x 9320 — a newer,
+# higher-resolution export batch than the old v4 set (2580 x 5592), but the
+# same device/aspect ratio scaled up by exactly 5/3, so the same crop logic
+# applies with its pixel constants scaled by that same 5/3. They carry the OS
+# status bar (clock, Wi-Fi, battery) at the top and the gesture bar at the
+# bottom. Shipping those inside an iPhone frame is wrong twice over — Android
+# chrome on an iPhone, and no Dynamic Island.
 #
 # So, for every screen listed below, in both themes:
-#   1. crop the Android status bar (144px) and gesture bar (132px) away — the
+#   1. crop the Android status bar (240px) and gesture bar (220px) away — the
 #      DeviceFrame draws its own island and home indicator instead,
-#   2. downscale 2580px -> 840px (enough for the largest frame on the page,
+#   2. downscale 4300px -> 840px (enough for the largest frame on the page,
 #      ~280 CSS px, at 3x),
 #   3. extend the first/last kept row into a top/bottom band the size of the
 #      device's own chrome, so the island has somewhere to sit that isn't on
@@ -19,22 +22,22 @@
 #      dimmed scrim behind a sheet (see 41_add_to_pantry),
 #   4. save WebP to public/screens/grocery/{light,dark}/.
 #
-# Only the .webp files ship; the masters never reach public/, which keeps 44 MB
-# of PNG out of the deploy. Adding a screen to lib/content.ts means adding its
-# name to SCREENS here and re-running.
+# Only the .webp files ship; the masters never reach public/, which keeps
+# tens of MB of PNG out of the deploy. Adding a screen to lib/content.ts means
+# adding its name to SCREENS here and re-running.
 #
 # Mirrors landing_page_grocery/assets/screens/v4/export_web.py, which does the
-# same job for the Zebite product page — same crops, same bands, so a screen
-# looks identical on both sites.
+# same job for the Zebite product page — same crops (scaled for v5), same
+# bands, so a screen looks identical on both sites.
 
 import os
 from PIL import Image
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
-SRC = os.path.join(ROOT, "assets", "screens", "grocery-v4")
+SRC = os.path.join(ROOT, "assets", "v5")
 DST = os.path.join(ROOT, "public", "screens", "grocery")
 
-CROP_TOP, CROP_BOTTOM = 144, 132   # 24dp status bar, 22dp gesture bar @ dpr 6
+CROP_TOP, CROP_BOTTOM = 240, 220   # 24dp status bar, 22dp gesture bar @ dpr 10
 WIDTH = 840
 BAND_TOP, BAND_BOTTOM = 48, 22     # must match DeviceFrame's band* constants
 QUALITY = 82

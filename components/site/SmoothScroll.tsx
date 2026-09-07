@@ -63,7 +63,12 @@ export function SmoothScroll() {
 
       e.preventDefault();
       lenis.scrollTo(target, {
-        offset: -24,
+        // Lenis already reads the target's own `scroll-margin-top` (every
+        // section's `scroll-mt-24`, 96px) when computing where to land, so
+        // this offset must stay 0 — an earlier version duplicated that 96px
+        // here too, which double-applied the clearance and overshot the
+        // section by ~190px instead of the ~90px the nav actually needs.
+        offset: 0,
         onComplete: () => {
           // Restore the focus move that preventDefault just cancelled.
           if (!target.hasAttribute("tabindex")) {
