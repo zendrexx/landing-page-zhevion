@@ -40,7 +40,7 @@ export function SiteNav({ base = "" }: { base?: string }) {
         className="pointer-events-auto mx-auto w-full max-w-content lg:w-fit"
       >
         <div className="relative rounded-pill border border-ink/10 bg-paper/80 px-2 py-1.5 shadow-[0_14px_38px_-24px_rgba(13,46,33,0.38)] backdrop-blur-xl sm:px-2.5 lg:px-3">
-          <div className="flex items-center justify-between gap-2 lg:gap-6">
+          <div className="flex items-center justify-between gap-2 lg:justify-start lg:gap-2">
             <a
               href={base || "/"}
               aria-label="Zhevion — home"
