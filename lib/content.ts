@@ -556,8 +556,8 @@ export const TEAM = [
     role: "Studio team",
     body:
       "Supports the studio as product work and client solutions move from early ideas into delivery.",
-    src: null as string | null,
-    alt: "",
+    src: "/us/aldrinhead.jpg" as string | null,
+    alt: "Aldrin, a member of the Zhevion studio team.",
     href: null as string | null,
   },
 ] as const;
