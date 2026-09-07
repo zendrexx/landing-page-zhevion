@@ -37,26 +37,26 @@ export function SiteNav({ base = "" }: { base?: string }) {
         initial={reduce ? { opacity: 0 } : { opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: reduce ? 0.2 : 0.65, ease: [0.16, 1, 0.3, 1] }}
-        className="pointer-events-auto mx-auto max-w-content"
+        className="pointer-events-auto mx-auto w-full max-w-content lg:w-[680px]"
       >
-        <div className="relative rounded-[22px] border border-ink/10 bg-paper/80 px-2.5 py-2 shadow-[0_16px_50px_-28px_rgba(13,46,33,0.45)] backdrop-blur-xl sm:px-3">
-          <div className="flex items-center justify-between gap-4">
+        <div className="zhevion-nav-cursor relative rounded-pill border border-ink/10 bg-paper/80 px-2 py-1.5 shadow-[0_14px_38px_-24px_rgba(13,46,33,0.38)] backdrop-blur-xl sm:px-2.5">
+          <div className="flex items-center justify-between gap-2">
             <a
               href={base || "/"}
               aria-label="Zhevion — home"
-              className="flex min-h-11 items-center gap-2.5 rounded-pill px-1.5 pr-3 text-ink transition-colors hover:bg-ink/5"
+              className="flex min-h-10 items-center gap-2 rounded-pill px-1.5 text-ink transition-colors hover:bg-ink/5 lg:w-10 lg:justify-center lg:px-0"
             >
-              <ZhevionMark size={31} />
-              <span className="text-[0.95rem] font-extrabold tracking-[-0.035em]">Zhevion</span>
+              <ZhevionMark size={28} />
+              <span className="text-[0.9rem] font-extrabold tracking-[-0.035em] lg:hidden">Zhevion</span>
             </a>
 
             <nav aria-label="Primary" className="hidden lg:block">
-              <ul className="flex items-center gap-0.5">
+              <ul className="flex items-center">
                 {LINKS.map((link) => (
                   <li key={link.href}>
                     <a
                       href={destination(link.href)}
-                      className="block rounded-pill px-4 py-2.5 text-sm font-semibold text-ink-soft transition hover:bg-ink/5 hover:text-ink"
+                      className="block rounded-pill px-3 py-2 text-[0.8125rem] font-semibold text-ink-soft transition hover:bg-ink/5 hover:text-ink"
                     >
                       {link.label}
                     </a>
@@ -69,7 +69,7 @@ export function SiteNav({ base = "" }: { base?: string }) {
               <a
                 href={destination("#contact")}
                 onClick={() => trackCTA("nav-start-project")}
-                className="hidden min-h-11 items-center rounded-pill bg-ink px-5 text-sm font-bold text-paper transition hover:-translate-y-0.5 hover:bg-forest-500 sm:inline-flex"
+                className="hidden min-h-10 items-center rounded-pill bg-ink px-4 text-[0.8125rem] font-bold text-paper transition hover:-translate-y-0.5 hover:bg-forest-500 sm:inline-flex"
               >
                 Start a project
               </a>
@@ -79,7 +79,7 @@ export function SiteNav({ base = "" }: { base?: string }) {
                 aria-controls="site-menu"
                 aria-label={open ? "Close menu" : "Open menu"}
                 onClick={() => setOpen((current) => !current)}
-                className="flex h-11 w-11 items-center justify-center rounded-pill text-ink transition-colors hover:bg-ink/5 lg:hidden"
+                className="flex h-10 w-10 items-center justify-center rounded-pill text-ink transition-colors hover:bg-ink/5 lg:hidden"
               >
                 <span className="relative block h-4 w-[18px]" aria-hidden>
                   <span
