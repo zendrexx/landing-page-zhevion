@@ -10,7 +10,7 @@ import { Footer } from "@/components/sections/Footer";
 export default function Home() {
   return (
     <>
-      <SiteNav />
+      <SiteNav variant="editorial" />
       <main id="main">
         <StudioHero />
         <SelectedWork />

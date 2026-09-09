@@ -7,38 +7,41 @@ export function StudioHero() {
   const forgeScreen = FORGE.screens[3];
 
   return (
-    <section className="paper-grain relative overflow-hidden pb-10 pt-32 sm:pt-36 lg:pb-16 lg:pt-44">
-      <div className="studio-grid-lines pointer-events-none absolute inset-0" aria-hidden />
+    <section className="studio-hero relative overflow-hidden pb-10 lg:pb-16" aria-labelledby="studio-hero-heading">
       <div className="shell relative z-10">
-        <div className="grid items-end gap-8 lg:grid-cols-[minmax(0,1.7fr)_minmax(280px,0.65fr)] lg:gap-12">
+        <div className="studio-hero-intro">
           <div>
-            <p className="eyebrow animate-reveal-up text-ink-faint">
+            <p className="studio-hero-eyebrow">
               {STUDIO_HOME.hero.eyebrow}
             </p>
-            <h1 className="mt-5 max-w-[11.5ch] animate-reveal-up text-[clamp(3rem,8.3vw,7.5rem)] font-extrabold leading-[0.94] tracking-[-0.06em] [animation-delay:80ms]">
+            <h1 id="studio-hero-heading" className="studio-hero-heading">
               <span className="sr-only">{STUDIO_HOME.hero.heading}</span>
               <span aria-hidden>
-                We build software that moves businesses{" "}
-                <HeroWordCycle words={STUDIO_HOME.hero.words} className="text-forest-500" />
+                <span className="studio-hero-line">We build software</span>{" "}
+                <span className="studio-hero-line">that moves</span>{" "}
+                <span className="studio-hero-line">
+                  businesses{" "}
+                  <HeroWordCycle words={STUDIO_HOME.hero.words} className="text-forest-500" />
+                </span>
               </span>
             </h1>
           </div>
 
-          <div className="animate-reveal-up pb-1 [animation-delay:160ms]">
-            <p className="max-w-md text-base font-medium leading-[1.7] text-ink-soft sm:text-lg">
+          <div className="studio-hero-copy">
+            <p className="studio-hero-description">
               {STUDIO_HOME.hero.body}
             </p>
-            <div className="mt-7 flex flex-wrap gap-3">
+            <div className="studio-hero-actions">
               <a
                 href="#contact"
-                className="inline-flex min-h-12 items-center justify-center rounded-pill bg-ink px-6 text-sm font-bold text-paper transition hover:-translate-y-0.5 hover:bg-forest-500"
+                className="studio-hero-primary"
               >
                 Start a project
-                <span className="ml-2" aria-hidden>↘</span>
+                <span aria-hidden>↘</span>
               </a>
               <a
                 href="#work"
-                className="inline-flex min-h-12 items-center justify-center rounded-pill border border-ink/15 px-6 text-sm font-bold text-ink transition hover:-translate-y-0.5 hover:border-ink/30 hover:bg-paper-deep"
+                className="studio-hero-secondary"
               >
                 View our work
               </a>

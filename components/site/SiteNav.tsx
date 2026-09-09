@@ -17,7 +17,7 @@ const LINKS = [
  * The existing shared navigation, expanded for the studio homepage. `base`
  * keeps the legal routes able to point back to the homepage anchors.
  */
-export function SiteNav({ base = "" }: { base?: string }) {
+export function SiteNav({ base = "", variant = "floating" }: { base?: string; variant?: "floating" | "editorial" }) {
   const [open, setOpen] = useState(false);
   const [onDark, setOnDark] = useState(false);
   const reduce = useReducedMotion();
@@ -91,24 +91,24 @@ export function SiteNav({ base = "" }: { base?: string }) {
   const mobileMenuBorder = onDark ? "border-white/12" : "border-ink/10";
 
   return (
-    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-5">
+    <header className={`pointer-events-none fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-5 ${variant === "editorial" ? "studio-masthead" : ""}`} data-on-dark={onDark}>
       <motion.div
-        initial={reduce ? { opacity: 0 } : { opacity: 0, y: -16 }}
+        initial={variant === "editorial" ? false : reduce ? { opacity: 0 } : { opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: reduce ? 0.2 : 0.65, ease: [0.16, 1, 0.3, 1] }}
-        className="pointer-events-auto mx-auto w-full max-w-content lg:w-fit"
+        className="site-nav-frame pointer-events-auto mx-auto w-full max-w-content lg:w-fit"
       >
         <div
-          className={`relative rounded-pill border px-2 py-1.5 backdrop-blur-xl transition-colors duration-300 sm:px-2.5 lg:px-3 ${pillSurface}`}
+          className={`site-nav-surface relative rounded-pill border px-2 py-1.5 backdrop-blur-xl transition-colors duration-300 sm:px-2.5 lg:px-3 ${pillSurface}`}
         >
-          <div className="flex items-center justify-between gap-2 lg:justify-start lg:gap-2">
+          <div className="site-nav-row flex items-center justify-between gap-2 lg:justify-start lg:gap-2">
             <a
               href={base || "/"}
               aria-label="Zhevion — home"
-              className={`flex min-h-10 items-center gap-2 rounded-pill px-1.5 transition-colors lg:w-10 lg:justify-center lg:px-0 ${brandText}`}
+              className={`site-nav-brand flex min-h-10 items-center gap-2 rounded-pill px-1.5 transition-colors lg:w-10 lg:justify-center lg:px-0 ${brandText}`}
             >
-              <ZhevionMark size={28} />
-              <span className="text-[0.9rem] font-extrabold tracking-[-0.035em] lg:hidden">Zhevion</span>
+              <ZhevionMark size={variant === "editorial" ? 32 : 28} />
+              <span className="site-nav-wordmark text-[0.9rem] font-extrabold tracking-[-0.035em] lg:hidden">Zhevion</span>
             </a>
 
             <nav aria-label="Primary" className="hidden lg:block">
@@ -117,7 +117,7 @@ export function SiteNav({ base = "" }: { base?: string }) {
                   <li key={link.href}>
                     <a
                       href={destination(link.href)}
-                      className={`block rounded-pill px-2.5 py-2 text-[0.8125rem] font-semibold transition ${navLinkText}`}
+                      className={`site-nav-link block rounded-pill px-2.5 py-2 text-[0.8125rem] font-semibold transition ${navLinkText}`}
                     >
                       {link.label}
                     </a>
@@ -130,7 +130,7 @@ export function SiteNav({ base = "" }: { base?: string }) {
               <a
                 href={destination("#contact")}
                 onClick={() => trackCTA("nav-start-project")}
-                className={`hidden min-h-10 items-center rounded-pill px-4 text-[0.8125rem] font-bold transition hover:-translate-y-0.5 sm:inline-flex ${ctaSurface}`}
+                className={`site-nav-cta hidden min-h-10 items-center rounded-pill px-4 text-[0.8125rem] font-bold transition hover:-translate-y-0.5 sm:inline-flex ${ctaSurface}`}
               >
                 Start a project
               </a>
