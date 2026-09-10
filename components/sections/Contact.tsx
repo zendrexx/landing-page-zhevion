@@ -84,7 +84,7 @@ export function Contact() {
               {STUDIO_HOME.contact.heading}
             </h2>
             <p className="mt-6 max-w-lg text-base font-medium leading-[1.75] text-ink-soft sm:text-lg">
-              {STUDIO_HOME.contact.body}
+              Tell us what you are managing manually, repeatedly, or inefficiently. We will help determine what should be built.
             </p>
 
             {/* What happens next, *before* the click. This used to render only

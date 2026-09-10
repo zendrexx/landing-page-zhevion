@@ -7,6 +7,7 @@ const nextConfig = {
   // Static screenshots are already sized; keep the default (optimized) loader.
   images: {
     formats: ["image/avif", "image/webp"],
+    qualities: [75, 90, 92],
   },
   // Prevent Next from treating the lockfile in the user directory as this
   // application's workspace root.

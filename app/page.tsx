@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { StudioHero } from "@/components/landing/StudioHero";
 import { SelectedWork } from "@/components/landing/SelectedWork";
 import { Services } from "@/components/landing/Services";
-import { ProcessSection, ValueSection } from "@/components/landing/ValueProcess";
+import { ProcessSection } from "@/components/landing/ValueProcess";
 import { TeamSection } from "@/components/landing/TeamAbout";
 import { SiteNav } from "@/components/site/SiteNav";
 import { Contact } from "@/components/sections/Contact";
@@ -22,7 +22,6 @@ export default function Home() {
         <StudioHero />
         <SelectedWork />
         <Services />
-        <ValueSection />
         <ProcessSection />
         <TeamSection />
         <Contact />

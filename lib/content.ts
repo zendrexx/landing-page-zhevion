@@ -610,13 +610,13 @@ export const STUDIO_HOME = {
    */
   team: {
     eyebrow: "Team",
-    heading: "The people doing the work.",
+    heading: "Small team. Direct collaboration.",
     body:
       "Zhevion builds software for businesses and products of its own. It is a small studio, so the people discussing your project stay close to the design and development work throughout it.",
   },
   contact: {
     eyebrow: "Start a project",
-    heading: "Tell us what needs to work better.",
+    heading: "Have a process your business has outgrown?",
     body:
       "Tell us about the business, the bottleneck, or the idea. You do not need a technical brief—we will help define the right first step with you.",
     /**
@@ -726,7 +726,7 @@ export const STUDIO_PROCESS = [
 export const TEAM = [
   {
     name: "Zendrex",
-    role: "Product development",
+    role: "Product & Engineering",
     body:
       "Turns product plans into working web and mobile software, from interface details to the systems behind them.",
     src: "/us/zen.jpg" as string | null,
@@ -744,7 +744,7 @@ export const TEAM = [
   },
   {
     name: "Aldrin",
-    role: "Studio team",
+    role: "Development",
     body:
       "Supports the studio as product work and client solutions move from early ideas into delivery.",
     src: "/us/aldrinhead.jpg" as string | null,

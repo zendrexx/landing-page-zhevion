@@ -38,7 +38,7 @@ export function TeamSection() {
           </div>
         </header>
 
-        <ul className="mt-[clamp(48px,7vw,80px)] grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+        <ul className="mt-[clamp(40px,6vw,64px)] grid gap-6 sm:grid-cols-2 md:grid-cols-3">
           {TEAM.map((member, index) => (
             <Reveal as="li" key={member.name} delay={index * 70}>
               <TeamCard member={member} />
@@ -96,7 +96,6 @@ export function TeamCard({ member }: { member: TeamMember }) {
           ) : null}
         </div>
         <p className="mt-1.5 text-sm font-semibold text-ink-soft">{member.role}</p>
-        <p className="mt-3 text-sm leading-[1.7] text-ink-soft">{member.body}</p>
       </div>
     </article>
   );
