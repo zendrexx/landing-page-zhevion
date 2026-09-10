@@ -9,7 +9,7 @@ const LINKS = [
   { href: "#work", label: "Work" },
   { href: "#services", label: "Services" },
   { href: "#process", label: "Process" },
-  { href: "#about", label: "About" },
+  { href: "#about", label: "Team" },
   { href: "#contact", label: "Contact" },
 ] as const;
 
@@ -144,12 +144,12 @@ export function SiteNav({ base = "", variant = "floating" }: { base?: string; va
               >
                 <span className="relative block h-4 w-[18px]" aria-hidden>
                   <span
-                    className={`absolute left-0 top-[3px] h-[1.5px] w-full rounded-full bg-current transition ${
+                    className={`absolute left-0 top-[3px] h-[1.5px] w-full rounded-pill bg-current transition ${
                       open ? "translate-y-[4px] rotate-45" : ""
                     }`}
                   />
                   <span
-                    className={`absolute bottom-[3px] left-0 h-[1.5px] w-full rounded-full bg-current transition ${
+                    className={`absolute bottom-[3px] left-0 h-[1.5px] w-full rounded-pill bg-current transition ${
                       open ? "-translate-y-[4px] -rotate-45" : ""
                     }`}
                   />
@@ -175,7 +175,7 @@ export function SiteNav({ base = "", variant = "floating" }: { base?: string; va
                       <a
                         href={destination(link.href)}
                         onClick={() => setOpen(false)}
-                        className={`flex min-h-11 items-center justify-between rounded-xl px-3 text-base font-semibold transition ${navLinkText}`}
+                        className={`flex min-h-11 items-center justify-between rounded-control px-3 text-base font-semibold transition ${navLinkText}`}
                       >
                         {link.label}
                         <span aria-hidden>↘</span>

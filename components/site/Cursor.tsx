@@ -187,7 +187,7 @@ function CursorLayer() {
 
     {/* Inner dot */}
     <motion.div
-      className="relative z-10 grid place-items-center rounded-full"
+      className="relative z-10 grid place-items-center rounded-pill"
       animate={{
         width: s.size,
         height: s.size,

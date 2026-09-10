@@ -1,11 +1,18 @@
+import type { Metadata } from "next";
 import { StudioHero } from "@/components/landing/StudioHero";
 import { SelectedWork } from "@/components/landing/SelectedWork";
 import { Services } from "@/components/landing/Services";
 import { ProcessSection, ValueSection } from "@/components/landing/ValueProcess";
-import { AboutSection, TeamSection } from "@/components/landing/TeamAbout";
+import { TeamSection } from "@/components/landing/TeamAbout";
 import { SiteNav } from "@/components/site/SiteNav";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
+
+// Title and description come from the root layout; this only pins the
+// canonical, which "/" was missing while /work and every /legal route had one.
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   return (
@@ -18,7 +25,6 @@ export default function Home() {
         <ValueSection />
         <ProcessSection />
         <TeamSection />
-        <AboutSection />
         <Contact />
       </main>
       <Footer />

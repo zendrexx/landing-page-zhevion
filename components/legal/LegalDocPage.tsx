@@ -72,7 +72,7 @@ export function LegalDocPage({ doc }: { doc: LegalDoc }) {
           <ul className="mt-4 flex flex-col gap-3">
             {doc.tldr.map((line) => (
               <li key={line} className="flex gap-3 text-[15px] leading-relaxed text-cream/90">
-                <span aria-hidden className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--accent)]" />
+                <span aria-hidden className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-pill bg-[color:var(--accent)]" />
                 <span>{line}</span>
               </li>
             ))}

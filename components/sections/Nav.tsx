@@ -43,7 +43,7 @@ export function Nav({ base = "" }: { base?: string }) {
       }`}
     >
       <nav className="shell flex h-16 items-center justify-between" aria-label="Primary">
-        <a href={base || "#"} className="rounded-md" aria-label="Zhevion home">
+        <a href={base || "#"} className="rounded-control" aria-label="Zhevion home">
           <ZhevionMark size={30} />
         </a>
 
@@ -51,7 +51,7 @@ export function Nav({ base = "" }: { base?: string }) {
           <ul className="flex items-center gap-7 text-sm font-medium text-muted">
             {LINKS.map((l) => (
               <li key={l.href}>
-                <a href={`${base}${l.href}`} className="rounded-md transition hover:text-cream">
+                <a href={`${base}${l.href}`} className="rounded-control transition hover:text-cream">
                   {l.label}
                 </a>
               </li>
@@ -68,7 +68,7 @@ export function Nav({ base = "" }: { base?: string }) {
 
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/12 text-cream md:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-control border border-white/12 text-cream md:hidden"
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Close menu" : "Open menu"}
@@ -96,7 +96,7 @@ export function Nav({ base = "" }: { base?: string }) {
               <a
                 href={`${base}${l.href}`}
                 onClick={() => setOpen(false)}
-                className="block rounded-lg px-2 py-2.5 text-cream/90 hover:bg-white/5"
+                className="block rounded-control px-2 py-2.5 text-cream/90 hover:bg-white/5"
               >
                 {l.label}
               </a>

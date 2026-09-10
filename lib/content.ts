@@ -187,14 +187,15 @@ export const FORGE = {
       body: "A strength-level grade (Novice and up) measured against bodyweight standards, plus streaks to keep you consistent.",
     },
   ] satisfies Feature[],
-  // Real portrait screenshots (in /public/screens/forge), 720×1560.
+  // Real portrait screenshots (in /public/screens/forge), 720×1560. WebP,
+  // like Zebite's — as PNGs these six were 951KB for the same content.
   screens: [
-    { src: "/screens/forge/home.png", label: "Today", alt: "Forge home screen showing today's Bench Day session from Forge Strength, a quick-start tile, and a 15 day streak calendar." },
-    { src: "/screens/forge/programs.png", label: "Programs", alt: "Browse Programs list with Forge Linear, Forge Strength and Forge Peak, each showing weeks, days per week and total workouts." },
-    { src: "/screens/forge/view_program.png", label: "Program", alt: "Forge Strength program broken into weeks and days, with a Start Week 4 Day 2 button." },
-    { src: "/screens/forge/log_workout.png", label: "Log a set", alt: "Log Workout screen with a live duration timer and per-set weight, reps and RPE entry for Bench Press." },
-    { src: "/screens/forge/history.png", label: "History", alt: "History screen with this week's workouts, volume lifted, recent PRs and a weekly volume chart." },
-    { src: "/screens/forge/profile.png", label: "Strength level", alt: "Profile showing an Advanced strength level graded against bodyweight, plus squat, bench and deadlift personal records." },
+    { src: "/screens/forge/home.webp", label: "Today", alt: "Forge home screen showing today's Bench Day session from Forge Strength, a quick-start tile, and a 15 day streak calendar." },
+    { src: "/screens/forge/programs.webp", label: "Programs", alt: "Browse Programs list with Forge Linear, Forge Strength and Forge Peak, each showing weeks, days per week and total workouts." },
+    { src: "/screens/forge/view_program.webp", label: "Program", alt: "Forge Strength program broken into weeks and days, with a Start Week 4 Day 2 button." },
+    { src: "/screens/forge/log_workout.webp", label: "Log a set", alt: "Log Workout screen with a live duration timer and per-set weight, reps and RPE entry for Bench Press." },
+    { src: "/screens/forge/history.webp", label: "History", alt: "History screen with this week's workouts, volume lifted, recent PRs and a weekly volume chart." },
+    { src: "/screens/forge/profile.webp", label: "Strength level", alt: "Profile showing an Advanced strength level graded against bodyweight, plus squat, bench and deadlift personal records." },
   ],
   screenSize: { w: 720, h: 1560 },
   screenChrome: "#0f0f0f", // matches the capture's near-black top edge
@@ -332,18 +333,144 @@ export const WORK = {
 export type ProjectKind = "Product" | "Portfolio";
 
 /**
+ * Guanzon — the studio's business-system case study.
+ *
+ * HONESTY: this is NOT a Zhevion client engagement. No contract, SOW, or client
+ * document exists for it, and the site must never imply one — the value here is
+ * "these people have built operational software inside a real company," which
+ * is true, not "a business hired Zhevion," which is not. Do not reword `role`
+ * or `category` into client language.
+ *
+ * WHAT THIS SECTION IS FOR: proving Zhevion can take a process that moves
+ * between people and approval stages and turn it into software. It is not a
+ * tour of the interface. An earlier pass annotated seven regions of the
+ * screenshot — every field group and the whole button bar — which documented
+ * the screen instead of telling the story. Three annotations and one workflow
+ * is the version a prospective client actually reads. Resist adding more.
+ */
+export const GUANZON_PROJECT = {
+  name: "Guanzon",
+  system: "Inventory Stock Request System",
+  category: "Business system · Internal software",
+
+  /** The workflow, in one paragraph. What the software organises, not what it looks like. */
+  summary:
+    "Stock requests carry product information, quantities, references, and approval states. The module brings those parts together into one structured transaction workflow.",
+
+  /**
+   * Scale, stated plainly. Six divisions is what makes this more than a single
+   * form — it is one workflow serving several separate businesses.
+   *
+   * Only the divisions we can actually name are named. "MP" is safe because the
+   * capture's own status bar spells out "Mobile Phone" beside it; the remaining
+   * division is left uncounted rather than guessed at.
+   */
+  divisions:
+    "One workflow serving six business divisions of the group, among them motorcycle, mobile phone, food, and accessories.",
+
+  scope: "Two request types · entry, confirmation, update, history · six divisions",
+  technology: "Java · JavaFX · MySQL",
+  role:
+    "Built by Zendrex and Aldrin as part of Guanzon Group of Companies' internal software.",
+
+  image: "/work/guanzon.png",
+  /** Intrinsic pixels. The plate derives its box from these — never a fixed ratio. */
+  imageSize: { w: 1630, h: 965 },
+  screenName: "Inv Stock Request Entry — MP General",
+  privacyNote: "Record data blurred for privacy.",
+  alt:
+    "Guanzon Inventory Stock Request desktop screen: transaction search, request details and remarks, inventory item fields with quantity on hand and order quantity, a line-item table, a transaction list panel, and the record action toolbar. Record data is blurred.",
+
+  /**
+   * Three regions, not seven. `x`/`y` are the centre of each as a percentage of
+   * the image's own 1630x965 box, measured off the capture. Each one has to
+   * earn its place by carrying a step of the workflow — if a marker only names
+   * a widget, it does not belong here.
+   */
+  regions: [
+    { n: 1, x: 24, y: 5.3, title: "Create & retrieve", body: "New requests, or an existing one found by transaction or reference number." },
+    { n: 2, x: 57.5, y: 10.1, title: "Request status", body: "The state badge. This record is OPEN." },
+    { n: 3, x: 50, y: 34.5, title: "Item & quantities", body: "Product details, stock on hand, and the quantity being requested." },
+  ],
+
+  /**
+   * What was actually built, in the client's own terms: two request families,
+   * each with the same four operations. This replaced an invented
+   * "request -> review -> approval -> process" flow, which read plausibly but
+   * described a generic approval pipeline rather than this system.
+   *
+   * Deliberately NOT rendered with arrows between them. Entry then Confirmation
+   * is sequential, but Update and History are supporting operations you reach
+   * whenever you need them — drawing a single arrow chain through all four
+   * would assert an order that does not exist.
+   *
+   * The capture above is the Entry screen of the Stock Request family, which is
+   * why its tab reads "Inv Stock Request Entry".
+   */
+  requestTypes: "Two request types — Stock Request and Inventory Request (ROQ) — each built with the same four operations.",
+
+  operations: [
+    { n: "01", title: "Entry", body: "Create a request against product, quantity, and reference details." },
+    { n: "02", title: "Confirmation", body: "Review and approve. A request moves from OPEN through CONFIRMED and PROCESSED, or ends as CANCELLED or VOID." },
+    { n: "03", title: "Update", body: "Amend a request while it is still open." },
+    { n: "04", title: "History", body: "Retrieve past transactions by number, reference, or date." },
+  ],
+} as const;
+
+/**
+ * The hero's closing index — a contents strip into Selected Work.
+ *
+ * This replaced a dark "product stage" card that floated two rotated phones on
+ * a radial-gradient glow over a grid texture. That block was decoration: it
+ * repeated a gesture used again further down, put two competing accent hues in
+ * one frame, and led with the two consumer apps — the weakest evidence for a
+ * business evaluating whether Zhevion can build an operational system.
+ *
+ * This is structural instead. Every row is a real anchor into that project's
+ * case study, so the first screen doubles as wayfinding, and the order is
+ * commercial: the business system first.
+ *
+ * `line` says plainly what each thing is. Not a slogan, and nothing here
+ * claims a store listing — neither app is published yet.
+ */
+export const HERO_WORK_INDEX = [
+  {
+    number: "01",
+    name: GUANZON_PROJECT.name,
+    line: GUANZON_PROJECT.system,
+    tag: "Business system",
+    href: "#guanzon",
+  },
+  {
+    number: "02",
+    name: GROCERY.name,
+    line: "Meal planning, grocery budgeting, and pantry tracking",
+    tag: "Mobile app",
+    href: "#zebite",
+  },
+  {
+    number: "03",
+    name: FORGE.name,
+    line: "Strength programs, workout logging, and progress",
+    tag: "Mobile app",
+    href: "#repforge",
+  },
+] as const;
+
+/**
  * Case-study entries for the Work section's Stories block, and for the
  * standalone /work page. `zebite` and `repforge` are looked up by `key`
  * against GROCERY/FORGE for their real name/summary/screenshot — nothing
  * here duplicates that data.
  *
- * The remaining entries are real freelance/personal work by studio people —
- * `person` names who built it, `image` is a real screenshot (no fabricated
- * device mockups; HONESTY RULE applies here too).
+ * The remaining entries are real freelance/personal/professional work by the
+ * people behind the studio — `people` names who built it, `image` is a real
+ * screenshot (no fabricated device mockups; HONESTY RULE applies here too).
  *
- * `guanzon` is the Inventory Stock Request System Zendrex built as a Junior
- * Software Developer at Guanzon Group of Companies — screenshot copied from
- * zendrex.zhevion.com's own portfolio (outsource.png there).
+ * `guanzon` is the Inventory Stock Request System Zendrex and Aldrin built
+ * inside Guanzon Group of Companies' own software — see GUANZON_PROJECT above
+ * for why it must never be labelled a Zhevion client engagement. Screenshot
+ * copied from zendrex.zhevion.com's own portfolio (outsource.png there).
  */
 export const PROJECTS = [
   {
@@ -365,11 +492,12 @@ export const PROJECTS = [
   {
     key: "guanzon",
     kind: "Portfolio",
-    name: "Inventory Stock Request System",
-    person: "Zendrex",
-    summary:
-      "A Java/JavaFX desktop module handling item requests, multi-step approvals, and stock tracking, built as part of Guanzon Group of Companies' internal software.",
-    image: "/work/guanzon.png",
+    name: GUANZON_PROJECT.system,
+    people: ["Zendrex", "Aldrin"],
+    // The card renders the credit separately, so this is the system, not who
+    // built it — otherwise the two lines say the same thing twice.
+    summary: GUANZON_PROJECT.summary,
+    image: GUANZON_PROJECT.image,
     tags: ["Java", "JavaFX", "MySQL"],
     href: US.people[0].href,
   },
@@ -377,7 +505,7 @@ export const PROJECTS = [
     key: "safetycrib",
     kind: "Portfolio",
     name: "SafetyCrib",
-    person: "Aldrin",
+    people: ["Aldrin"],
     summary:
       "An infant safety system that uses computer vision to detect vomiting events, combining a YOLO-based detection model with a React Native mobile application.",
     image: "/work/safetycrib.png",
@@ -388,7 +516,7 @@ export const PROJECTS = [
     key: "rgm",
     kind: "Portfolio",
     name: "RGM Furniture",
-    person: "Aldrin",
+    people: ["Aldrin"],
     summary:
       "A full-stack e-commerce platform built for a local furniture business, featuring product browsing, cart and ordering functionality, Stripe payments, and MongoDB.",
     image: "/work/rgm.png",
@@ -399,7 +527,7 @@ export const PROJECTS = [
     key: "beru",
     kind: "Portfolio",
     name: "Beru",
-    person: "Aldrin",
+    people: ["Aldrin"],
     summary:
       "An interactive mental-health-focused web application that combines a 3D digital world, real-time communication, and immersive user interactions.",
     image: "/work/beru.jpg",
@@ -453,43 +581,55 @@ export const STUDIO_HOME = {
   },
   work: {
     eyebrow: "Selected work",
-    heading: "Working products, not presentation theatre.",
+    heading: "Software built for real work.",
     body:
-      "Our own products are where product thinking, interface design, and engineering meet. Every screen below comes from software we are actively building.",
+      "Professional business-system experience, followed by products designed and built at Zhevion.",
   },
   services: {
     eyebrow: "Services",
-    heading: "The right system for the work in front of you.",
+    heading: "What we build for businesses.",
     body:
-      "We start with the business problem, then choose the smallest useful product that can solve it well.",
+      "We start with the work that needs to improve, then define the smallest useful system that can support it well.",
   },
   value: {
     eyebrow: "From scattered to clear",
-    heading: "Your workflow should not depend on memory and manual follow-up.",
+    heading: "From scattered work to one clear system.",
     body:
-      "We study how information enters your business, where it gets stuck, and what your team repeats. Then we design one practical system around the way the work needs to move.",
+      "We study where information enters, where it gets stuck, and what your team repeats. Then we shape software around the way the work needs to move.",
   },
   process: {
     eyebrow: "Process",
-    heading: "Clear decisions at every stage.",
+    heading: "How a project moves forward.",
   },
+  /**
+   * There is no separate `about` entry any more. The old About section restated
+   * the three STUDIO_SERVICES blocks verbatim and repeated the hero, so its one
+   * non-redundant idea — that the studio builds both software for businesses and
+   * products of its own — was folded into `team.body`, and the `#about` anchor
+   * moved onto the team section so the nav and footer links keep resolving.
+   */
   team: {
-    eyebrow: "The people behind Zhevion",
-    heading: "Small team. Close collaboration.",
+    eyebrow: "Team",
+    heading: "The people doing the work.",
     body:
-      "The people discussing the problem are the same people shaping and building the solution.",
-  },
-  about: {
-    eyebrow: "About Zhevion",
-    heading: "One studio for client software and products of our own.",
-    body:
-      "Zhevion is the umbrella behind the software we build for businesses and the focused products we build ourselves. We take ideas from an early conversation through product decisions, interface design, engineering, launch, and the improvements that follow.",
+      "Zhevion builds software for businesses and products of its own. It is a small studio, so the people discussing your project stay close to the design and development work throughout it.",
   },
   contact: {
     eyebrow: "Start a project",
-    heading: "Have something your business should be doing better?",
+    heading: "Tell us what needs to work better.",
     body:
-      "Tell us about the work, the bottleneck, or the idea. You don't need to know what should be built yet — we'll help figure that out with you.",
+      "Tell us about the business, the bottleneck, or the idea. You do not need a technical brief—we will help define the right first step with you.",
+    /**
+     * What happens after someone sends the form. Rendered beside the form
+     * *before* submitting (the uncertainty these answer happens before the
+     * click, not after) and again, condensed, in the success panel.
+     */
+    steps: [
+      { number: "01", title: "Review", body: "We read what you sent and look at what you are trying to build or improve." },
+      { number: "02", title: "Discovery", body: "We talk through the workflow, the people using it, and the constraints." },
+      { number: "03", title: "Scope", body: "We agree on the right first version and what belongs in it." },
+      { number: "04", title: "Proposal", body: "We send the approach, scope, timeline, and cost." },
+    ],
   },
 } as const;
 
@@ -536,44 +676,50 @@ export const STUDIO_SERVICES = [
 ] as const;
 
 export const WORKFLOW_PROBLEMS = [
-  "Leads disappearing in Messenger",
-  "Manual tracking across spreadsheets",
-  "Repetitive admin work",
-  "No central source of business data",
-  "Customers asking the same questions",
-  "Tools and processes that do not connect",
+  "Leads buried in Messenger conversations",
+  "Records spread across separate spreadsheets",
+  "The same information encoded more than once",
+  "No shared source of truth for the team",
+  "Repeated customer questions and follow-up",
+  "Tools that do not share the same workflow",
 ] as const;
 
 export const STUDIO_PROCESS = [
   {
     number: "01",
     title: "Discover",
-    body: "Understand the business, the people doing the work, and the real constraint.",
+    body: "We learn the workflow, users, constraints, and business problem.",
+    output: "A clear problem definition",
   },
   {
     number: "02",
     title: "Plan",
-    body: "Define the useful first version, priorities, and a practical route to delivery.",
+    body: "We decide what belongs in the first useful version and define the scope.",
+    output: "An agreed first version",
   },
   {
     number: "03",
     title: "Design",
-    body: "Shape the flow and interface around decisions users need to make.",
+    body: "We map the flows and shape the interface around the tasks people need to complete.",
+    output: "Reviewable flows and interface",
   },
   {
     number: "04",
     title: "Build",
-    body: "Develop the working product with maintainable foundations and regular review.",
+    body: "We develop working software and review it progressively with you.",
+    output: "A tested working product",
   },
   {
     number: "05",
     title: "Launch",
-    body: "Prepare the product, content, and handoff for real-world use.",
+    body: "We test, prepare production, and put the system into real use.",
+    output: "A production-ready release",
   },
   {
     number: "06",
     title: "Improve",
-    body: "Learn from use, remove friction, and evolve what creates value.",
+    body: "We fix friction and evolve the product based on what happens in practice.",
+    output: "Focused improvements after launch",
   },
 ] as const;
 
@@ -611,6 +757,6 @@ export const PROJECT_NEEDS = [
   "Business system",
   "Mobile app",
   "Website",
-  "Automation",
+  "Automation / integration",
   "Not sure yet",
 ] as const;

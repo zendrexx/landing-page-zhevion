@@ -5,7 +5,7 @@ const STUDIO_LINKS = [
   { href: "#work", label: "Work" },
   { href: "#services", label: "Services" },
   { href: "#process", label: "Process" },
-  { href: "#about", label: "About" },
+  { href: "#about", label: "Team" },
   { href: "#contact", label: "Contact" },
 ] as const;
 

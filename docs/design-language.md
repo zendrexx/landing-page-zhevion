@@ -37,9 +37,10 @@ Reverse-engineered from the live Zhevion site (`app/`, `components/`, `tailwind.
 - **Contrast:** High but never harsh. Ink-on-paper contrast is strong for legibility, but secondary text steps down through named opacity tiers (`ink-soft`, `ink-faint`) rather than jumping straight to gray — contrast is a gradient, not a binary.
 - **Whitespace:** Treated as a structural material, not leftover space. Sections use `clamp()`-based vertical rhythm (e.g. `py-[clamp(72px,14vh,160px)]`) so spacing scales fluidly with viewport instead of snapping between fixed breakpoints. Whitespace is what makes single-accent color read as intentional instead of unfinished.
 - **Typography character:** One typeface family (Plus Jakarta Sans, variable weight) doing everything — display, body, UI. Hierarchy comes from weight + size + tracking, not from mixing fonts. Display sizes are extra-bold and tight; body copy is medium-weight and comfortably loose.
-- **Shapes / Geometry:** Rectilinear grid with two rounded exceptions: fully-pilled controls (`999px` radius — nav, buttons, tags) and softly-rounded cards (`20px` — the `rounded-card` token). No arbitrary radii in between; a shape is either sharp, a pill, or a card.
+- **Shapes / Geometry:** Rectilinear grid with four radius roles: sharp editorial controls (`4px`), soft cards (`20px`), the oversized product stage (`38px`), and fully-pilled controls (`999px`). No arbitrary radii in between — every shape picks one of the four.
 - **Borders:** Hairline only (`1px`, low-opacity ink or white). Borders separate, they never decorate — no thick strokes, no colored borders except the one accent underline.
-- **Radius:** Two tokens only — `pill` (999px, for anything you'd tap or scan quickly: nav, buttons, badges) and `card` (20px, for content containers). Consistency here is what makes disparate components feel like one family.
+- **Radius:** Four tokens, one job each — `control` (4px: anything pressed, typed into, focused, or read as a chip), `card` (20px: genuine objects sitting on a ground), `stage` (38px: the oversized dark product stage, and nothing else), `pill` (999px: only genuine lozenges and circles). Radii expressed as a percentage of their own element — the logo mark, the app lockups, `DeviceFrame`'s `width * 0.16` — are *shapes*, not surface radii, and are exempt. Consistency here is what makes disparate components feel like one family.
+  > This section used to claim two tokens. It was never true in the code (15 distinct values shipped), and the approved editorial hero uses both a 4px control radius and a 38px stage — so the doc was what was wrong, not the hero. Four tokens with a written rule each beats two tokens honoured in a third of the codebase.
 - **Shadows / Depth:** Shadows are soft, diffuse, and rare — a nav pill gets a barely-there dual shadow (`0_1px_2px` + a big soft `-16px` spread) for float, not a hard drop shadow. Depth is mostly implied by z-layering and the dark/light contrast between panels, not by box-shadow stacking.
 - **Texture:** A near-invisible grain/noise overlay (`.paper-grain`, `.grain`) on hero/dark surfaces — SVG turbulence at very low opacity, blended with `multiply`/`overlay`. It's felt more than seen; it's what keeps flat color from looking like a vector file.
 - **Grid:** A single centered content column (`max-width: 1200px`, fluid inline padding via `clamp(20px, 5vw, 48px)`) — the `.shell` pattern. Everything aligns to this one column; there is no separate 12-column CSS grid system running underneath.
@@ -141,7 +142,7 @@ Reverse-engineered from the live Zhevion site (`app/`, `components/`, `tailwind.
 - **CTAs:** Understated by default (text + underline + arrow); a filled pill button is reserved for the one primary action per page. Never more than one filled/high-emphasis CTA visible at a time.
 - **Footers:** (Legacy dark pattern, still valid) — dense but organized, dark ground, cream text, same hairline-rule + eyebrow-label conventions as the rest of the system; no separate visual language for the footer.
 
-**What makes them belong to one family:** the same two radii (pill/card), the same hairline-border weight, the same eyebrow-before-heading pattern, the same three-step text-opacity ladder, and the same "color only for the one accented detail" rule — applied without exception across every component.
+**What makes them belong to one family:** the same four radius tokens, the same hairline-border weight, the same eyebrow-before-heading pattern, the same three-step text-opacity ladder, and the same "color only for the one accented detail" rule — applied without exception across every component.
 
 ---
 
@@ -220,7 +221,7 @@ Reverse-engineered from the live Zhevion site (`app/`, `components/`, `tailwind.
 - Reserve exactly one saturated accent color per site/section ("world"), used only as a small detail — never a large fill.
 - Set an "eyebrow" label (tiny, bold, uppercase, wide-tracked, low-opacity) before every section heading.
 - Size display type with real measured math (`clamp()` derived from actual font metrics), not an eyeballed guess.
-- Use only two border-radius values sitewide: full-pill and one soft card radius (~20px).
+- Use only the four border-radius tokens sitewide: control (4px), card (20px), stage (38px), pill (999px).
 - Keep borders to 1px hairlines at low opacity — never bold or colored borders.
 - Drive entrances and scroll effects with eased springs / ease-out-expo curves, staggered by index.
 - Alternate light "paper" passages with short dark "graphite" passages as a compositional rhythm.
@@ -233,7 +234,7 @@ Reverse-engineered from the live Zhevion site (`app/`, `components/`, `tailwind.
 - Don't fill large surfaces with the accent color — it's a spark, not a background.
 - Don't use soft-UI/glassmorphism, neon glow, gradient-mesh blobs, or generic 3D hero renders.
 - Don't use stock photography or generic icon-pack illustration as brand imagery.
-- Don't mix multiple border-radius values or multiple border weights across components.
+- Don't invent a border-radius outside the four tokens, and don't mix multiple border weights across components.
 - Don't animate with linear/default easing, or add motion that doesn't track scroll, state, or arrival.
 - Don't let a scroll-jacked/pinned effect run on mobile or under reduced motion — always provide the plain fallback.
 - Don't title-case or bold-everything navigation and buttons — sentence case, one weight tier per role.
@@ -281,8 +282,10 @@ container-max:  1200px
 section-pad-y:  clamp(56px, 10vh, 160px)  /* scale by section importance */
 
 /* ---- Radius ---- */
---radius-pill:  999px   /* nav, buttons, badges, tags */
---radius-card:  20px    /* cards, panels, image containers */
+--r-control:    4px     /* buttons, inputs, badges, tags, focus ring, plates */
+--r-card:       20px    /* cards, panels, image containers */
+--r-stage:      38px    /* the oversized dark product stage only */
+--r-pill:       999px   /* genuine lozenges and circles only */
 
 /* ---- Borders ---- */
 width: 1px always
@@ -340,8 +343,8 @@ CORE IDENTITY
   leading (1.6-1.75).
 - Precede every section heading with a small "eyebrow" label: uppercase,
   700 weight, 0.18em letter-spacing, ~12px, low-opacity ink/cream.
-- Two border-radius values only: a full pill (999px) for nav/buttons/tags,
-  and a ~20px "card" radius for containers. Borders are always 1px hairlines
+- Four border-radius tokens only: 4px controls, 20px cards, 38px product
+  stage, 999px pills. Borders are always 1px hairlines
   at low opacity, never bold or colored (except the one accent-line token).
 - All content sits inside one shared centered container (~1200px max-width,
   fluid clamp()-based inline padding) — no separate grid system.

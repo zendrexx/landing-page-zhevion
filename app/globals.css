@@ -27,6 +27,18 @@
   --hairline: rgba(245, 245, 243, 0.1);
   --page-x: clamp(20px, 5vw, 48px);
 
+  /* ---- Radius ---------------------------------------------------------
+     Four tokens, mirrored in tailwind.config.ts (see the note there for what
+     each one is for). Anything that needs a radius picks one of these; there
+     are no arbitrary values. The exceptions are radii expressed as a
+     percentage of their own element (logo mark, app lockups, DeviceFrame),
+     which are shapes rather than surface radii, and StudioHero's product
+     stage, which keeps its literal value by sign-off. */
+  --r-control: 4px;
+  --r-card: 20px;
+  --r-stage: 38px;
+  --r-pill: 999px;
+
   /* ---- Light canvas (studio / home) ----------------------------------
      The studio surface is warm paper with forest-green ink; lime stays a
      micro-accent only (cursor, rules, dots) so the green reads as identity
@@ -64,7 +76,7 @@ body {
 :focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: var(--r-control);
 }
 
 .skip-link {
@@ -75,7 +87,7 @@ body {
   background: var(--ink);
   color: var(--paper);
   padding: 10px 16px;
-  border-radius: 10px;
+  border-radius: var(--r-control);
   font-weight: 700;
   transition: top 0.2s ease;
 }
@@ -238,7 +250,7 @@ body {
   top: 0.7em;
   width: 5px;
   height: 5px;
-  border-radius: 999px;
+  border-radius: var(--r-pill);
   background: var(--accent, var(--muted));
   opacity: 0.7;
 }
@@ -253,7 +265,7 @@ body {
   margin-top: 1.5rem;
   overflow-x: auto;
   border: 1px solid var(--hairline);
-  border-radius: 14px;
+  border-radius: var(--r-card);
 }
 
 .legal-prose table {
@@ -344,6 +356,10 @@ html.js .reveal.is-visible {
 .dark-panel {
   background: var(--graphite-900);
   color: var(--cream);
+  --focus: var(--volt-soft);
+}
+
+.dark-focus {
   --focus: var(--volt-soft);
 }
 
@@ -486,7 +502,7 @@ html.has-cursor select {
 
 .studio-masthead a,
 .studio-masthead button {
-  border-radius: 4px;
+  border-radius: var(--r-control);
 }
 
 .studio-masthead .site-nav-brand {
@@ -545,6 +561,209 @@ html.has-cursor select {
   display: block;
 }
 
+.hero-word-reserve {
+  color: transparent;
+}
+
+.hero-word-cycle::after {
+  content: attr(data-word-one);
+  position: absolute;
+  inset: 0;
+  color: var(--forest-500);
+  white-space: nowrap;
+  animation: studio-word-cycle 16.8s ease-in-out infinite;
+}
+
+@keyframes studio-word-cycle {
+  0%, 21% {
+    content: attr(data-word-one);
+    opacity: 1;
+  }
+  23% {
+    content: attr(data-word-one);
+    opacity: 0;
+  }
+  25%, 46% {
+    content: attr(data-word-two);
+    opacity: 1;
+  }
+  48% {
+    content: attr(data-word-two);
+    opacity: 0;
+  }
+  50%, 71% {
+    content: attr(data-word-three);
+    opacity: 1;
+  }
+  73% {
+    content: attr(data-word-three);
+    opacity: 0;
+  }
+  75%, 96% {
+    content: attr(data-word-four);
+    opacity: 1;
+  }
+  98% {
+    content: attr(data-word-four);
+    opacity: 0;
+  }
+  100% {
+    content: attr(data-word-one);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-word-cycle::after {
+    content: attr(data-word-one);
+    animation: none;
+  }
+}
+
+/* Hero work index — the contents strip that replaced the old product stage.
+   Rows are a plain grid: number, name, descriptor, category, arrow. Stacked on
+   small screens so the name and its descriptor stay adjacent instead of being
+   split across a wide gutter. */
+.hero-index-row {
+  display: grid;
+  grid-template-columns: 2.25rem 1fr auto;
+  grid-template-areas:
+    "num name arrow"
+    ".   line line"
+    ".   tag  tag";
+  align-items: baseline;
+  gap: 0.35rem 1rem;
+  border-bottom: 1px solid var(--rule);
+  padding: 1.125rem 0;
+}
+
+.hero-index-num { grid-area: num; }
+.hero-index-name { grid-area: name; }
+.hero-index-line { grid-area: line; }
+.hero-index-tag { grid-area: tag; }
+.hero-index-arrow { grid-area: arrow; justify-self: end; }
+
+/* The preview only exists where hover does. Below lg the rows stand alone,
+   which is the layout that shipped before the panel was added. */
+.hero-index-preview {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .hero-index-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .hero-index-row {
+    grid-template-columns: 3rem minmax(0, 0.38fr) minmax(0, 1fr) 7.5rem 1.25rem;
+    grid-template-areas: "num name line tag arrow";
+    gap: 1.25rem;
+    padding: 1.25rem 0;
+  }
+
+  .hero-index-preview {
+    display: block;
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    border-radius: var(--r-control);
+    background: var(--paper-deep);
+  }
+
+  .hero-index-preview > * {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+
+  /* Default state, so the panel is never empty on load or on touch. */
+  .hero-index-preview > [data-p="1"] {
+    opacity: 1;
+  }
+
+  /* Hover OR keyboard focus swaps the panel. `:has()` keeps this stateless —
+     no JS, and a browser without it simply keeps showing the default. */
+  .hero-index-shell:has(.hero-index-row:is(:hover, :focus-visible)) .hero-index-preview > * {
+    opacity: 0;
+  }
+
+  .hero-index-shell:has(.hero-index-row[data-i="1"]:is(:hover, :focus-visible)) .hero-index-preview > [data-p="1"],
+  .hero-index-shell:has(.hero-index-row[data-i="2"]:is(:hover, :focus-visible)) .hero-index-preview > [data-p="2"],
+  .hero-index-shell:has(.hero-index-row[data-i="3"]:is(:hover, :focus-visible)) .hero-index-preview > [data-p="3"] {
+    opacity: 1;
+  }
+
+  /* The desktop is fitted as a complete window; the mobile products use two
+     complete device views so the panel reads as a composed project card. */
+  .hero-preview-plate {
+    overflow: hidden;
+  }
+
+  .hero-preview-guanzon {
+    padding: 1rem;
+    background: var(--paper);
+  }
+
+  .hero-preview-desktop {
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid rgba(7, 48, 36, 0.18);
+    border-radius: 0.35rem;
+    background: white;
+    box-shadow: 0 18px 40px -24px rgba(7, 48, 36, 0.42);
+  }
+
+  .hero-preview-desktop-image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .hero-preview-phones {
+    align-items: center !important;
+    justify-items: center;
+    padding: 0 1.25rem;
+  }
+
+  .hero-preview-zebite,
+  .hero-preview-repforge {
+    background: var(--paper);
+  }
+
+  .hero-preview-zebite {
+    --hero-phone-shadow: rgba(7, 48, 36, 0.28);
+  }
+
+  .hero-preview-repforge {
+    --hero-phone-shadow: rgba(14, 15, 16, 0.34);
+  }
+
+  .hero-preview-device-pair {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-preview-phone {
+    box-shadow: 0 18px 32px -22px var(--hero-phone-shadow);
+  }
+
+  .hero-preview-phone-back,
+  .hero-preview-phone-front {
+    transform: none;
+  }
+}
+
 .studio-hero-copy {
   max-width: 34rem;
 }
@@ -577,7 +796,7 @@ html.has-cursor select {
 
 .studio-hero-primary {
   gap: 0.75rem;
-  border-radius: 4px;
+  border-radius: var(--r-control);
   padding-inline: 1.25rem;
   background: var(--ink);
   color: var(--paper);
@@ -631,42 +850,98 @@ html.has-cursor select {
   mask-image: linear-gradient(to bottom, #000 0%, transparent 92%);
 }
 
-.hero-product-stage {
+.text-link {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.4em;
+  transition: color 0.2s, text-decoration-color 0.2s;
+}
+
+.text-link:hover {
+  color: var(--forest-500);
+  text-decoration-color: currentColor;
+}
+
+/* Landscape screenshot plate.
+   The frame is derived from the image, never the other way round: no
+   aspect-ratio and no object-fit here, so the intrinsic width/height on the
+   <Image> decides the box. The previous rule forced 16/9 (1.778) onto a
+   1630x965 (1.689) capture with object-cover, which quietly clipped ~5% off
+   the *bottom* — the toolbar labels and status bar, the most useful strip in
+   the whole screenshot.
+
+   `position: relative` is load-bearing: the numbered region markers are
+   absolutely positioned against this box, so their percentage coordinates map
+   onto the image's own geometry at every viewport. */
+
+.work-plate {
   position: relative;
-  /* The phones are top-anchored (.hero-phone-*'s own `top`) while the
-     "Zebite"/"RepForge" badges below are bottom-anchored (bottom-5 in
-     StudioHero.tsx) — at 510px the two collided on mobile, since a phone's
-     scaled-down bottom edge landed inside the badge row's own band and read
-     as covering the badge text. Taller stage = more gap between the two,
-     independent of either one's own position. */
-  min-height: 620px;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-control);
+  background: var(--paper-deep);
 }
 
-.hero-stage-light {
-  background:
-    radial-gradient(55% 75% at 50% 100%, rgba(245, 245, 243, 0.13), transparent 72%),
-    radial-gradient(34% 52% at 48% 72%, rgba(27, 92, 65, 0.34), transparent 75%),
-    radial-gradient(32% 48% at 74% 72%, rgba(124, 92, 255, 0.25), transparent 76%);
+/* Below sm the plate bleeds to the viewport edges (see the negative margin in
+   SelectedWork.tsx). Square it off there — a 4px radius floating against the
+   screen edge reads as a mistake rather than a corner. */
+@media (max-width: 639px) {
+  .work-plate {
+    border-inline: 0;
+    border-radius: 0;
+  }
 }
 
-.hero-phone,
+/* Horizontal screen rail (Zebite's filmstrip). It remains natively scrollable
+   through compact desktop widths, then becomes a static row only once all
+   three screens have room. The visible scrollbar keeps it usable with a mouse. */
+.film-rail {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ink-faint) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+.film-rail::-webkit-scrollbar {
+  height: 0.5rem;
+}
+
+@media (min-width: 1280px) {
+  .film-rail {
+    overflow-x: visible;
+    scroll-snap-type: none;
+  }
+}
+
+/* Primary action inside a case study. This used to be cream-on-graphite, which
+   was right when Zebite sat on a dark panel and is invisible now that it sits
+   on paper — same fill as .studio-hero-primary so the page has one primary
+   button, not two. */
+.case-primary-light {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-control);
+  background: var(--ink);
+  padding-inline: 1.25rem;
+  color: var(--paper);
+  font-size: 0.875rem;
+  font-weight: 700;
+  transition: background-color 0.2s;
+}
+
+.case-primary-light:hover {
+  background: var(--forest-500);
+}
+
 .project-phone {
   position: absolute;
   transform-origin: top center;
-}
-
-.hero-phone-grocery {
-  left: 42%;
-  top: 112px;
-  transform: translateX(-64%) rotate(-6deg) scale(0.68);
-  z-index: 8;
-}
-
-.hero-phone-forge {
-  left: 64%;
-  top: 142px;
-  transform: translateX(-35%) rotate(6deg) scale(0.62);
-  z-index: 9;
 }
 
 .project-stage::after {
@@ -718,21 +993,6 @@ html.has-cursor select {
 }
 
 @media (min-width: 640px) {
-  .hero-product-stage {
-    min-height: 580px;
-  }
-
-  .hero-phone-grocery {
-    left: 45%;
-    top: 92px;
-    transform: translateX(-70%) rotate(-6deg) scale(0.86);
-  }
-
-  .hero-phone-forge {
-    left: 66%;
-    top: 125px;
-    transform: translateX(-18%) rotate(6deg) scale(0.8);
-  }
 
   .project-phone-primary {
     left: 44%;
@@ -748,21 +1008,6 @@ html.has-cursor select {
 }
 
 @media (min-width: 1024px) {
-  .hero-product-stage {
-    min-height: 620px;
-  }
-
-  .hero-phone-grocery {
-    left: 52%;
-    top: 56px;
-    transform: translateX(-72%) rotate(-6deg) scale(1.04);
-  }
-
-  .hero-phone-forge {
-    left: 69%;
-    top: 96px;
-    transform: translateX(-10%) rotate(6deg) scale(0.98);
-  }
 
   .project-phone-primary {
     left: 44%;

@@ -58,8 +58,30 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-jakarta)", "system-ui", "sans-serif"],
       },
+      /**
+       * Four radius tokens, each with one job. The two-token rule the design
+       * doc used to state was never actually true in the code (15 distinct
+       * values), and the approved hero itself uses both a 4px control radius
+       * and a 38px stage radius — so the doc was what was wrong, not the hero.
+       *
+       *  control  anything pressed, typed into, focused, or read as a chip
+       *  card     genuine objects sitting on a ground
+       *  stage    exactly one surface type: the oversized dark product stage
+       *  pill     only genuine lozenges and circles
+       *
+       * `stage` is 38px because that is the approved hero's own upper value
+       * (StudioHero.tsx keeps its literal `rounded-[30px] sm:rounded-[38px]`
+       * and is the one documented exception to this system — it was signed off
+       * as-is and is deliberately not swept).
+       *
+       * Radii expressed as a percentage of their own element — the logo mark,
+       * the app lockups, DeviceFrame's `width * 0.16` — are *shapes*, not
+       * surface radii. They are exempt and must not be migrated to a token.
+       */
       borderRadius: {
+        control: "4px",
         card: "20px",
+        stage: "38px",
         pill: "999px",
       },
       letterSpacing: {
