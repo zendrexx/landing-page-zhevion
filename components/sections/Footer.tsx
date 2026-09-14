@@ -3,10 +3,10 @@ import { CONTACT, FORGE, GROCERY } from "@/lib/content";
 
 const STUDIO_LINKS = [
   { href: "#work", label: "Work" },
-  { href: "#services", label: "Services" },
-  { href: "#process", label: "Process" },
-  { href: "#about", label: "Team" },
-  { href: "#contact", label: "Contact" },
+  { href: "#services", label: "Capabilities" },
+  { href: "#about", label: "About" },
+  { href: "/blog", label: "Blog" },
+  { href: "#contact", label: "Start a project" },
 ] as const;
 
 export function Footer({ base = "" }: { base?: string }) {
@@ -32,7 +32,7 @@ export function Footer({ base = "" }: { base?: string }) {
 
           <FooterColumn title="Studio">
             {STUDIO_LINKS.map((link) => (
-              <FooterLink key={link.href} href={`${base}${link.href}`}>{link.label}</FooterLink>
+              <FooterLink key={link.href} href={link.href.startsWith("/") ? link.href : `${base}${link.href}`}>{link.label}</FooterLink>
             ))}
           </FooterColumn>
 

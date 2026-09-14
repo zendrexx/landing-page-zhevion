@@ -1,12 +1,7 @@
 import type { Metadata } from "next";
-import { StudioHero } from "@/components/landing/StudioHero";
-import { SelectedWork } from "@/components/landing/SelectedWork";
-import { Services } from "@/components/landing/Services";
-import { ProcessSection } from "@/components/landing/ValueProcess";
-import { TeamSection } from "@/components/landing/TeamAbout";
 import { SiteNav } from "@/components/site/SiteNav";
-import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
+import { SignificaHome } from "@/components/landing/SignificaHome";
 
 // Title and description come from the root layout; this only pins the
 // canonical, which "/" was missing while /work and every /legal route had one.
@@ -18,14 +13,7 @@ export default function Home() {
   return (
     <>
       <SiteNav variant="editorial" />
-      <main id="main">
-        <StudioHero />
-        <SelectedWork />
-        <Services />
-        <ProcessSection />
-        <TeamSection />
-        <Contact />
-      </main>
+      <SignificaHome />
       <Footer />
     </>
   );

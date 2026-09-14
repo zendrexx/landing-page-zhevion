@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { getPublishedPosts } from "@/lib/blog";
 
 const SITE_URL = "https://zhevion.com";
 
@@ -10,6 +11,10 @@ const SITE_URL = "https://zhevion.com";
 const ROUTES = [
   { path: "/", priority: 1 },
   { path: "/work", priority: 0.8 },
+  { path: "/work/guanzon", priority: 0.7 },
+  { path: "/work/zebite", priority: 0.7 },
+  { path: "/work/repforge", priority: 0.7 },
+  { path: "/blog", priority: 0.6 },
   { path: "/legal", priority: 0.3 },
   { path: "/legal/website", priority: 0.3 },
   { path: "/legal/zebite/privacy", priority: 0.3 },
@@ -21,9 +26,11 @@ const ROUTES = [
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
-  return ROUTES.map((route) => ({
+  const staticRoutes = ROUTES.map((route) => ({
     url: `${SITE_URL}${route.path}`,
     lastModified,
     priority: route.priority,
   }));
+  const posts = getPublishedPosts().map((post) => ({ url: `${SITE_URL}/blog/${post.slug}`, lastModified: new Date(`${post.date}T00:00:00Z`), priority: 0.5 }));
+  return [...staticRoutes, ...posts];
 }

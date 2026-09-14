@@ -7,10 +7,9 @@ import { trackCTA } from "@/lib/analytics";
 
 const LINKS = [
   { href: "#work", label: "Work" },
-  { href: "#services", label: "Services" },
-  { href: "#process", label: "Process" },
-  { href: "#about", label: "Team" },
-  { href: "#contact", label: "Contact" },
+  { href: "#services", label: "Capabilities" },
+  { href: "#about", label: "About" },
+  { href: "/blog", label: "Blog" },
 ] as const;
 
 /**
@@ -75,7 +74,7 @@ export function SiteNav({ base = "", variant = "floating" }: { base?: string; va
     };
   }, []);
 
-  const destination = (href: string) => `${base}${href}`;
+  const destination = (href: string) => (href.startsWith("/") ? href : `${base}${href}`);
 
   const pillSurface = onDark
     ? "border-white/12 bg-graphite-900/70 shadow-[0_14px_38px_-24px_rgba(0,0,0,0.65)]"
