@@ -21,6 +21,7 @@ export type HomeProject = {
    * designed for their shape. Add the next app's files here when ready.
    */
   heroMedia?: {
+    square: string;
     portrait: string;
     portraitAspectRatio: string;
     landscape: string;
@@ -71,6 +72,7 @@ export const HOME_PROJECTS = [
     // Homepage hero artwork. When RepForge (or another project) has matching
     // art, add the same `heroMedia` block to that project entry.
     heroMedia: {
+      square: "/hero/zebite_1x1.png",
       portrait: "/hero/zebite_portrait.png",
       portraitAspectRatio: "941 / 1672",
       landscape: "/hero/zebite_landscape.png",
@@ -146,6 +148,7 @@ export const HOME_PROJECTS = [
     thumbnail: "/hero/repforge_landscape.png",
     thumbnailAlt: "RepForge strength-training app shown across phone screens.",
     heroMedia: {
+      square: "/hero/repforge_1x1.png",
       portrait: "/hero/repforge_portrait.png",
       portraitAspectRatio: "941 / 1672",
       landscape: "/hero/repforge_landscape.png",

@@ -1647,6 +1647,10 @@ html.has-cursor select {
   inset: 0;
 }
 
+.zv-montage-hero-image--portrait {
+  display: none !important;
+}
+
 .zv-montage-image {
   position: absolute;
   overflow: hidden;
@@ -2469,6 +2473,14 @@ html.has-cursor select {
 
   .zv-montage-panel {
     --montage-scale: 0.68;
+  }
+
+  .zv-montage-hero-image--square {
+    display: none !important;
+  }
+
+  .zv-montage-hero-image--portrait {
+    display: block !important;
   }
 
   .zv-project-drawer-backdrop {

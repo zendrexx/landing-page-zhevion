@@ -11,12 +11,19 @@ export function HomeProjectMontage() {
           {"heroMedia" in project && project.heroMedia ? (
             <div className="zv-montage-hero-image">
               <Image
-                src={project.heroMedia.portrait}
+                src={project.heroMedia.square}
                 alt={project.heroMedia.alt}
                 fill
                 priority={index === 0}
-                sizes="(min-width: 768px) 25vw, 50vw"
-                className="object-cover object-top"
+                sizes="(max-width: 767px) 50vw, 25vw"
+                className="zv-montage-hero-image--square object-cover"
+              />
+              <Image
+                src={project.heroMedia.portrait}
+                alt={project.heroMedia.alt}
+                fill
+                sizes="25vw"
+                className="zv-montage-hero-image--portrait object-cover object-top"
               />
             </div>
           ) : project.visual.kind === "product" ? (
