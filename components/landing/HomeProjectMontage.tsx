@@ -28,6 +28,25 @@ export function HomeProjectMontage() {
             </div>
           ) : project.visual.kind === "product" ? (
             <MontagePhone project={project} priority={index === 0} />
+          ) : "montageImage" in project && project.montageImage ? (
+            <div className="zv-montage-image">
+              <Image
+                src={project.montageImage.mobile}
+                alt={project.montageImage.alt}
+                fill
+                priority={index === 2}
+                sizes="(max-width: 767px) 50vw, 0px"
+                className="zv-montage-image--mobile object-cover"
+              />
+              <Image
+                src={project.montageImage.desktop}
+                alt=""
+                fill
+                priority={index === 2}
+                sizes="(min-width: 1280px) 25vw, (min-width: 768px) 25vw, 0px"
+                className="zv-montage-image--desktop object-cover"
+              />
+            </div>
           ) : (
             <div className="zv-montage-image">
               <Image

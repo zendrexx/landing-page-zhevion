@@ -15,6 +15,13 @@ export type HomeProject = {
   external?: boolean;
   thumbnail: string;
   thumbnailAlt: string;
+  /** Optional artwork used only in the four-project homepage montage. */
+  montageImage?: {
+    desktop: string;
+    mobile: string;
+    alt: string;
+    fit: "cover" | "contain";
+  };
   /**
    * Marketing artwork used only on the homepage hero. Keep both crops so the
    * compact project tile and the wide project preview can each use the image
@@ -100,6 +107,12 @@ export const HOME_PROJECTS = [
     external: true,
     thumbnail: safetyCrib.image,
     thumbnailAlt: "SafetyCrib mobile and desktop product screens.",
+    montageImage: {
+      desktop: "/hero/safety_portrait.png",
+      mobile: "/hero/safety_1x1.png",
+      alt: "SafetyCrib infant-monitoring application.",
+      fit: "cover",
+    },
     facts: safetyCrib.tags.map((tag, index) => ({
       label: index === 0 ? "Focus" : index === 1 ? "Model" : "Platform",
       value: tag,
