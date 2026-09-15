@@ -48,8 +48,20 @@ export function HomeSelectedWork() {
                   </span>
                 </div>
 
-                <div className="zv-work-visual">
-                  <HomeProjectVisual project={project} />
+                <div
+                  className="zv-work-visual"
+                  style={{
+                    aspectRatio:
+                      "heroMedia" in project
+                        ? project.heroMedia.landscapeAspectRatio
+                        : undefined,
+                  }}
+                >
+                  <HomeProjectVisual
+                    project={project}
+                    useHeroMedia
+                    heroMediaOrientation="landscape"
+                  />
                 </div>
               </div>
             </a>

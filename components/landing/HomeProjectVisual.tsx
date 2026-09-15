@@ -6,9 +6,13 @@ import type { HomeProject } from "@/lib/home-projects";
 export function HomeProjectVisual({
   project,
   priority = false,
+  useHeroMedia = false,
+  heroMediaOrientation = "responsive",
 }: {
   project: HomeProject;
   priority?: boolean;
+  useHeroMedia?: boolean;
+  heroMediaOrientation?: "responsive" | "landscape";
 }) {
   if (project.visual.kind === "image") {
     const visual = project.visual;
@@ -22,6 +26,43 @@ export function HomeProjectVisual({
           priority={priority}
           sizes="(min-width: 1024px) 50vw, 100vw"
           className={visual.fit === "cover" ? "object-cover" : "object-contain"}
+        />
+      </div>
+    );
+  }
+
+  if (useHeroMedia && project.heroMedia) {
+    if (heroMediaOrientation === "landscape") {
+      return (
+        <div className={`zv-project-visual zv-project-visual--${project.key} zv-project-visual--hero-media`}>
+          <Image
+            src={project.heroMedia.landscape}
+            alt={project.heroMedia.alt}
+            fill
+            priority={priority}
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            className="object-cover"
+          />
+        </div>
+      );
+    }
+
+    return (
+      <div className={`zv-project-visual zv-project-visual--${project.key} zv-project-visual--hero-media`}>
+        <Image
+          src={project.heroMedia.portrait}
+          alt={project.heroMedia.alt}
+          fill
+          priority={priority}
+          sizes="(min-width: 768px) 50vw, 100vw"
+          className="zv-project-hero-image zv-project-hero-image--portrait object-cover object-top"
+        />
+        <Image
+          src={project.heroMedia.landscape}
+          alt=""
+          fill
+          sizes="(min-width: 768px) 50vw, 100vw"
+          className="zv-project-hero-image zv-project-hero-image--landscape object-cover"
         />
       </div>
     );

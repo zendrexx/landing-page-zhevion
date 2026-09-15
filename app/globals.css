@@ -1558,6 +1558,14 @@ html.has-cursor select {
   background: var(--zv-offset);
 }
 
+.zv-hero-thumb--zebite {
+  background: #eeeae2;
+}
+
+.zv-hero-thumb--repforge {
+  background: #a9634f;
+}
+
 .zv-hero-tab-copy {
   display: flex;
   min-width: 0;
@@ -1625,33 +1633,6 @@ html.has-cursor select {
   background: #e6b19e;
 }
 
-.zv-montage-label {
-  position: absolute;
-  inset: 0 auto auto 0;
-  z-index: 8;
-  display: flex;
-  max-width: 100%;
-  align-items: baseline;
-  gap: 0.45rem;
-  padding: 0.75rem;
-  color: #171717;
-}
-
-.zv-montage-label span {
-  color: rgba(23, 23, 23, 0.56);
-  font-size: 0.6rem;
-  font-weight: 600;
-}
-
-.zv-montage-label strong {
-  overflow: hidden;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .zv-montage-phone {
   position: absolute !important;
   left: 50%;
@@ -1659,6 +1640,11 @@ html.has-cursor select {
   z-index: 4;
   transform: translateX(-50%) scale(var(--montage-scale));
   transform-origin: bottom center;
+}
+
+.zv-montage-hero-image {
+  position: absolute;
+  inset: 0;
 }
 
 .zv-montage-image {
@@ -1783,6 +1769,10 @@ html.has-cursor select {
   background: #242424;
 }
 
+.zv-project-drawer-visual--hero-media {
+  aspect-ratio: var(--hero-media-portrait-ratio);
+}
+
 .zv-project-drawer-visual > .zv-project-visual {
   position: absolute;
   inset: 0;
@@ -1903,6 +1893,19 @@ html.has-cursor select {
 
 .zv-project-visual--zebite {
   background: #bfd48f;
+}
+
+.zv-project-visual--hero-media {
+  background: #f2efe8;
+}
+
+.zv-project-visual--hero-media::before,
+.zv-project-visual--hero-media::after {
+  display: none;
+}
+
+.zv-project-hero-image--landscape {
+  display: none !important;
 }
 
 .zv-project-visual--zebite::before,
@@ -2468,19 +2471,6 @@ html.has-cursor select {
     --montage-scale: 0.68;
   }
 
-  .zv-montage-label {
-    gap: 0.6rem;
-    padding: 1rem;
-  }
-
-  .zv-montage-label span {
-    font-size: 0.65rem;
-  }
-
-  .zv-montage-label strong {
-    font-size: 0.85rem;
-  }
-
   .zv-project-drawer-backdrop {
     padding: 0.75rem;
   }
@@ -2503,12 +2493,24 @@ html.has-cursor select {
     aspect-ratio: 16 / 9;
   }
 
+  .zv-project-drawer-visual--hero-media {
+    aspect-ratio: var(--hero-media-landscape-ratio);
+  }
+
   .zv-project-drawer-visual .zv-project-device-a {
     transform: translateX(-104%) rotate(-5deg) scale(0.72);
   }
 
   .zv-project-drawer-visual .zv-project-device-b {
     transform: translateX(4%) rotate(5deg) scale(0.72);
+  }
+
+  .zv-project-hero-image--portrait {
+    display: none !important;
+  }
+
+  .zv-project-hero-image--landscape {
+    display: block !important;
   }
 
   .zv-project-drawer-copy {

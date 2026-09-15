@@ -15,6 +15,18 @@ export type HomeProject = {
   external?: boolean;
   thumbnail: string;
   thumbnailAlt: string;
+  /**
+   * Marketing artwork used only on the homepage hero. Keep both crops so the
+   * compact project tile and the wide project preview can each use the image
+   * designed for their shape. Add the next app's files here when ready.
+   */
+  heroMedia?: {
+    portrait: string;
+    portraitAspectRatio: string;
+    landscape: string;
+    landscapeAspectRatio: string;
+    alt: string;
+  };
   facts: readonly HomeProjectFact[];
   visual:
     | {
@@ -52,8 +64,19 @@ export const HOME_PROJECTS = [
     teaser: "Smarter groceries, planned around you.",
     href: "/work/zebite",
     external: false,
-    thumbnail: GROCERY.screens[0].src,
-    thumbnailAlt: GROCERY.screens[0].alt,
+    // The four clickable cards below the hero copy are landscape thumbnails.
+    // The portrait crop is used separately by HomeProjectMontage below them.
+    thumbnail: "/hero/zebite_landscape.png",
+    thumbnailAlt: "Zebite grocery-planning app shown across three phone screens.",
+    // Homepage hero artwork. When RepForge (or another project) has matching
+    // art, add the same `heroMedia` block to that project entry.
+    heroMedia: {
+      portrait: "/hero/zebite_portrait.png",
+      portraitAspectRatio: "941 / 1672",
+      landscape: "/hero/zebite_landscape.png",
+      landscapeAspectRatio: "1448 / 1086",
+      alt: "Zebite grocery-planning app shown across phone screens.",
+    },
     facts: [
       { label: "Platform", value: "iOS + Android" },
       { label: "Focus", value: GROCERY.features[0].title },
@@ -66,24 +89,26 @@ export const HOME_PROJECTS = [
     },
   },
   {
-    key: "repforge",
-    name: FORGE.name,
-    category: "Zhevion product · Mobile app",
-    headline: `${FORGE.pitch} ${FORGE.features[0].title}, ${FORGE.features[1].title.toLowerCase()}, and progress tracking.`,
-    teaser: FORGE.pitch,
-    href: "/work/repforge",
-    external: false,
-    thumbnail: FORGE.screens[0].src,
-    thumbnailAlt: FORGE.screens[0].alt,
-    facts: [
-      { label: "Platform", value: "iOS + Android" },
-      { label: "Focus", value: FORGE.features[0].title },
-      { label: "Built around", value: FORGE.features[1].title },
-    ],
+    key: "safetycrib",
+    name: safetyCrib.name,
+    category: "Portfolio work · Computer vision",
+    headline: "A computer-vision infant safety system paired with a React Native mobile application.",
+    teaser: "Computer vision for infant safety.",
+    href: safetyCrib.href,
+    external: true,
+    thumbnail: safetyCrib.image,
+    thumbnailAlt: "SafetyCrib mobile and desktop product screens.",
+    facts: safetyCrib.tags.map((tag, index) => ({
+      label: index === 0 ? "Focus" : index === 1 ? "Model" : "Platform",
+      value: tag,
+    })),
     visual: {
-      kind: "product",
-      product: "repforge",
-      screenIndexes: [0, 3],
+      kind: "image",
+      src: safetyCrib.image,
+      alt: "SafetyCrib mobile and desktop product screens.",
+      width: 1536,
+      height: 1024,
+      fit: "cover",
     },
   },
   {
@@ -111,26 +136,31 @@ export const HOME_PROJECTS = [
     },
   },
   {
-    key: "safetycrib",
-    name: safetyCrib.name,
-    category: "Portfolio work · Computer vision",
-    headline: "A computer-vision infant safety system paired with a React Native mobile application.",
-    teaser: "Computer vision for infant safety.",
-    href: safetyCrib.href,
-    external: true,
-    thumbnail: safetyCrib.image,
-    thumbnailAlt: "SafetyCrib mobile and desktop product screens.",
-    facts: safetyCrib.tags.map((tag, index) => ({
-      label: index === 0 ? "Focus" : index === 1 ? "Model" : "Platform",
-      value: tag,
-    })),
+    key: "repforge",
+    name: FORGE.name,
+    category: "Zhevion product · Mobile app",
+    headline: `${FORGE.pitch} ${FORGE.features[0].title}, ${FORGE.features[1].title.toLowerCase()}, and progress tracking.`,
+    teaser: FORGE.pitch,
+    href: "/work/repforge",
+    external: false,
+    thumbnail: "/hero/repforge_landscape.png",
+    thumbnailAlt: "RepForge strength-training app shown across phone screens.",
+    heroMedia: {
+      portrait: "/hero/repforge_portrait.png",
+      portraitAspectRatio: "941 / 1672",
+      landscape: "/hero/repforge_landscape.png",
+      landscapeAspectRatio: "1672 / 941",
+      alt: "RepForge strength-training app shown across phone screens.",
+    },
+    facts: [
+      { label: "Platform", value: "iOS + Android" },
+      { label: "Focus", value: FORGE.features[0].title },
+      { label: "Built around", value: FORGE.features[1].title },
+    ],
     visual: {
-      kind: "image",
-      src: safetyCrib.image,
-      alt: "SafetyCrib mobile and desktop product screens.",
-      width: 1536,
-      height: 1024,
-      fit: "cover",
+      kind: "product",
+      product: "repforge",
+      screenIndexes: [0, 3],
     },
   },
 ] as const satisfies readonly HomeProject[];

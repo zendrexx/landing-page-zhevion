@@ -8,12 +8,18 @@ export function HomeProjectMontage() {
     <div className="zv-hero-montage" role="group" aria-label="Four selected Zhevion projects">
       {HOME_PROJECTS.map((project, index) => (
         <div className={`zv-montage-panel zv-montage-panel--${project.key}`} key={project.key}>
-          <div className="zv-montage-label">
-            <span>{String(index + 1).padStart(2, "0")}</span>
-            <strong>{project.name}</strong>
-          </div>
-
-          {project.visual.kind === "product" ? (
+          {"heroMedia" in project && project.heroMedia ? (
+            <div className="zv-montage-hero-image">
+              <Image
+                src={project.heroMedia.portrait}
+                alt={project.heroMedia.alt}
+                fill
+                priority={index === 0}
+                sizes="(min-width: 768px) 25vw, 50vw"
+                className="object-cover object-top"
+              />
+            </div>
+          ) : project.visual.kind === "product" ? (
             <MontagePhone project={project} priority={index === 0} />
           ) : (
             <div className="zv-montage-image">

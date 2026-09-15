@@ -84,7 +84,11 @@ function CursorLayer() {
   useEffect(() => {
     document.documentElement.classList.add("has-cursor");
 
-    const onMove = (e: PointerEvent) => {
+    // This cursor only mounts for a fine desktop pointer. Track position from
+    // `window` with the desktop mouse event so Safari/macOS keeps delivering
+    // coordinates across overlays and document boundaries. Hover state still
+    // uses pointer events below because it benefits from their target data.
+    const onMove = (e: MouseEvent) => {
       x.set(e.clientX);
       y.set(e.clientY);
       setVisible(true);
@@ -136,7 +140,7 @@ function CursorLayer() {
       setOnDark((event as CustomEvent<"light" | "dark">).detail === "dark");
     };
 
-    document.addEventListener("pointermove", onMove, { passive: true });
+    window.addEventListener("mousemove", onMove, { passive: true });
     document.addEventListener("pointerover", onOver, { passive: true });
     document.addEventListener("pointerleave", hide);
     document.addEventListener("pointerenter", show);
@@ -145,7 +149,7 @@ function CursorLayer() {
 
     return () => {
       document.documentElement.classList.remove("has-cursor");
-      document.removeEventListener("pointermove", onMove);
+      window.removeEventListener("mousemove", onMove);
       document.removeEventListener("pointerover", onOver);
       document.removeEventListener("pointerleave", hide);
       document.removeEventListener("pointerenter", show);
@@ -160,7 +164,7 @@ function CursorLayer() {
   <motion.div
     aria-hidden
     className="pointer-events-none fixed left-0 top-0 z-[9999]"
-    style={{ x: sx, y: sy }}
+    style={{ x: sx, y: sy, willChange: "transform" }}
   >
     <motion.div
       className="relative grid h-[120px] w-[120px] -translate-x-1/2 -translate-y-1/2 place-items-center"

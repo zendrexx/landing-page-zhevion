@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import type { KeyboardEvent, RefObject } from "react";
+import type { CSSProperties, KeyboardEvent, RefObject } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { HomeProjectMontage } from "@/components/landing/HomeProjectMontage";
 import { HomeProjectVisual } from "@/components/landing/HomeProjectVisual";
@@ -134,15 +134,15 @@ export function HomeHero() {
                 className="zv-hero-tab"
                 onClick={(event) => openDrawer(index, event.currentTarget)}
               >
-                <span className="zv-hero-thumb">
+                <span className={`zv-hero-thumb zv-hero-thumb--${project.key}`}>
                   <Image
                     src={project.thumbnail}
                     alt=""
                     fill
                     sizes="96px"
                     className={
-                      project.key === "zebite" || project.key === "repforge"
-                        ? "object-cover object-top"
+                      "heroMedia" in project && project.heroMedia
+                        ? "object-contain"
                         : "object-cover"
                     }
                   />
@@ -229,8 +229,18 @@ function ProjectDrawerContent({
       </header>
 
       <div className="zv-project-drawer-body">
-        <div className="zv-project-drawer-visual">
-          <HomeProjectVisual project={project} priority />
+        <div
+          className={`zv-project-drawer-visual${project.heroMedia ? " zv-project-drawer-visual--hero-media" : ""}`}
+          style={
+            project.heroMedia
+              ? ({
+                  "--hero-media-portrait-ratio": project.heroMedia.portraitAspectRatio,
+                  "--hero-media-landscape-ratio": project.heroMedia.landscapeAspectRatio,
+                } as CSSProperties)
+              : undefined
+          }
+        >
+          <HomeProjectVisual project={project} priority useHeroMedia />
         </div>
 
         <div className="zv-project-drawer-copy">
