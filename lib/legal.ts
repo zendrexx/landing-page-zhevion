@@ -21,6 +21,8 @@ import { CONTACT, FORGE, GROCERY, STUDIO } from "@/lib/content";
 /** Bump both dates together when a document changes materially. */
 export const LEGAL_EFFECTIVE = "24 July 2026";
 export const LEGAL_UPDATED = "24 July 2026";
+const WEBSITE_EFFECTIVE = "15 September 2026";
+const WEBSITE_UPDATED = "15 September 2026";
 
 /**
  * The legal operator behind both apps. Zhevion is not an incorporated
@@ -1117,15 +1119,15 @@ const WEBSITE_PRIVACY: LegalDoc = {
   slug: "website",
   kind: "privacy",
   app: "website",
-  title: "Website Privacy Notice",
-  summary: `What happens to your information on the ${STUDIO.name} website — which is very little.`,
-  effective: LEGAL_EFFECTIVE,
-  updated: LEGAL_UPDATED,
+  title: "Zhevion Website Privacy Policy",
+  summary: `How ${STUDIO.name} handles the limited information you share through zhevion.com.`,
+  effective: WEBSITE_EFFECTIVE,
+  updated: WEBSITE_UPDATED,
   tldr: [
-    "No cookies. No analytics. No tracking pixels. Nothing follows you off this site.",
-    "You are only in our records if you emailed us or typed your address into a form.",
-    "Form submissions reach our inbox through a form relay, and go nowhere else.",
-    "Ask us to delete your address and we will.",
+    "We do not use advertising cookies, analytics, tracking pixels, or session-recording tools.",
+    "Your theme preference stays in your browser. It is not sent to us or used to identify you.",
+    "A project inquiry goes through Web3Forms to our inbox so we can respond to you.",
+    "We do not sell personal information. You can ask to access, correct, or delete the information we hold about you.",
   ],
   sections: [
     {
@@ -1134,39 +1136,71 @@ const WEBSITE_PRIVACY: LegalDoc = {
       blocks: [
         {
           type: "p",
-          text: `This notice covers the ${STUDIO.name} website at zhevion.com. The ${GROCERY.name} and ${FORGE.name} mobile apps are separate and each has its own policy, linked from the legal index.`,
+          text: `This policy covers the ${STUDIO.name} website at zhevion.com, including its portfolio pages and project-inquiry form. The ${GROCERY.name} and ${FORGE.name} mobile apps are separate products with their own privacy policies and terms.`,
+        },
+      ],
+    },
+    {
+      id: "information",
+      heading: "Information we process",
+      blocks: [
+        {
+          type: "table",
+          head: ["Information", "When we receive it", "Why we use it"],
+          rows: [
+            [
+              "Project inquiry details",
+              "When you submit the Start a project form: your name, work email, company (if provided), project type, project description, selected starting materials, and any additional context you choose to share",
+              "To understand the inquiry, prepare for a first conversation, and reply to you",
+            ],
+            [
+              "Email correspondence",
+              "When you email us or reply to us",
+              "To communicate with you and manage the conversation",
+            ],
+            [
+              "Basic technical request data",
+              "When your browser requests a page",
+              "Our hosting and network providers process data such as an IP address, browser request, and timestamp to deliver and secure the site",
+            ],
+            [
+              "Theme preference",
+              "When you choose light or dark mode",
+              "To remember that display choice in your browser using local storage. We do not receive it.",
+            ],
+          ],
+        },
+        {
+          type: "p",
+          text: `Please do not include confidential, sensitive, or third-party personal information in an inquiry unless you are authorised to share it and are comfortable sending it by email. A short description is enough for a first conversation.`,
         },
       ],
     },
     {
       id: "no-tracking",
-      heading: "No cookies, no analytics",
+      heading: "No advertising or analytics tracking",
       blocks: [
         {
           type: "p",
-          text: `This site sets no cookies, runs no analytics, and embeds no tracking pixels, session recorders or social widgets. There is no consent banner because there is nothing to consent to. Browsing the site leaves no profile of you with us.`,
+          text: `We do not use advertising cookies, analytics services, tracking pixels, social-media tracking buttons, or session-recording tools on this website. We do not build a browsing profile about you or sell personal information.`,
         },
         {
           type: "p",
-          text: `If we add privacy-respecting analytics later, we will update this notice and say what it measures before switching it on.`,
+          text: `If we introduce analytics, advertising, or another material way of processing personal information, we will update this policy before using it.`,
         },
       ],
     },
     {
-      id: "forms",
-      heading: "The contact form and the launch list",
+      id: "service-providers",
+      heading: "How an inquiry reaches us",
       blocks: [
         {
           type: "p",
-          text: `Two forms on this site send us something. The contact form sends your name, your email address and your message. The launch-notify signup sends your email address only.`,
+          text: `The project-inquiry form sends the information you enter directly to Web3Forms, our form-delivery provider, which forwards it to our email inbox. Web3Forms states that it processes and forwards submissions rather than storing them as form records; its documentation also says that server logs containing personal information may be retained for up to two months. Web3Forms uses servers in the United States, so your inquiry may be processed there before it reaches us.`,
         },
         {
           type: "p",
-          text: `Both are delivered by Web3Forms, a form-relay service that forwards the submission to our email inbox. It passes through their systems on the way; it is not stored in a database of ours, because we do not run one for this site. We use what you send to reply to you, and — if you joined the launch list — to email you when the apps are released.`,
-        },
-        {
-          type: "p",
-          text: `We do not add you to any other list, and we do not pass your address to anyone else. Every launch email will have a way to unsubscribe, and you can also just reply and ask.`,
+          text: `We use service providers only to operate the site and receive inquiries. We do not authorise them to use your information for their own marketing. Their processing is also governed by their own policies and terms.`,
         },
       ],
     },
@@ -1176,11 +1210,11 @@ const WEBSITE_PRIVACY: LegalDoc = {
       blocks: [
         {
           type: "p",
-          text: `Contact messages stay in our email inbox while the conversation is useful, and we clear out old ones periodically. Launch-list addresses are kept until the apps launch and you have been told, or until you ask to be removed — whichever comes first.`,
+          text: `We keep project inquiries and email correspondence only for as long as the conversation, potential engagement, record-keeping, or a legal obligation reasonably requires. We review old inquiries periodically and delete information we no longer need.`,
         },
         {
           type: "p",
-          text: `To be removed at any time, email ${EMAIL} and say so. There is no form to fill in and no waiting period beyond the time it takes us to read it.`,
+          text: `You can ask us to delete your inquiry at any time by emailing ${EMAIL}. We may retain a minimal record where necessary to meet a legal obligation, resolve a dispute, or prevent fraud.`,
         },
       ],
     },
@@ -1190,7 +1224,7 @@ const WEBSITE_PRIVACY: LegalDoc = {
       blocks: [
         {
           type: "p",
-          text: `Like any website, the server that delivers these pages processes standard request information — your IP address, the page requested, and a timestamp — to serve the page and to keep the service secure. We do not combine that with anything else or use it to identify you.`,
+          text: `Like any website, our hosting and network providers process standard request information to deliver the site and protect it from abuse. We do not use that information to market to you or build a profile about you.`,
         },
         {
           type: "p",
@@ -1204,12 +1238,146 @@ const WEBSITE_PRIVACY: LegalDoc = {
       blocks: [
         {
           type: "p",
-          text: `Under the Data Privacy Act of 2012 (Republic Act No. 10173) you can ask what we hold about you, have it corrected, or have it deleted. Given the above, the answer is usually "your email address and whatever you wrote to us". Email ${EMAIL} and we will respond within 30 days.`,
+          text: `Depending on applicable law, you may have rights to be informed about our processing, access or correct your personal information, object to processing, request erasure or blocking, receive a copy where applicable, and raise a concern with a privacy regulator. Under the Philippine Data Privacy Act of 2012, these rights include being informed about processing and requesting access, correction, or erasure in appropriate circumstances.`,
+        },
+        {
+          type: "p",
+          text: `To make a request, email ${EMAIL} with “Website privacy” in the subject line. We may need to confirm your identity before acting on a request, and we aim to respond within 30 days. You may also contact the National Privacy Commission if you believe your privacy rights have been violated.`,
         },
       ],
     },
-    changesSection("this notice"),
+    {
+      id: "changes",
+      heading: "Changes to this policy",
+      blocks: [
+        {
+          type: "p",
+          text: `We may update this policy when the website or its data practices change. We will post the revised version here and update the date at the top.`,
+        },
+      ],
+    },
     contactSection("Website privacy"),
+  ],
+};
+
+const WEBSITE_TERMS: LegalDoc = {
+  slug: "website/terms",
+  kind: "terms",
+  app: "website",
+  title: "Zhevion Website Terms of Use",
+  summary: `The terms for using zhevion.com and contacting ${STUDIO.name} about potential work.`,
+  effective: WEBSITE_EFFECTIVE,
+  updated: WEBSITE_UPDATED,
+  tldr: [
+    "This website shares Zhevion's work and services; it is not a binding proposal or promise to take on a project.",
+    "Use the site lawfully and do not interfere with it, copy its content for commercial use, or misuse the inquiry form.",
+    "A project starts only when both sides agree in a separate written agreement.",
+    "The site may link to third parties, whose content and policies are their own.",
+  ],
+  sections: [
+    {
+      id: "agreement",
+      heading: "Agreement and scope",
+      blocks: [
+        {
+          type: "p",
+          text: `These terms govern your use of zhevion.com. By accessing or using the site, you agree to them. If you do not agree, please do not use the site. These terms cover the website only; the ${GROCERY.name} and ${FORGE.name} apps have their own terms.`,
+        },
+      ],
+    },
+    {
+      id: "site-content",
+      heading: "Site content and intellectual property",
+      blocks: [
+        {
+          type: "p",
+          text: `The site design, copy, code, Zhevion name and visual identity are owned by ${STUDIO.name} or used with permission. Project names, logos, screenshots, and other third-party material remain the property of their respective owners.`,
+        },
+        {
+          type: "p",
+          text: `You may view and share links to the site for personal or internal business evaluation. You may not copy, reproduce, modify, distribute, scrape, reverse engineer, or commercially exploit site content without prior written permission, except where applicable law allows it.`,
+        },
+      ],
+    },
+    {
+      id: "acceptable-use",
+      heading: "Use the site responsibly",
+      blocks: [
+        {
+          type: "list",
+          items: [
+            "Do not interfere with the website, attempt unauthorised access, introduce malware, or use automated means that place an unreasonable load on it.",
+            "Do not use the inquiry form to send spam, unlawful material, or content you are not authorised to share.",
+            "Do not present yourself as Zhevion, its team, or a client or partner of Zhevion without permission.",
+          ],
+        },
+      ],
+    },
+    {
+      id: "inquiries",
+      heading: "Project inquiries",
+      blocks: [
+        {
+          type: "p",
+          text: `Submitting an inquiry does not create a client relationship, a duty to take on the work, a partnership, or a binding agreement. We may choose whether to respond or pursue an engagement. If we decide to work together, scope, fees, deliverables, confidentiality, ownership, and timelines will be set out in a separate written agreement.`,
+        },
+        {
+          type: "p",
+          text: `Do not submit trade secrets, highly sensitive information, or other confidential material through the form unless we have separately agreed in writing to receive it.`,
+        },
+      ],
+    },
+    {
+      id: "external-links",
+      heading: "Third-party links",
+      blocks: [
+        {
+          type: "p",
+          text: `The site may link to app stores, social profiles, portfolios, and other third-party websites. We do not control or endorse their content, availability, security, or privacy practices. Your use of those sites is governed by their own terms and policies.`,
+        },
+      ],
+    },
+    {
+      id: "availability",
+      heading: "Availability and disclaimers",
+      blocks: [
+        {
+          type: "p",
+          text: `We aim to keep the site accurate and available, but it is provided on an “as is” and “as available” basis. To the extent permitted by law, we do not guarantee that the site will always be secure, uninterrupted, error-free, current, or suitable for a particular purpose. Portfolio and service information may change without notice.`,
+        },
+      ],
+    },
+    {
+      id: "liability",
+      heading: "Limitation of liability",
+      blocks: [
+        {
+          type: "p",
+          text: `To the fullest extent permitted by law, ${STUDIO.name} and ${OPERATOR} are not liable for indirect, incidental, special, consequential, or punitive damages arising from use of, or inability to use, this website. Nothing in these terms excludes liability that cannot lawfully be excluded.`,
+        },
+      ],
+    },
+    {
+      id: "governing-law",
+      heading: "Governing law",
+      blocks: [
+        {
+          type: "p",
+          text: `These terms are governed by the laws of ${JURISDICTION}, without regard to conflict-of-law rules. Before bringing a dispute, please contact us first so we can try to resolve it directly.`,
+        },
+      ],
+    },
+    {
+      id: "changes",
+      heading: "Changes to these terms",
+      blocks: [
+        {
+          type: "p",
+          text: `We may update these terms from time to time. The revised version will be posted here with a new last-updated date. Continued use of the site after an update means you accept the revised terms.`,
+        },
+      ],
+    },
+    contactSection("Website terms"),
   ],
 };
 
@@ -1221,6 +1389,7 @@ export const LEGAL_DOCS = {
   repforgePrivacy: REPFORGE_PRIVACY,
   repforgeTerms: REPFORGE_TERMS,
   websitePrivacy: WEBSITE_PRIVACY,
+  websiteTerms: WEBSITE_TERMS,
 } satisfies Record<string, LegalDoc>;
 
 /**
@@ -1279,8 +1448,13 @@ export const LEGAL_INDEX: {
     docs: [
       {
         href: "/legal/website",
-        title: "Privacy Notice",
-        blurb: "What happens to a contact form or launch-list signup.",
+        title: "Privacy Policy",
+        blurb: "How the website and project-inquiry form handle your information.",
+      },
+      {
+        href: "/legal/website/terms",
+        title: "Terms of Use",
+        blurb: "The rules for using this website and submitting a project inquiry.",
       },
     ],
   },

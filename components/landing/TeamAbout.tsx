@@ -19,20 +19,20 @@ export function TeamSection() {
   return (
     <section
       id="about"
-      className="scroll-mt-24 border-y border-ink/10 bg-paper-deep py-[clamp(76px,10vw,136px)]"
+      className="zv-team-section scroll-mt-24 border-y border-ink/10 bg-paper-deep py-[clamp(76px,10vw,136px)]"
       aria-labelledby="team-heading"
     >
       <div className="shell">
         <header className="grid gap-5 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
-          <p className="text-sm font-semibold text-ink-soft">{STUDIO_HOME.team.eyebrow}</p>
+          <p className="zv-team-eyebrow text-sm font-semibold text-[#707074]">{STUDIO_HOME.team.eyebrow}</p>
           <div>
             <h2
               id="team-heading"
-              className="max-w-[17ch] text-[clamp(2.35rem,4.7vw,4.5rem)] font-extrabold leading-[1.02] tracking-[-0.05em]"
+              className="zv-team-heading max-w-[17ch] text-[clamp(2.35rem,4.7vw,4.5rem)] font-extrabold leading-[1.02] tracking-[-0.05em] text-[#171717]"
             >
               {STUDIO_HOME.team.heading}
             </h2>
-            <p className="mt-5 max-w-2xl text-base font-medium leading-[1.75] text-ink-soft sm:text-lg">
+            <p className="zv-team-body mt-5 max-w-2xl text-base font-medium leading-[1.75] text-[#707074] sm:text-lg">
               {STUDIO_HOME.team.body}
             </p>
           </div>
@@ -57,8 +57,8 @@ export function TeamSection() {
  */
 export function TeamCard({ member }: { member: TeamMember }) {
   return (
-    <article className="group flex h-full flex-col">
-      <div className="relative aspect-[4/4.6] overflow-hidden rounded-card border border-ink/10 bg-ink">
+    <article className="zv-team-card group flex h-full flex-col">
+      <div className="zv-team-photo relative aspect-[4/4.6] overflow-hidden rounded-card border border-ink/10 bg-ink">
         {member.src ? (
           <Image
             src={member.src}
@@ -81,21 +81,21 @@ export function TeamCard({ member }: { member: TeamMember }) {
         )}
       </div>
 
-      <div className="mt-5 border-t border-ink/15 pt-4">
+      <div className="zv-team-info mt-5 border-t border-ink/15 pt-4">
         <div className="flex items-baseline justify-between gap-4">
-          <h3 className="text-xl font-extrabold tracking-[-0.035em] sm:text-2xl">{member.name}</h3>
+          <h3 className="zv-team-name text-xl font-extrabold tracking-[-0.035em] text-[#171717] sm:text-2xl">{member.name}</h3>
           {member.href ? (
             <a
               href={member.href}
               target="_blank"
               rel="noreferrer"
-              className="text-link shrink-0 text-sm font-bold"
+              className="zv-team-portfolio shrink-0 text-sm font-bold text-[#171717] underline decoration-[#171717]/20 underline-offset-4 transition hover:decoration-[#171717]"
             >
               Portfolio
             </a>
           ) : null}
         </div>
-        <p className="mt-1.5 text-sm font-semibold text-ink-soft">{member.role}</p>
+        <p className="zv-team-role mt-1.5 text-sm font-semibold text-[#707074]">{member.role}</p>
       </div>
     </article>
   );

@@ -30,22 +30,22 @@ export default function WorkPage() {
   return (
     <>
       <SiteNav base="/" />
-      <main id="main" className="pb-24 pt-32 sm:pb-32 sm:pt-40">
+      <main id="main" className="min-h-screen bg-[var(--zv-theme-bg)] pb-24 pt-32 text-[var(--zv-theme-fg)] transition-colors sm:pb-32 sm:pt-40">
         <div className="shell">
-          <Reveal className="border-t border-ink/15 pt-6">
-            <p className="text-sm font-semibold text-ink-soft">Selected work</p>
+          <Reveal className="border-t border-[var(--zv-theme-border)] pt-6">
+            <p className="text-sm font-semibold text-[var(--zv-theme-secondary)]">Selected work</p>
             <h1 className="mt-4 max-w-[16ch] text-[clamp(2.6rem,6vw,5.5rem)] font-extrabold leading-[0.96] tracking-[-0.055em]">
               Everything we&apos;ve built.
             </h1>
-            <p className="mt-6 max-w-2xl text-base font-medium leading-[1.75] text-ink-soft sm:text-lg">
+            <p className="mt-6 max-w-2xl text-base font-medium leading-[1.75] text-[var(--zv-theme-secondary)] sm:text-lg">
               Products designed and built at Zhevion, and the professional and freelance work of the people who
               build them.
             </p>
           </Reveal>
 
           <section className="mt-[clamp(56px,8vw,96px)]" aria-labelledby="products-heading">
-            <div className="grid gap-5 border-t border-ink/20 pt-6 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
-              <p className="text-sm font-semibold text-ink-soft">01</p>
+            <div className="grid gap-5 border-t border-[var(--zv-theme-border)] pt-6 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
+              <p className="text-sm font-semibold text-[var(--zv-theme-secondary)]">01</p>
               <div>
                 <h2
                   id="products-heading"
@@ -76,8 +76,8 @@ export default function WorkPage() {
           </section>
 
           <section className="mt-[clamp(72px,10vw,128px)]" aria-labelledby="people-heading">
-            <div className="grid gap-5 border-t border-ink/20 pt-6 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
-              <p className="text-sm font-semibold text-ink-soft">02</p>
+            <div className="grid gap-5 border-t border-[var(--zv-theme-border)] pt-6 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
+              <p className="text-sm font-semibold text-[var(--zv-theme-secondary)]">02</p>
               <div>
                 <h2
                   id="people-heading"
@@ -85,7 +85,7 @@ export default function WorkPage() {
                 >
                   Work by the people behind Zhevion.
                 </h2>
-                <p className="mt-5 max-w-2xl text-base leading-[1.75] text-ink-soft">
+                <p className="mt-5 max-w-2xl text-base leading-[1.75] text-[var(--zv-theme-secondary)]">
                   Business systems, freelance projects, and research work built individually, before or alongside
                   the studio.
                 </p>
@@ -106,13 +106,13 @@ export default function WorkPage() {
             </div>
           </section>
 
-          <Reveal className="mt-[clamp(72px,10vw,128px)] flex flex-col items-start gap-5 border-t border-ink/20 pt-8 sm:flex-row sm:items-center sm:justify-between">
-            <p className="max-w-md text-base font-medium leading-relaxed text-ink-soft">
+          <Reveal className="mt-[clamp(72px,10vw,128px)] flex flex-col items-start gap-5 border-t border-[var(--zv-theme-border)] pt-8 sm:flex-row sm:items-center sm:justify-between">
+            <p className="max-w-md text-base font-medium leading-relaxed text-[var(--zv-theme-secondary)]">
               Have something your business should be doing better?
             </p>
             <a
-              href="/#contact"
-              className="inline-flex min-h-12 shrink-0 items-center justify-center rounded-control bg-ink px-6 text-sm font-bold text-paper transition hover:bg-forest-500"
+              href="/start-a-project"
+              className="inline-flex min-h-12 shrink-0 items-center justify-center rounded-control bg-[var(--zv-theme-fg)] px-6 text-sm font-bold text-[var(--zv-theme-bg)] transition hover:opacity-80"
             >
               Start a project
             </a>

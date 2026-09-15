@@ -9,7 +9,6 @@ const LINKS = [
   { href: "#work", label: "Work" },
   { href: "#services", label: "Capabilities" },
   { href: "#about", label: "About" },
-  { href: "/blog", label: "Blog" },
 ] as const;
 
 /**
@@ -18,8 +17,10 @@ const LINKS = [
  */
 export function SiteNav({ base = "", variant = "floating" }: { base?: string; variant?: "floating" | "editorial" }) {
   const [open, setOpen] = useState(false);
-  const [onDark, setOnDark] = useState(false);
+  const [overDarkSurface, setOverDarkSurface] = useState(false);
+  const [themeDark, setThemeDark] = useState(false);
   const reduce = useReducedMotion();
+  const onDark = themeDark || overDarkSurface;
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -41,10 +42,21 @@ export function SiteNav({ base = "", variant = "floating" }: { base?: string; va
    * means "currently under the nav," not "anywhere on screen."
    */
   useEffect(() => {
+    const syncTheme = () => setThemeDark(document.documentElement.dataset.theme === "dark");
+
+    syncTheme();
+    window.addEventListener("zhevion-theme-change", syncTheme);
+    return () => window.removeEventListener("zhevion-theme-change", syncTheme);
+  }, []);
+
+  useEffect(() => {
     const targets = Array.from(
       document.querySelectorAll<HTMLElement>(".dark-panel, .on-dark, .bg-graphite-900"),
     );
-    if (!targets.length) return;
+    if (!targets.length) {
+      setOverDarkSurface(false);
+      return;
+    }
 
     const NAV_BAND = 100;
     const intersecting = new Set<Element>();
@@ -59,7 +71,7 @@ export function SiteNav({ base = "", variant = "floating" }: { base?: string; va
             if (entry.isIntersecting) intersecting.add(entry.target);
             else intersecting.delete(entry.target);
           }
-          setOnDark(intersecting.size > 0);
+          setOverDarkSurface(intersecting.size > 0);
         },
         { rootMargin: `0px 0px -${Math.max(window.innerHeight - NAV_BAND, 0)}px 0px`, threshold: 0 },
       );
@@ -127,7 +139,7 @@ export function SiteNav({ base = "", variant = "floating" }: { base?: string; va
 
             <div className="flex items-center gap-1.5">
               <a
-                href={destination("#contact")}
+                href="/start-a-project"
                 onClick={() => trackCTA("nav-start-project")}
                 className={`site-nav-cta hidden min-h-10 items-center rounded-pill px-4 text-[0.8125rem] font-bold transition hover:-translate-y-0.5 sm:inline-flex ${ctaSurface}`}
               >
@@ -183,7 +195,7 @@ export function SiteNav({ base = "", variant = "floating" }: { base?: string; va
                   ))}
                 </ul>
                 <a
-                  href={destination("#contact")}
+                  href="/start-a-project"
                   onClick={() => {
                     setOpen(false);
                     trackCTA("nav-mobile-start-project");

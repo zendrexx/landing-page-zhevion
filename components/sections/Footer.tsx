@@ -5,8 +5,7 @@ const STUDIO_LINKS = [
   { href: "#work", label: "Work" },
   { href: "#services", label: "Capabilities" },
   { href: "#about", label: "About" },
-  { href: "/blog", label: "Blog" },
-  { href: "#contact", label: "Start a project" },
+  { href: "/start-a-project", label: "Start a project" },
 ] as const;
 
 export function Footer({ base = "" }: { base?: string }) {
@@ -47,6 +46,7 @@ export function Footer({ base = "" }: { base?: string }) {
             <FooterLink href="/legal/zebite/privacy">Zebite privacy</FooterLink>
             <FooterLink href="/legal/repforge/privacy">RepForge privacy</FooterLink>
             <FooterLink href="/legal/website">Website privacy</FooterLink>
+            <FooterLink href="/legal/website/terms">Website terms</FooterLink>
           </FooterColumn>
         </div>
 

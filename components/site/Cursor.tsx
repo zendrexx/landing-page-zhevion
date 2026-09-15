@@ -107,9 +107,13 @@ function CursorLayer() {
       // `closest(".dark-panel")` would wrongly bubble past it to that distant
       // dark ancestor.
       const surface = target?.closest?.(
-        ".dark-panel, .on-dark, .bg-paper",
+        ".dark-panel, .on-dark, .bg-paper, .zv-project-drawer",
       ) as HTMLElement | null;
-      setOnDark(!!surface && !surface.classList.contains("bg-paper"));
+      setOnDark(
+        surface
+          ? !surface.classList.contains("bg-paper")
+          : document.documentElement.dataset.theme === "dark",
+      );
 
       const el = target?.closest?.(
         "[data-cursor], a[href], button, [role='button']",
@@ -128,12 +132,16 @@ function CursorLayer() {
 
     const hide = () => setVisible(false);
     const show = () => setVisible(true);
+    const syncTheme = (event: Event) => {
+      setOnDark((event as CustomEvent<"light" | "dark">).detail === "dark");
+    };
 
     document.addEventListener("pointermove", onMove, { passive: true });
     document.addEventListener("pointerover", onOver, { passive: true });
     document.addEventListener("pointerleave", hide);
     document.addEventListener("pointerenter", show);
     window.addEventListener("blur", hide);
+    window.addEventListener("zhevion-theme-change", syncTheme);
 
     return () => {
       document.documentElement.classList.remove("has-cursor");
@@ -142,6 +150,7 @@ function CursorLayer() {
       document.removeEventListener("pointerleave", hide);
       document.removeEventListener("pointerenter", show);
       window.removeEventListener("blur", hide);
+      window.removeEventListener("zhevion-theme-change", syncTheme);
     };
   }, [x, y]);
 

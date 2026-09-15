@@ -61,13 +61,32 @@ export const metadata: Metadata = {
   },
 };
 
-// The studio surface is the light canvas now. /legal/* is still dark and wraps
-// itself in .on-dark, but theme-color is document-global, so those six routes
-// report the light chrome colour until they are rebuilt too.
+// Browser chrome follows the OS before hydration; the homepage toggle updates
+// these tags to match a saved manual choice once the client is active.
 export const viewport: Viewport = {
-  themeColor: "#F2F1EC",
-  colorScheme: "light",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f7f7f7" },
+    { media: "(prefers-color-scheme: dark)", color: "#151515" },
+  ],
+  colorScheme: "light dark",
 };
+
+const themeBootScript = `
+  (() => {
+    const key = "zhevion-theme";
+    const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    let saved = null;
+    try { saved = window.localStorage.getItem(key); } catch (_) {}
+    const theme = saved === "light" || saved === "dark"
+      ? saved
+      : systemDark ? "dark" : "light";
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    document.querySelectorAll('meta[name="theme-color"]').forEach((meta) => {
+      meta.setAttribute("content", theme === "dark" ? "#151515" : "#f7f7f7");
+    });
+  })();
+`;
 
 export default function RootLayout({
   children,
@@ -77,6 +96,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={jakarta.variable} suppressHydrationWarning>
       <head>
+        {/* Resolve the saved/system theme before paint so the homepage never
+            flashes through the light palette on a dark system. */}
+        <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
         {/* Flag JS availability before paint so scroll-reveal only hides
             content when it can actually be revealed (no-JS shows everything). */}
         <script
