@@ -1,19 +1,20 @@
 # Publishing a blog post
 
-The journal is file-based. Its only source is `lib/blog.ts`, so there is no
-CMS login or separate publishing tool.
+1. Sign in at `https://zhevion.com/dashboard` with your individual team account.
+2. Select **New post**, then add the title, URL slug, summary, and article body.
+3. Choose one or more destinations available to your account. Authors can
+   prepare destination-specific drafts; editors and owners can also mark each
+   destination as published.
+4. Save the post. Publication is independent per site, so one post may be live
+   on Zhevion and remain a draft on a personal site.
 
-1. Open `lib/blog.ts`.
-2. Copy the `your-first-post` object in `BLOG_POSTS` and paste it directly
-   below the original, separated by a comma.
-3. Give it a short, unique, lowercase `slug` such as
-   `how-we-scope-product-work`. The published URL will be
-   `https://zhevion.com/blog/how-we-scope-product-work`.
-4. Write the title, summary, date (`YYYY-MM-DD`), author, and sections.
-   Each paragraph is one quoted string. Sections can optionally have a
-   `heading` and a `bullets` list.
-5. Change `published: false` to `published: true`.
-6. Run `npm run build`, commit the change, and deploy as usual.
+The article body uses a small portable format: blank lines separate paragraphs,
+`##` starts a section heading, and consecutive `-` lines create a bullet list.
+Each site's frontend owns its rendering and visual design.
 
-Posts marked `published: false` are invisible to visitors, search engines,
-the sitemap, and their direct URL. This makes them safe drafts.
+Public sites read `published_posts` with their own site slug. Rows that are
+unpublished, scheduled for the future, assigned to another site, or attached to
+an inactive site are not returned.
+
+See `docs/supabase-publishing.md` for setup, account provisioning, permissions,
+and the frontend query contract.

@@ -11,10 +11,8 @@
     "binding": "ASSETS"
   },
   // No WORKER_SELF_REFERENCE binding. @opennextjs/cloudflare's autoconfig adds
-  // one by default, but it's only used by the ISR revalidation path — the
-  // Worker calling itself to regenerate a page — and every route here is
-  // prerendered (`next build` reports 11/11 static, and nothing in the app
-  // exports `revalidate`/`dynamic` or uses a route handler). Meanwhile it broke
+  // one by default, but it is only used by the ISR revalidation path. Blog and
+  // dashboard routes are request-time dynamic and do not use ISR. The binding broke
   // the deploy: the binding resolved to a Worker named `landing-page-zhevion`
   // that doesn't exist in the account, so the upload was rejected with
   // "Service binding 'WORKER_SELF_REFERENCE' references Worker ... not found"

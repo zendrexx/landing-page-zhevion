@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { getPublishedPosts } from "@/lib/blog";
 
 const SITE_URL = "https://zhevion.com";
 
@@ -23,12 +24,23 @@ const ROUTES = [
   { path: "/legal/repforge/terms", priority: 0.3 },
 ] as const;
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export const dynamic = "force-dynamic";
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const lastModified = new Date();
   const staticRoutes = ROUTES.map((route) => ({
     url: `${SITE_URL}${route.path}`,
     lastModified,
     priority: route.priority,
   }));
-  return staticRoutes;
+  const posts = await getPublishedPosts();
+  return [
+    ...staticRoutes,
+    { url: `${SITE_URL}/blog`, lastModified, priority: 0.6 },
+    ...posts.map((post) => ({
+      url: `${SITE_URL}/blog/${post.slug}`,
+      lastModified: new Date(post.date),
+      priority: 0.5,
+    })),
+  ];
 }

@@ -1,3 +1,6 @@
+import { createPublicClient } from "@/lib/supabase/public";
+import { isSupabaseConfigured } from "@/lib/supabase/config";
+
 export type BlogSection = {
   heading?: string;
   paragraphs: string[];
@@ -5,51 +8,121 @@ export type BlogSection = {
 };
 
 export type BlogPost = {
+  id: string;
   slug: string;
   title: string;
   description: string;
   date: string;
   author: string;
-  published: boolean;
+  body: string;
   sections: BlogSection[];
 };
 
-/**
- * The site's editorial source. To publish, copy the starter entry, give it a
- * unique slug, write the article, and change `published` to true.
- */
-export const BLOG_POSTS: BlogPost[] = [
-  {
-    slug: "your-first-post",
-    title: "Your post title goes here",
-    description: "A one- or two-sentence summary displayed on the journal page and in search results.",
-    date: "2026-09-14",
-    author: "Zhevion",
-    published: false,
-    sections: [
-      {
-        paragraphs: [
-          "Start with a concise opening that explains the problem, observation, or idea behind this note.",
-          "Keep paragraphs as separate strings. Add as many sections as the article needs.",
-        ],
-      },
-      {
-        heading: "A useful section heading",
-        paragraphs: ["Use sections to give longer posts a clear, readable structure."],
-        bullets: ["Optional supporting point", "Another useful takeaway"],
-      },
-    ],
-  },
-];
+type PublishedPostRow = {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  body: string;
+  author_name: string;
+  published_at: string;
+};
 
-export function getPublishedPosts() {
-  return BLOG_POSTS.filter((post) => post.published).sort(
-    (a, b) => Date.parse(b.date) - Date.parse(a.date),
-  );
+export const ZHEVION_SITE_SLUG = "zhevion";
+
+/**
+ * Lightweight authoring syntax: blank lines separate blocks, `##` starts a
+ * section, and consecutive `-` lines form a list. Content stays portable so
+ * every site can render the same post with its own components and CSS.
+ */
+export function parsePostBody(body: string): BlogSection[] {
+  const sections: BlogSection[] = [];
+  let current: BlogSection = { paragraphs: [] };
+
+  const pushCurrent = () => {
+    if (current.heading || current.paragraphs.length || current.bullets?.length) {
+      sections.push(current);
+    }
+    current = { paragraphs: [] };
+  };
+
+  for (const block of body.trim().split(/\n\s*\n/)) {
+    const value = block.trim();
+    if (!value) continue;
+
+    if (value.startsWith("## ")) {
+      pushCurrent();
+      current.heading = value.slice(3).trim();
+      continue;
+    }
+
+    const lines = value.split("\n").map((line) => line.trim());
+    if (lines.every((line) => line.startsWith("- "))) {
+      current.bullets = [
+        ...(current.bullets ?? []),
+        ...lines.map((line) => line.slice(2).trim()).filter(Boolean),
+      ];
+      continue;
+    }
+
+    current.paragraphs.push(lines.join(" "));
+  }
+
+  pushCurrent();
+  return sections;
 }
 
-export function getPublishedPost(slug: string) {
-  return getPublishedPosts().find((post) => post.slug === slug);
+function toBlogPost(row: PublishedPostRow): BlogPost {
+  return {
+    id: row.id,
+    slug: row.slug,
+    title: row.title,
+    description: row.description,
+    body: row.body,
+    author: row.author_name,
+    date: row.published_at,
+    sections: parsePostBody(row.body),
+  };
+}
+
+export async function getPublishedPosts(siteSlug = ZHEVION_SITE_SLUG) {
+  if (!isSupabaseConfigured()) return [];
+
+  const supabase = createPublicClient();
+  const { data, error } = await supabase
+    .from("published_posts")
+    .select("id, slug, title, description, body, author_name, published_at")
+    .eq("site_slug", siteSlug)
+    .order("published_at", { ascending: false });
+
+  if (error) {
+    console.error("Unable to load published posts", error.code);
+    return [];
+  }
+
+  return (data as PublishedPostRow[]).map(toBlogPost);
+}
+
+export async function getPublishedPost(
+  slug: string,
+  siteSlug = ZHEVION_SITE_SLUG,
+) {
+  if (!isSupabaseConfigured()) return undefined;
+
+  const supabase = createPublicClient();
+  const { data, error } = await supabase
+    .from("published_posts")
+    .select("id, slug, title, description, body, author_name, published_at")
+    .eq("site_slug", siteSlug)
+    .eq("slug", slug)
+    .maybeSingle();
+
+  if (error || !data) {
+    if (error) console.error("Unable to load published post", error.code);
+    return undefined;
+  }
+
+  return toBlogPost(data as PublishedPostRow);
 }
 
 export function formatPostDate(date: string) {
@@ -58,5 +131,5 @@ export function formatPostDate(date: string) {
     month: "long",
     year: "numeric",
     timeZone: "UTC",
-  }).format(new Date(`${date}T00:00:00Z`));
+  }).format(new Date(date));
 }

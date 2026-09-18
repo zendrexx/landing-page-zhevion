@@ -13,9 +13,10 @@ OG image, and the "What is Zhevion" bento grid.
 
 - **Next.js 15 (App Router) + TypeScript + Tailwind CSS** — chosen over static
   HTML for componentized sections and typed content.
-- No backend. Pre-launch: store badges are placeholders and the primary
-  conversion is an email waitlist.
-- Fully static output — no edge/serverless functions required to host it.
+- **Supabase Auth + Postgres** — the shared publishing dashboard uses individual
+  email/password accounts and RLS-protected, per-site publication records.
+- Cloudflare remains the deployment target through OpenNext. Cloudflare Access
+  and D1 are not used; `/blog`, `/sitemap.xml`, and `/dashboard` are dynamic.
 
 ```bash
 npm install
@@ -23,6 +24,10 @@ npm run dev      # http://localhost:3000
 npm run build    # production build
 npm start        # serve the build
 ```
+
+Copy `.env.example` to `.env.local`, then follow
+[`docs/supabase-publishing.md`](docs/supabase-publishing.md) to apply the schema,
+create the three accounts, assign roles/sites, and configure deployment values.
 
 ## Design system
 
