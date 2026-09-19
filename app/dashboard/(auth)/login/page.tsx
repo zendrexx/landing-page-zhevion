@@ -43,6 +43,17 @@ export default async function DashboardLoginPage({
         <p className="dashboard-login-copy">
           Sign in with your individual team account to create and publish content.
         </p>
+        <aside className="dashboard-login-help">
+          <strong>Team access only</strong>
+          <p>
+            There is no public sign-up. The owner creates each account in Supabase
+            under <b>Authentication → Users</b>, then activates its role using the
+            setup SQL in <code>docs/supabase-publishing.md</code>.
+          </p>
+          <a href="https://supabase.com/dashboard" target="_blank" rel="noreferrer">
+            Open Supabase dashboard ↗
+          </a>
+        </aside>
         {!configured ? (
           <p className="dashboard-alert error">
             Supabase is not configured. Follow <code>docs/supabase-publishing.md</code> before signing in.

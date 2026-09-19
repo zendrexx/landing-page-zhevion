@@ -2746,6 +2746,7 @@ html.has-cursor select {
   min-height: 100dvh;
   background: var(--dashboard-bg);
   color: var(--dashboard-ink);
+  color-scheme: light;
 }
 
 .dashboard-shell *:focus-visible,
@@ -3176,6 +3177,40 @@ html.has-cursor select {
   color: var(--dashboard-muted);
   font-size: 0.9rem;
   line-height: 1.6;
+}
+
+.dashboard-login-help {
+  margin-top: 1.5rem;
+  border: 1px solid var(--dashboard-rule);
+  border-radius: var(--r-control);
+  background: var(--dashboard-bg);
+  padding: 1rem;
+}
+
+.dashboard-login-help strong {
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+}
+
+.dashboard-login-help p {
+  margin-top: 0.4rem;
+  color: var(--dashboard-muted);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.dashboard-login-help code {
+  color: var(--dashboard-ink);
+}
+
+.dashboard-login-help a {
+  display: inline-block;
+  margin-top: 0.75rem;
+  color: var(--dashboard-accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
 }
 
 .dashboard-login-form {

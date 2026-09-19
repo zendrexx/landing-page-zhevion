@@ -1,4 +1,3 @@
-interface CloudflareEnv {
-  CF_ACCESS_TEAM_DOMAIN?: string;
-  CF_ACCESS_DASHBOARD_AUD?: string;
-}
+// Generated Cloudflare bindings belong here. Publishing authentication and
+// authorization are provided by Supabase, so there are no Access bindings.
+interface CloudflareEnv {}
